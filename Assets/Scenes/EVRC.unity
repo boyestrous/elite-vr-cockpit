@@ -204,8 +204,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af22bd791bcd75f4b9078393c57c4c5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controlBindingsState: {fileID: 11400000, guid: 1de2906d06cd6f745bab03c953c45a3a,
-    type: 2}
 --- !u!114 &59438901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1116,6 +1114,52 @@ Transform:
   m_Father: {fileID: 1074601785}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &516072241 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9098288760151393727, guid: 13dfd2ff77290bb4faf75012641f360d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1749688776}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &516072243 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5625217958891209880, guid: 13dfd2ff77290bb4faf75012641f360d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1749688776}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 516072241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf32f9d7c93175745bcf1ee89d900bc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &516072244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 516072241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1ef366d1adba714aa9442631db4e0b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Source: {fileID: 11400000, guid: 1e32b9862c3503c4db55b246757a21f7, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 516072243}
+        m_TargetAssemblyTypeName: EVRC.Desktop.StatusView, EVRC.Desktop
+        m_MethodName: Refresh
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &569466639
 GameObject:
   m_ObjectHideFlags: 0
@@ -2658,6 +2702,11 @@ PrefabInstance:
     - target: {fileID: 4811742776677330, guid: 71fe574d30e93584e986026484e39e7f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114168438288787448, guid: 71fe574d30e93584e986026484e39e7f,
+        type: 3}
+      propertyPath: deadzonePercentage
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 114532849731444944, guid: 71fe574d30e93584e986026484e39e7f,
         type: 3}

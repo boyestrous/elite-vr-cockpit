@@ -27,6 +27,7 @@ namespace EVRC.Core
         public GameEvent eliteDangerousStarted;
         // Replace these Steam Events with GameEvents
         public static Events.Event EliteDangerousStopped = new Events.Event();
+        public static Events.Event EliteDangerousStarted = new Events.Event();
         public static Events.Event<uint, string> CurrentProcessChanged = new Events.Event<uint, string>();
         public static Events.Event<EDGuiFocus> GuiFocusChanged = new Events.Event<EDGuiFocus>();
         public static Events.Event<EDStatusFlags> FlagsChanged = new Events.Event<EDStatusFlags>();
@@ -116,7 +117,7 @@ namespace EVRC.Core
 
         internal void SetIsEliteDangerousRunning(bool running)
         {
-            if (eliteDangerousState.running == running) return;
+            //if (eliteDangerousState.running == running) return;
             eliteDangerousState.running = running;
             eliteDangerousState.processId = currentProcessId;
             eliteDangerousState.processName = currentProcessName;
@@ -125,6 +126,7 @@ namespace EVRC.Core
             {
                 StartCoroutine(WatchStatusFile());
                 eliteDangerousStarted.Raise();
+                EliteDangerousStarted.Send();
             }
             else
             {

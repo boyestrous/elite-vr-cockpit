@@ -70,7 +70,7 @@ namespace EVRC.Core
 
         void OnEnable()
         {
-            // EDStateManager.eliteDangerousStarted.Listen(OnGameStartedOrStopped);
+            EDStateManager.EliteDangerousStarted.Listen(OnGameStartedOrStopped);
             EDStateManager.EliteDangerousStopped.Listen(OnGameStartedOrStopped);
             EDStateManager.GuiFocusChanged.Listen(OnGuiFocusChanged);
             EDStateManager.FlagsChanged.Listen(OnFlagsChanged);
@@ -79,7 +79,7 @@ namespace EVRC.Core
 
         void OnDisable()
         {
-            // EDStateManager.eliteDangerousStarted.Remove(OnGameStartedOrStopped);
+            EDStateManager.EliteDangerousStarted.Remove(OnGameStartedOrStopped);
             EDStateManager.EliteDangerousStopped.Remove(OnGameStartedOrStopped);
             EDStateManager.GuiFocusChanged.Remove(OnGuiFocusChanged);
             EDStateManager.FlagsChanged.Remove(OnFlagsChanged);
