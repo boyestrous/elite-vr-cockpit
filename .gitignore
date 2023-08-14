@@ -7,8 +7,6 @@
 [Ll]ogs/
 Assets/AssetStoreTools
 UserSettings/
-ProjectSettings/
-
 
 # Visual Studio cache directory
 .vs/
@@ -64,5 +62,3 @@ EVRC.Core.csproj.DotSettings
 *.DotSettings
 *.dwlt
 .vsconfig
-
-ProjectSettings/ProjectSettings.asset
