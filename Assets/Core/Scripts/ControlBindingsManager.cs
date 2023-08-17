@@ -31,7 +31,7 @@ namespace EVRC.Core
         /// Overload for setting a custom path (mostly for testing)
         /// </summary>
         /// <param name="path"></param>
-        public void SetBindingsFile(string path)
+        internal void SetBindingsFile(string path)
         {
             bindingsFile = path;
             bindingsPath = Path.GetDirectoryName(bindingsFile);
