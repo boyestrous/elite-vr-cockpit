@@ -7,10 +7,12 @@ namespace EVRC.Core.Editor
     public class StatusFlagsEventEditor : UnityEditor.Editor
     {
         private EDStatusFlags statusFlags;
+        private EDStatusFlags2 statusFlags2;
 
         private void OnEnable()
         {
             statusFlags = EDStatusFlags.InMainShip;
+            statusFlags2 = EDStatusFlags2.OnFoot;
         }
 
         public override void OnInspectorGUI()
@@ -27,12 +29,17 @@ namespace EVRC.Core.Editor
             statusFlags = (EDStatusFlags)EditorGUILayout.EnumFlagsField(statusFlags);
             EditorGUILayout.EndHorizontal();
 
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("Status Flags2:");
+            statusFlags2 = (EDStatusFlags2)EditorGUILayout.EnumFlagsField(statusFlags2);
+            EditorGUILayout.EndHorizontal();
+
             EditorGUILayout.EndVertical();
 
 
             if (GUILayout.Button("Raise"))
             {
-                ((EDStatusFlagsEvent)target).Raise(statusFlags);
+                ((EDStatusFlagsEvent)target).Raise(statusFlags, statusFlags2);
                 Debug.Log($"Raising EdStatusAndGuiEvent with: {statusFlags}");
             }
 

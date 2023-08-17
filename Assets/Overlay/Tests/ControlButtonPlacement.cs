@@ -38,9 +38,9 @@ public class ControlButtonPlacement
         controlButtonManager.enabled = false;
 #endif
 
-        // Create a new GameObject and attach the CockpitModeAnchor component
-        anchorParentGameObject = new GameObject("Anchor");
-        cockpitModeAnchor = anchorParentGameObject.AddComponent<CockpitModeAnchor>();
+        // Create an anchor using the prefab from the ControlButtonManager
+        anchorParentGameObject = PrefabUtility.InstantiatePrefab(controlButtonManager.CockpitAnchorPrefab) as GameObject;
+        cockpitModeAnchor = anchorParentGameObject.GetComponent<CockpitModeAnchor>();
 
         // For the OnEnable actions, which don't reliably run during unit tests
         cockpitModeAnchor.OnEnable();
@@ -75,7 +75,7 @@ public class ControlButtonPlacement
     // Test a MainShip button
     new ControlButtonPlacementTestCase() {
         expectedOutcome=true,
-        config = new anchorConfig() { guiFocus = EDGuiFocus.NoFocus, statusFlag = EDStatusFlags.InMainShip },
+        config = new anchorConfig() { guiFocus = EDGuiFocus.NoFocus, shipStatusFlag = EDStatusFlags.InMainShip },
         savedControlButton = new SavedControlButton()
         {
             type = "Hyperspace",
@@ -87,7 +87,7 @@ public class ControlButtonPlacement
     // Test an SRV button
     new ControlButtonPlacementTestCase() {
         expectedOutcome=true,
-        config = new anchorConfig() { guiFocus = EDGuiFocus.NoFocus, statusFlag = EDStatusFlags.InSRV },
+        config = new anchorConfig() { guiFocus = EDGuiFocus.NoFocus, shipStatusFlag = EDStatusFlags.InSRV },
         savedControlButton = new SavedControlButton()
         {
             type = "ToggleCargoScoop_Buggy",
@@ -99,7 +99,7 @@ public class ControlButtonPlacement
     // GuiFocus not defined in file (on purpose)
     new ControlButtonPlacementTestCase() {
         expectedOutcome=true,
-        config = new anchorConfig() { statusFlag = EDStatusFlags.InMainShip, guiFocus = EDGuiFocus.PanelOrNoFocus },
+        config = new anchorConfig() { shipStatusFlag = EDStatusFlags.InMainShip, guiFocus = EDGuiFocus.PanelOrNoFocus },
         savedControlButton = new SavedControlButton()
         {
             type = "Hyperspace",
@@ -128,7 +128,7 @@ public class ControlButtonPlacement
         cockpitModeAnchor.activationSettings.Add(new CockpitModeAnchor.AnchorSetting()
         {
             activationGuiFocus = testCase.config.guiFocus,
-            activationStatusFlag = testCase.config.statusFlag
+            shipActivationFlag = testCase.config.shipStatusFlag
         });
 
         // Make sure the ControlButtonManager actually contains a reference to the Anchor
@@ -150,9 +150,9 @@ public class ControlButtonPlacement
     public void SameControlButton_Multiple_Anchors()
     {
         #region --------------ARRANGE---------------
-        // Create a new GameObject and attach the CockpitModeAnchor component
-        GameObject anchorParentGameObject_Two = new GameObject("Anchor2");
-        CockpitModeAnchor cockpitModeAnchor_Two = anchorParentGameObject_Two.AddComponent<CockpitModeAnchor>();
+        // Create a second GameObject with the prefab
+        GameObject anchorParentGameObject_Two = PrefabUtility.InstantiatePrefab(controlButtonManager.CockpitAnchorPrefab) as GameObject;
+        CockpitModeAnchor cockpitModeAnchor_Two = anchorParentGameObject_Two.GetComponent<CockpitModeAnchor>();
 
         // For the OnEnable actions, which don't reliably run during unit tests
         cockpitModeAnchor_Two.OnEnable();
@@ -162,20 +162,20 @@ public class ControlButtonPlacement
         cockpitModeAnchor.activationSettings.Add(new CockpitModeAnchor.AnchorSetting()
         {
             activationGuiFocus = default(EDGuiFocus),
-            activationStatusFlag = EDStatusFlags.InMainShip
+            shipActivationFlag = EDStatusFlags.InMainShip
         });
         //cockpitModeAnchor.activationGuiFocus = default(EDGuiFocus);
-        //cockpitModeAnchor.activationStatusFlag = EDStatusFlags.InMainShip;
+        //cockpitModeAnchor.shipActivationFlag = EDStatusFlags.InMainShip;
 
 
         // Set Anchor TWO to be SRV
         cockpitModeAnchor_Two.activationSettings.Add(new CockpitModeAnchor.AnchorSetting()
         {
             activationGuiFocus = default(EDGuiFocus),
-            activationStatusFlag = EDStatusFlags.InSRV
+            shipActivationFlag = EDStatusFlags.InSRV
         });
         //cockpitModeAnchor_Two.activationGuiFocus = default(EDGuiFocus);
-        //cockpitModeAnchor_Two.activationStatusFlag = EDStatusFlags.InSRV;
+        //cockpitModeAnchor_Two.shipActivationFlag = EDStatusFlags.InSRV;
 
         //Create the SavedControlButtons
         //One for Mainship
@@ -223,7 +223,7 @@ public class ControlButtonPlacement
         // Assert that scene doesn't have any matching Anchors
         Assert.AreEqual(0, controlButtonManager.CockpitModeAnchors
             .Where(anchor => anchor.activationSettings.Any(x => x.activationGuiFocus == EDGuiFocus.PanelOrNoFocus))
-            .Where(anchor => anchor.activationSettings.Any(y => y.activationStatusFlag == EDStatusFlags.InFighter))
+            .Where(anchor => anchor.activationSettings.Any(y => y.shipActivationFlag == EDStatusFlags.InFighter))
             .Count());
 
         controlButtonManager.parentObject = new GameObject("SeatedOrigin");

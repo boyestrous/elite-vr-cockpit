@@ -17,11 +17,15 @@ MonoBehaviour:
   processId: 0
   processName: 
   processDirectory: 
-  statusFlags: 0
-  guiFocus: 255
+  statusFlags: 16777216
+  statusFlags2: 0
+  guiFocus: 9
   lastStatusFromFile:
     timestamp: 
     Flags: 0
+    Flags2: 0
     Pips: 
     FireGroup: 0
     GuiFocus: 0
+  statusFlagsEvent: {fileID: 11400000, guid: 4b79c0920216f5b4485380a4c928d830, type: 2}
+  guiFocusEvent: {fileID: 11400000, guid: 5410c4b90c5702649bcfd82dc3815c95, type: 2}

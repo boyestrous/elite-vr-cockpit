@@ -12,11 +12,14 @@ namespace EVRC.Core
         public string processName;
         public string processDirectory;
         public EDStatusFlags statusFlags;
+        public EDStatusFlags2 statusFlags2;
         public EDGuiFocus guiFocus;
-        
-
         public EDStatus lastStatusFromFile;
-        
+
+        [Header("Convenience References")]
+        public EDStatusFlagsEvent statusFlagsEvent;
+        public EDGuiFocusEvent guiFocusEvent;
+
         public void Clear()
         {
             running = false;
@@ -24,11 +27,13 @@ namespace EVRC.Core
             processName = null;
             processDirectory = null;    
             statusFlags= 0;
+            statusFlags2 = 0;
             guiFocus = EDGuiFocus.NoFocus;
 
-        // Struct for items directly read from Status.json
-        lastStatusFromFile.timestamp = null;
+            // For items directly read from Status.json
+            lastStatusFromFile.timestamp = null;
             lastStatusFromFile.Flags = 0;
+            lastStatusFromFile.Flags2 = 0;
             lastStatusFromFile.Pips = new byte[] { };
             lastStatusFromFile.FireGroup = 0;
             lastStatusFromFile.GuiFocus = 0;

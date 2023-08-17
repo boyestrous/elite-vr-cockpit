@@ -25,12 +25,14 @@ namespace EVRC.Core.Overlay
         public struct AnchorSetting
         {
             [SerializeField, Tooltip("The single status flag that must be present for this Object to be active")]
-            public EDStatusFlags activationStatusFlag;
+            public EDStatusFlags shipActivationFlag;
             [SerializeField, Tooltip("Which GUI Focus must be present for this Object to be active.")]
             public EDGuiFocus activationGuiFocus;
+            [SerializeField, Tooltip("Which single status flag (for the Flag2 field) must be present for this Object to be active.")]
+            public EDStatusFlags2 footActivationFlag;
         }
 
-        //[Tooltip("The single status flag that must be present for this Object to be active")] public EDStatusFlags activationStatusFlag;
+        //[Tooltip("The single status flag that must be present for this Object to be active")] public EDStatusFlags shipActivationFlag;
         //[Description("The default value: 'Panel Or No Focus' will make this anchor stay active if the guiFocus is any of the 'panels' (internal, comms, etc.)")]
         //[Tooltip("Which GUI Focus must be present for this Object to be active.")] public EDGuiFocus activationGuiFocus = EDGuiFocus.PanelOrNoFocus;
         public List<AnchorSetting> activationSettings;
@@ -78,14 +80,15 @@ namespace EVRC.Core.Overlay
             Refresh();
         }
 
-        public void AddAnchorSetting(EDStatusFlags statusFlag, EDGuiFocus guiFocus)
+        public void AddAnchorSetting(EDStatusFlags shipStatusFlag, EDGuiFocus guiFocus, EDStatusFlags2 footStatusFlag)
         {
             if (activationSettings == null || activationSettings.Count == 0) activationSettings = new List<AnchorSetting>();
             activationSettings.Add(
                 new AnchorSetting() 
                 { 
                     activationGuiFocus = guiFocus,
-                    activationStatusFlag = statusFlag,
+                    shipActivationFlag = shipStatusFlag,
+                    footActivationFlag = footStatusFlag
                 }
             );
 
@@ -107,7 +110,12 @@ namespace EVRC.Core.Overlay
         private bool ShouldStatusFlagActivate(AnchorSetting activationSetting, EDStatusFlags statusFlags)
         {
             
-            return activationSetting.activationStatusFlag == default(EDStatusFlags) ? false : statusFlags.HasFlag(activationSetting.activationStatusFlag);
+            return activationSetting.shipActivationFlag == default(EDStatusFlags) ? false : statusFlags.HasFlag(activationSetting.shipActivationFlag);
+        }
+
+        private bool ShouldStatusFlag2Activate(AnchorSetting anchorSetting, EDStatusFlags2 statusFlags)
+        {
+            return anchorSetting.footActivationFlag == default ? false : statusFlags.HasFlag(anchorSetting.footActivationFlag);
         }
 
         private bool ShouldGuiFocusActivate(AnchorSetting activationSetting, EDGuiFocus guiFocus)
@@ -120,20 +128,22 @@ namespace EVRC.Core.Overlay
         }
 
 
-        public void OnEDStatusFlagsChanged(EDStatusFlags newStatusFlags)
+        public void OnEDStatusFlagsChanged(EDStatusFlags newStatusFlags, EDStatusFlags2 newStatusFlags2)
         {
             // GuiFocus values above 4 are "mode" types, so status flag changes won't affect the UI
             if ((int)eliteDangerousState.guiFocus > 4) return;
-
-            
-            //activationSettings.Any(
-            //    anchorSetting => ShouldStatusFlagActivate(anchorSetting, newStatusFlags) && 
-            //    ShouldGuiFocusActivate(anchorSetting, eliteDangerousState.guiFocus)))
-            
+           
             ActivateTargets(
                 activationSettings.Any(
-                anchorSetting => ShouldStatusFlagActivate(anchorSetting, newStatusFlags) &&
-                ShouldGuiFocusActivate(anchorSetting, eliteDangerousState.guiFocus))
+                    anchorSetting =>
+                        // StatusFlags & GuiFocus match
+                        ShouldStatusFlagActivate(anchorSetting, newStatusFlags) &&                        
+                        ShouldGuiFocusActivate(anchorSetting, eliteDangerousState.guiFocus)
+                        // OR
+                        ||
+                        // StatusFlags2 matches
+                        ShouldStatusFlag2Activate(anchorSetting, newStatusFlags2)
+                    )
                 );
             
 
@@ -152,8 +162,15 @@ namespace EVRC.Core.Overlay
 
             ActivateTargets(
                 activationSettings.Any(
-                anchorSetting => ShouldStatusFlagActivate(anchorSetting, eliteDangerousState.statusFlags) &&
-                ShouldGuiFocusActivate(anchorSetting, newFocus))
+                    anchorSetting =>
+                        // StatusFlags & GuiFocus match
+                        ShouldStatusFlagActivate(anchorSetting, eliteDangerousState.statusFlags) &&
+                        ShouldGuiFocusActivate(anchorSetting, newFocus)
+                        // OR
+                        ||
+                        // StatusFlags2 matches
+                        ShouldStatusFlag2Activate(anchorSetting, eliteDangerousState.statusFlags2)
+                    )
                 );
             
         }

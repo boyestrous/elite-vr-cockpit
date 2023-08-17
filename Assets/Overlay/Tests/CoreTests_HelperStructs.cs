@@ -8,7 +8,8 @@ namespace EVRC.Overlay.Tests
     /// </summary>
     public struct anchorConfig
     {
-        public EDStatusFlags statusFlag;
+        public EDStatusFlags shipStatusFlag;
+        public EDStatusFlags2 footStatusFlag;
         public EDGuiFocus guiFocus;
         public bool ignoreCockpitFocusChanges;
     }
@@ -30,7 +31,7 @@ namespace EVRC.Overlay.Tests
         public override string ToString()
         {
                 
-            return $"Btn: {savedControlButton.type}=>{savedControlButton.anchorGuiFocus}/{savedControlButton.anchorStatusFlag} || Anchor: {config.guiFocus}|{config.statusFlag}";
+            return $"Btn: {savedControlButton.type}=>{savedControlButton.anchorGuiFocus}/{savedControlButton.anchorStatusFlag} || Anchor: {config.guiFocus}|{config.shipStatusFlag}";
         }
     }
 
@@ -45,6 +46,7 @@ namespace EVRC.Overlay.Tests
 
         // Settings for the event that will be raised in the test case
         public EDStatusFlags raisedStatusFlag;
+        public EDStatusFlags2 raisedStatusFlag2;
 
         // Setting for what the GuiFocus will be when the event is raised
         public EDGuiFocus eliteStatusGuiFocus;
@@ -53,7 +55,7 @@ namespace EVRC.Overlay.Tests
         public override string ToString()
         {
 
-            return $"Raised: =>{raisedStatusFlag} w/ {eliteStatusGuiFocus} || Anchor: {config.guiFocus}|{config.statusFlag}";
+            return $"Raised: =>{raisedStatusFlag} w/ {eliteStatusGuiFocus} || Anchor: {config.guiFocus}|{config.shipStatusFlag}";
         }
     }
 
@@ -76,7 +78,7 @@ namespace EVRC.Overlay.Tests
         public override string ToString()
         {
 
-            return $"Raised: =>{raisedGuiFocus} w/ {eliteStatusFlags} || Anchor: {config.guiFocus}|{config.statusFlag}";
+            return $"Raised: =>{raisedGuiFocus} w/ {eliteStatusFlags} || Anchor: {config.guiFocus}|{config.shipStatusFlag}";
         }
     }
 }
