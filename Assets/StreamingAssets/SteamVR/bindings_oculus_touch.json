@@ -57,7 +57,7 @@
             {
                "inputs" : {
                   "position" : {
-                     "output" : "/actions/cockpitcontrols/in/pov2joystickposition"
+                     "output" : "/actions/cockpitcontrols/in/pov1joystickposition"
                   }
                },
                "mode" : "joystick",
@@ -75,7 +75,7 @@
             {
                "inputs" : {
                   "click" : {
-                     "output" : "/actions/cockpitcontrols/in/buttonpov2"
+                     "output" : "/actions/cockpitcontrols/in/buttonpov1"
                   }
                },
                "mode" : "button",
@@ -164,29 +164,11 @@
             {
                "inputs" : {
                   "click" : {
-                     "output" : "/actions/default/in/resetseatedposition"
-                  }
-               },
-               "mode" : "button",
-               "path" : "/user/hand/left/input/system"
-            },
-            {
-               "inputs" : {
-                  "click" : {
                      "output" : "/actions/default/in/grabhold"
                   }
                },
                "mode" : "button",
                "path" : "/user/hand/right/input/grip"
-            },
-            {
-               "inputs" : {
-                  "click" : {
-                     "output" : "/actions/default/in/resetseatedposition"
-                  }
-               },
-               "mode" : "button",
-               "path" : "/user/hand/right/input/system"
             },
             {
                "inputs" : {
@@ -266,11 +248,17 @@
             },
             {
                "inputs" : {
+                  "east" : {
+                     "output" : "/actions/fsscontrols/in/tuneup"
+                  },
                   "north" : {
                      "output" : "/actions/fsscontrols/in/zoomin"
                   },
                   "south" : {
                      "output" : "/actions/fsscontrols/in/zoomout"
+                  },
+                  "west" : {
+                     "output" : "/actions/fsscontrols/in/tunedown"
                   }
                },
                "mode" : "dpad",
@@ -278,6 +266,15 @@
                   "sub_mode" : "touch"
                },
                "path" : "/user/hand/left/input/joystick"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/fsscontrols/in/targetcurrentsignal"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/right/input/a"
             }
          ]
       },
@@ -290,24 +287,6 @@
             {
                "inputs" : {
                   "click" : {
-                     "output" : "/actions/menu/in/menuback"
-                  }
-               },
-               "mode" : "button",
-               "path" : "/user/hand/left/input/system"
-            },
-            {
-               "inputs" : {
-                  "click" : {
-                     "output" : "/actions/menu/in/menuback"
-                  }
-               },
-               "mode" : "button",
-               "path" : "/user/hand/right/input/system"
-            },
-            {
-               "inputs" : {
-                  "click" : {
                      "output" : "/actions/menu/in/menuselect"
                   }
                },
@@ -316,15 +295,6 @@
             },
             {
                "inputs" : {
-                  "click" : {
-                     "output" : "/actions/menu/in/menuselect"
-                  }
-               },
-               "mode" : "button",
-               "path" : "/user/hand/right/input/x"
-            },
-            {
-               "inputs" : {
                   "position" : {
                      "output" : "/actions/menu/in/menunavigatejoystickposition"
                   }
@@ -334,30 +304,12 @@
             },
             {
                "inputs" : {
-                  "position" : {
-                     "output" : "/actions/menu/in/menunavigatejoystickposition"
-                  }
-               },
-               "mode" : "joystick",
-               "path" : "/user/hand/right/input/joystick"
-            },
-            {
-               "inputs" : {
                   "click" : {
                      "output" : "/actions/menu/in/menunestedtoggle"
                   }
                },
                "mode" : "button",
                "path" : "/user/hand/left/input/joystick"
-            },
-            {
-               "inputs" : {
-                  "click" : {
-                     "output" : "/actions/menu/in/menunestedtoggle"
-                  }
-               },
-               "mode" : "button",
-               "path" : "/user/hand/right/input/joystick"
             },
             {
                "inputs" : {
@@ -367,6 +319,33 @@
                },
                "mode" : "button",
                "path" : "/user/hand/left/input/y"
+            },
+            {
+               "inputs" : {
+                  "position" : {
+                     "output" : "/actions/menu/in/menunavigatejoystickposition"
+                  }
+               },
+               "mode" : "joystick",
+               "path" : "/user/hand/right/input/joystick"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/menu/in/menunestedtoggle"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/right/input/joystick"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/menu/in/menuselect"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/right/input/x"
             },
             {
                "inputs" : {
@@ -428,21 +407,15 @@
                   }
                },
                "mode" : "button",
-               "path" : "/user/hand/left/input/system"
-            },
-            {
-               "inputs" : {
-                  "click" : {
-                     "output" : "/actions/ui/in/uiback"
-                  }
-               },
-               "mode" : "button",
                "path" : "/user/hand/right/input/system"
             },
             {
                "inputs" : {
+                  "click" : {
+                     "output" : "/actions/ui/in/uitabprevious"
+                  },
                   "position" : {
-                     "output" : "/actions/ui/in/uitabjoystickposition"
+                     "output" : "/actions/ui/in/uinavigatejoystickposition"
                   }
                },
                "mode" : "joystick",
@@ -450,6 +423,9 @@
             },
             {
                "inputs" : {
+                  "click" : {
+                     "output" : "/actions/ui/in/uitabnext"
+                  },
                   "position" : {
                      "output" : "/actions/ui/in/uinavigatejoystickposition"
                   }
@@ -490,7 +466,8 @@
    "category" : "steamvr_input",
    "controller_type" : "oculus_touch",
    "description" : "",
-   "name" : "Saved Elite VR Cockpit [Testing] configuration for Oculus Touch",
+   "interaction_profile" : "",
+   "name" : "Oculus Touch - Elite VR Cockpit configuration",
    "options" : {},
    "simulated_actions" : []
 }

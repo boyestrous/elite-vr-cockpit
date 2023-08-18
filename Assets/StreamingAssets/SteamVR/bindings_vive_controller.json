@@ -1,7 +1,7 @@
 {
    "action_manifest_version" : 0,
    "alias_info" : {},
-   "app_key" : "name.danielfriesen.unity.elitevrcockpit.exe",
+   "app_key" : "application.generated.unity.elitevrcockpit.exe",
    "bindings" : {
       "/actions/cockpitcontrols" : {
          "chords" : [],
@@ -61,31 +61,7 @@
                   }
                },
                "mode" : "trackpad",
-               "path" : "/user/hand/left/input/trackpad"
-            },
-            {
-               "inputs" : {
-                  "click" : {
-                     "output" : "/actions/cockpitcontrols/in/pov1trackpadpress"
-                  },
-                  "position" : {
-                     "output" : "/actions/cockpitcontrols/in/pov1trackpadposition"
-                  }
-               },
-               "mode" : "trackpad",
                "path" : "/user/hand/right/input/trackpad"
-            },
-            {
-               "inputs" : {
-                  "position" : {
-                     "output" : "/actions/cockpitcontrols/in/pov2trackpadposition"
-                  },
-                  "touch" : {
-                     "output" : "/actions/cockpitcontrols/in/pov2trackpadtouch"
-                  }
-               },
-               "mode" : "trackpad",
-               "path" : "/user/hand/left/input/trackpad"
             },
             {
                "inputs" : {
@@ -196,10 +172,10 @@
             {
                "inputs" : {
                   "click" : {
-                     "output" : "/actions/fsscontrols/in/cameracontrolactivate"
+                     "output" : "/actions/fsscontrols/in/zoomtrackpadpress"
                   },
-                  "position" : {
-                     "output" : "/actions/fsscontrols/in/cameracontrol"
+                  "touch" : {
+                     "output" : "/actions/fsscontrols/in/tunetrackpadtouch"
                   }
                },
                "mode" : "trackpad",
@@ -207,9 +183,6 @@
             },
             {
                "inputs" : {
-                  "click" : {
-                     "output" : "/actions/fsscontrols/in/cameracontrolactivate"
-                  },
                   "position" : {
                      "output" : "/actions/fsscontrols/in/cameracontrol"
                   }
@@ -234,6 +207,33 @@
                },
                "mode" : "button",
                "path" : "/user/hand/right/input/application_menu"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/fsscontrols/in/cameracontrolactivate"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/right/input/grip"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/fsscontrols/in/targetcurrentsignal"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/left/input/trigger"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/fsscontrols/in/targetcurrentsignal"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/right/input/trigger"
             }
          ]
       },
@@ -246,7 +246,7 @@
             {
                "inputs" : {
                   "click" : {
-                     "output" : "/actions/menu/in/menunavigatetrackpadpress"
+                     "output" : "/actions/menu/in/menunestedtoggle"
                   },
                   "position" : {
                      "output" : "/actions/menu/in/menunavigatetrackpadposition"
@@ -261,7 +261,7 @@
             {
                "inputs" : {
                   "click" : {
-                     "output" : "/actions/menu/in/menunavigatetrackpadpress"
+                     "output" : "/actions/menu/in/menunestedtoggle"
                   },
                   "position" : {
                      "output" : "/actions/menu/in/menunavigatetrackpadposition"
@@ -290,6 +290,42 @@
                },
                "mode" : "button",
                "path" : "/user/hand/right/input/application_menu"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/menu/in/menuselect"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/left/input/trigger"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/menu/in/menuselect"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/right/input/trigger"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/menu/in/menuselect"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/left/input/trackpad"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/menu/in/menuselect"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/right/input/trackpad"
             }
          ]
       },
@@ -371,7 +407,8 @@
    "category" : "steamvr_input",
    "controller_type" : "vive_controller",
    "description" : "",
-   "name" : "Vive Controller",
+   "interaction_profile" : "",
+   "name" : "Vive Controller - Elite VR Cockpit configuration",
    "options" : {},
    "simulated_actions" : []
 }
