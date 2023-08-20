@@ -21,8 +21,9 @@ namespace EVRC.Core.Overlay
 
         private bool ready = false;
 
-        void OnEnable()
+        internal void OnEnable()
         {
+            registeredObjects = new List<staticLocationKeyTargetMap>();
             StartCoroutine(GetAnchors());
         }
 
@@ -84,7 +85,11 @@ namespace EVRC.Core.Overlay
 
                 //Try to find a matching registered object
                 int findIndex = registeredObjects.FindIndex(ro => ro.key == _key);
-                if (findIndex == -1) continue;
+                if (findIndex == -1)
+                {
+                    throw new KeyNotFoundException($"key: {_key} was not found. Check to make sure your save file is compatible with the current EVRC version.");
+                }
+
                 
                 // Assign position and rotation from the loaded state 
                 Vector3 _pos = loadedGameObjects[i].overlayTransform.pos;
