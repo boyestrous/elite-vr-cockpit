@@ -69,7 +69,7 @@ namespace EVRC.Core.Actions.Editor
                 Directory.CreateDirectory(Path.Combine(buildDir, "Images"));
             }
 
-            var imagesPath = Path.Combine(Application.dataPath, "..", "Images");
+            var imagesPath = Path.Combine(Application.dataPath, "..", "Assets/Documentation/Images");
             string[] imagePaths = Directory.GetFiles(imagesPath, "*.png");
             foreach (var imagePath in imagePaths)
             {
