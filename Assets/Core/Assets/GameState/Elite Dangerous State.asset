@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02dc692eea0eb8e4aa9506ebd427e1b4, type: 3}
   m_Name: Elite Dangerous State
   m_EditorClassIdentifier: 
-  gameEvent: {fileID: 0}
+  gameEvent: {fileID: 11400000, guid: 6f35a73da1337834bab0cfe804ff7d8f, type: 2}
   running: 0
-  processId: 0
-  processName: 
-  processDirectory: 
+  processId: 12345
+  processName: Parker64.exe
+  processDirectory: C:\Yes\I\Rock
   statusFlags: 0
-  guiFocus: 255
+  guiFocus: 0
   lastStatusFromFile:
     timestamp: 
     Flags: 0

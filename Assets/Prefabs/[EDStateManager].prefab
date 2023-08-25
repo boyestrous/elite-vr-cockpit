@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eliteDangerousState: {fileID: 11400000, guid: de65acd1f8087ff4cb3c04f687b0f89f,
     type: 2}
-  statusChanged: {fileID: 11400000, guid: 1ea6ca5ada0dca047a71b2ed2cb92e0c, type: 2}
+  statusChanged: {fileID: 11400000, guid: 6f35a73da1337834bab0cfe804ff7d8f, type: 2}
   eliteDangerousStartStop: {fileID: 11400000, guid: 08521b916e6a05248b02a99beae1ae7a,
     type: 2}
   eDStatusFlagsEvent: {fileID: 11400000, guid: 4b79c0920216f5b4485380a4c928d830, type: 2}
