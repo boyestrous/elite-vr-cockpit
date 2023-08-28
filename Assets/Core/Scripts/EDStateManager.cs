@@ -23,7 +23,7 @@ namespace EVRC.Core
 
 
         [Header("Game Events")]
-        public EDStateEvent statusChanged;
+        public GameEvent statusChanged;
         public BoolEvent eliteDangerousStartStop;
         public EDStatusFlagsEvent eDStatusFlagsEvent;
         public EDGuiFocusEvent eDGuiFocusEvent;
@@ -188,7 +188,7 @@ namespace EVRC.Core
 
                         if (status.timestamp != eliteDangerousState.lastStatusFromFile.timestamp)
                         {
-                            statusChanged.Raise(eliteDangerousState);
+                            statusChanged.Raise();
 
                             if (eliteDangerousState.lastStatusFromFile.GuiFocus != status.GuiFocus)
                             {

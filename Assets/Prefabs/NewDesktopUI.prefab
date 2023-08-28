@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 649170928783406786}
   - component: {fileID: 3388104431613939313}
+  - component: {fileID: 3914959317253130693}
+  - component: {fileID: 2792544302326749862}
   m_Layer: 6
   m_Name: LogView
   m_TagString: Untagged
@@ -57,6 +59,49 @@ MonoBehaviour:
     color: {r: 0.9433962, g: 0, b: 0, a: 1}
     icon: {fileID: 21300000, guid: 365964070f343304da7d6b2875ae06a2, type: 3}
   maxLines: 100
+--- !u!114 &3914959317253130693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1200109454227299433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4404ab8a8cef6094f9a0d7de62ed8642, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentUIDocument: {fileID: 6465645074838448022}
+  eliteDangerousState: {fileID: 11400000, guid: de65acd1f8087ff4cb3c04f687b0f89f,
+    type: 2}
+--- !u!114 &2792544302326749862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1200109454227299433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1ef366d1adba714aa9442631db4e0b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Source: {fileID: 11400000, guid: 6f35a73da1337834bab0cfe804ff7d8f, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3914959317253130693}
+        m_TargetAssemblyTypeName: EVRC.Desktop.EliteStatusViewController, EVRC.Desktop
+        m_MethodName: Refresh
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1895929214567527768
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,7 +429,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 650565485984119541}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1540992566050733771
+--- !u!114 &4713616154397279417
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -393,10 +438,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 9098288760151393727}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 713d68404d8274940ae87c00109a6ee4, type: 3}
+  m_Script: {fileID: 11500000, guid: f1ef366d1adba714aa9442631db4e0b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Source: {fileID: 11400000, guid: 1ea6ca5ada0dca047a71b2ed2cb92e0c, type: 2}
+  Source: {fileID: 11400000, guid: 6f35a73da1337834bab0cfe804ff7d8f, type: 2}
   Response:
     m_PersistentCalls:
       m_Calls:
