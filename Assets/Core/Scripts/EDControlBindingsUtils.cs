@@ -44,6 +44,7 @@ namespace EVRC.Core
             {
                 Device = GetAttributeValue(node, "Device"),
                 Key = GetAttributeValue(node, "Key"),
+                DeviceIndex = GetAttributeValue(node, "DeviceIndex"),
                 Modifiers = new HashSet<ControlButtonBinding.KeyModifier>(),
             };
 
@@ -62,8 +63,12 @@ namespace EVRC.Core
         private static string GetAttributeValue(XElement el, string localName)
         {
             localName = localName.ToLowerInvariant();
-            return el.Attributes().First(attr => attr.Name.LocalName.ToLowerInvariant() == localName).Value;
+            XAttribute attribute = el.Attributes()
+                                    .FirstOrDefault(attr => attr.Name.LocalName.ToLowerInvariant() == localName);
+
+            return attribute?.Value;  // Return the attribute value if found, otherwise return null
         }
+
 
         public static string EDControlFriendlyName(EDControlButton button)
         {
