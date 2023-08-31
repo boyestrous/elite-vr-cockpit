@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace EVRC.DesktopUI
+namespace EVRC.Desktop
 {
     /*
      * Displays the data of a log entry in the UI of the list

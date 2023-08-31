@@ -16,7 +16,7 @@ namespace EVRC.Core
         {
             public string Device;
             public string Key;
-            //public string DeviceIndex;
+            public string DeviceIndex;
             public HashSet<KeyModifier> Modifiers;
 
             public bool IsValid

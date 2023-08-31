@@ -64,10 +64,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hudColor: {fileID: 11400000, guid: 9cdab6a8c4197cf47bc32b708128459d, type: 2}
-  useHudColorMatrixOverride: 0
-  baseColor: {r: 1, g: 0.44313726, b: 0, a: 1}
-  highlightColor: {r: 1, g: 0.6901961, b: 0, a: 1}
-  invalidColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &6582732730923580346
 GameObject:
   m_ObjectHideFlags: 0
@@ -78,7 +74,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6582732730923580349}
   - component: {fileID: 2156917432996039220}
-  - component: {fileID: 939386760508840648}
+  - component: {fileID: 1337997265059625085}
   - component: {fileID: 9098651306250912292}
   - component: {fileID: 8480226408613417952}
   m_Layer: 0
@@ -122,7 +118,7 @@ MonoBehaviour:
     type: 2}
   windowNotFocusedPanel: {fileID: 6582732731851171001}
   gameNotRunningPanel: {fileID: 4390316695377896737}
---- !u!114 &939386760508840648
+--- !u!114 &1337997265059625085
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -131,10 +127,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6582732730923580346}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 713d68404d8274940ae87c00109a6ee4, type: 3}
+  m_Script: {fileID: 11500000, guid: f1ef366d1adba714aa9442631db4e0b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Source: {fileID: 11400000, guid: 1ea6ca5ada0dca047a71b2ed2cb92e0c, type: 2}
+  Source: {fileID: 11400000, guid: 6f35a73da1337834bab0cfe804ff7d8f, type: 2}
   Response:
     m_PersistentCalls:
       m_Calls:
@@ -294,10 +290,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hudColor: {fileID: 11400000, guid: 9cdab6a8c4197cf47bc32b708128459d, type: 2}
-  useHudColorMatrixOverride: 0
-  baseColor: {r: 1, g: 0.44313726, b: 0, a: 1}
-  highlightColor: {r: 1, g: 0.6901961, b: 0, a: 1}
-  invalidColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1001 &3978729070999729105
 PrefabInstance:
   m_ObjectHideFlags: 0
