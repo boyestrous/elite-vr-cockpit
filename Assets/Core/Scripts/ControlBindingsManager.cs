@@ -9,12 +9,19 @@ namespace EVRC.Core
     public class ControlBindingsManager : MonoBehaviour
     {
         public ControlBindingsState controlBindingsState;
+        [Description("Event when the bindings have been loaded, NOT when the bindings file has changed.")]
+        public GameEvent eliteBindingsLoadedEvent;
 
         private FileSystemWatcher bindsFileWatcher;
         private FileSystemWatcher startPresetFileWatcher;
 
         private string bindingsFile;
         private string bindingsPath;
+
+        private void OnEnable()
+        {
+            Reload();
+        }
 
         public void Reload()
         {

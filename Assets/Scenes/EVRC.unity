@@ -3180,6 +3180,12 @@ PrefabInstance:
       propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 2646727896140413924, guid: 13dfd2ff77290bb4faf75012641f360d,
+        type: 3}
+      propertyPath: Source
+      value: 
+      objectReference: {fileID: 11400000, guid: 9ef35765c2c2aba4ab6e582c50e6e559,
+        type: 2}
     - target: {fileID: 3388104431613939313, guid: 13dfd2ff77290bb4faf75012641f360d,
         type: 3}
       propertyPath: maxLines
@@ -3683,6 +3689,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 751941968}
     m_Modifications:
+    - target: {fileID: 5923639315931899, guid: 0f91a9bf1a905184da5d5bcf5560442e, type: 3}
+      propertyPath: eliteBindingsLoadedEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 9ef35765c2c2aba4ab6e582c50e6e559,
+        type: 2}
     - target: {fileID: 5923639315931900, guid: 0f91a9bf1a905184da5d5bcf5560442e, type: 3}
       propertyPath: m_RootOrder
       value: 3

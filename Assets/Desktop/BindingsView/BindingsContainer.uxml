@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/Desktop/BindingsView/bindingsStyles.uss?fileID=7433441132597879392&amp;guid=486398ca079e92444881f179de7726f0&amp;type=3#bindingsStyles" />
+    <ui:VisualElement name="BindingsContainer" class="contentContainer" style="flex-direction: row;">
+        <ui:VisualElement name="left-70" class="left70">
+            <ui:Label text="vJoy Bindings from File" display-tooltip-when-elided="true" name="bindings-list-label" style="-unity-font-style: bold; font-size: 16px; width: 70%;" />
+            <ui:ListView focusable="true" name="required-bindings-list" />
+        </ui:VisualElement>
+        <ui:VisualElement name="right-30">
+            <ui:Label text="Bindings here are read from your custom.X.0.binds file. This list will only show bindings that are configured to use vJoy controls" display-tooltip-when-elided="true" style="flex-wrap: wrap; white-space: normal;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
