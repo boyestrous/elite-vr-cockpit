@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 namespace EVRC.Desktop
 {
-    public class BindingsListController : MonoBehaviour
+    public class VJoyBindingsListController : MonoBehaviour
     {
         [Header("Templates and Scene Refs")]
         // UXML template for list entries
@@ -18,11 +18,11 @@ namespace EVRC.Desktop
         ListView requiredBindingListView;
         
 
-        [SerializeField] List<BindingItem> m_requiredBindings;
+        [SerializeField] List<VJoyBindingItem> m_requiredBindings;
 
         public void OnEnable()
         {
-            m_requiredBindings = new List<BindingItem>();
+            m_requiredBindings = new List<VJoyBindingItem>();
 
             VisualElement root = parentUIDocument.rootVisualElement;
 
@@ -30,7 +30,7 @@ namespace EVRC.Desktop
             requiredBindingListView = root.Q<ListView>("required-bindings-list");
 
             SetListBindingMethods();
-            m_requiredBindings.Add(new BindingItem() 
+            m_requiredBindings.Add(new VJoyBindingItem() 
             { 
                 name = "BindingsNotReadYet", 
                 keyValue = "Joy_ZYXAxis",
@@ -51,7 +51,7 @@ namespace EVRC.Desktop
             {
                 if (!binding.Value.HasVJoyKeybinding) continue;
 
-                var tempBindingItem = new BindingItem()
+                var tempBindingItem = new VJoyBindingItem()
                 {
                     name = binding.Key.ToString(),
                     keyValue = binding.Value.VJoyKeybinding.Value.Key,
@@ -75,7 +75,7 @@ namespace EVRC.Desktop
                 var newListEntry = m_BindingEntryTemplate.Instantiate();
 
                 // Instantiate a controller for the data
-                var newListEntryLogic = new BindingItemDisplay();
+                var newListEntryLogic = new VJoyBindingItemDisplay();
 
                 // Assign the controller script to the visual element
                 newListEntry.userData = newListEntryLogic;
@@ -90,7 +90,7 @@ namespace EVRC.Desktop
             // Set up bind function for a specific list entry
             requiredBindingListView.bindItem = (item, index) =>
             {
-                (item.userData as BindingItemDisplay).SetBindingData(m_requiredBindings[index]);
+                (item.userData as VJoyBindingItemDisplay).SetBindingData(m_requiredBindings[index]);
             };
 
             // Set a fixed item height

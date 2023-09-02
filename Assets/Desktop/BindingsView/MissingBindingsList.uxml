@@ -1,0 +1,5 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Label text="Missing Bindings" display-tooltip-when-elided="true" name="missing-bindings-label" style="width: 100%; min-width: 200px; max-width: 350px; font-size: 16px; -unity-font-style: bold;" />
+    <ui:Label text="These controls were not assigned in your bindings file, but are required by holographic buttons that you have assigned. Please edit your bindings and ensure at least one keyboard control is bound." display-tooltip-when-elided="true" name="missing-bindings-description" style="white-space: normal; max-width: 350px; width: 100%; min-width: 200px; font-size: 10px;" />
+    <ui:ListView focusable="true" name="missing-bindings-list" style="min-height: 300px;" />
+</ui:UXML>

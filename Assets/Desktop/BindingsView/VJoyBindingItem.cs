@@ -6,7 +6,7 @@ using UnityEngine;
 namespace EVRC.Desktop
 {
     [Serializable]
-    public class BindingItem
+    public class VJoyBindingItem
     {
         public string name;
         public string keyValue;
