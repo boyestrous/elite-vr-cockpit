@@ -60,6 +60,8 @@ namespace EVRC.Core
             return startPreset;
         }
 
+        public static string DesktopUIDocumentsPath
+            => Path.Combine(Application.dataPath,"Desktop");
 
         public static string StatusFilePath
             => Path.Combine(SaveDataPath, "Status.json");

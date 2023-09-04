@@ -48,6 +48,51 @@ public class ControlButtonPlacement
     }
 
     [Test]
+    public void Anchor_IsCreated_IfNotPresent()
+    {
+        #region ------------ Arrange ---------------
+        // create SavedControlButton that doesn't match the existing anchor
+        SavedControlButton NightVision = new SavedControlButton()
+        {
+            type = "NightVisionToggle",
+            anchorStatusFlag = "InFighter",
+            anchorGuiFocus = "",
+            overlayTransform = testOverlayTransform
+        };
+        // Assert that scene doesn't have any matching Anchors
+        Assert.AreEqual(0, controlButtonManager.CockpitModeAnchors
+            .Where(anchor => anchor.activationSettings.Any(x => x.activationGuiFocus == EDGuiFocus.PanelOrNoFocus))
+            .Where(anchor => anchor.activationSettings.Any(y => y.shipActivationFlag == EDStatusFlags.InFighter))
+            .Count());
+
+        controlButtonManager.parentObject = new GameObject("SeatedOrigin");
+
+#if UNITY_EDITOR
+        string prefabPath = "Assets/Overlay/Prefabs/CockpitAnchor.prefab";
+        GameObject cockpitAnchorPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
+        if (cockpitAnchorPrefab == null) { Debug.LogError($"ControlButtonManager prefab could not be found. Expected path: {prefabPath}"); }
+#endif
+
+        controlButtonManager.CockpitAnchorPrefab = cockpitAnchorPrefab;
+        #endregion
+
+        #region ------------ Act ---------------
+        int initialAnchorCount = controlButtonManager.CockpitModeAnchors.Count;
+
+        // Place the controlbutton through the ControlButtonManager
+        controlButtonManager.PlaceSavedControlButton(NightVision);
+
+        #endregion
+
+        #region ------------ Assert ---------------
+        // No warnings or errors raised
+        LogAssert.NoUnexpectedReceived();
+        // Should have exactly one more CockpitModeAnchor in the list
+        Assert.AreEqual(initialAnchorCount + 1, controlButtonManager.CockpitModeAnchors.Count);
+        #endregion
+    }
+
+    [Test]
     public void ControlButtonManager_Instantiates_Button()
     {
         SavedControlButton savedControlButton = new SavedControlButton()
@@ -67,6 +112,31 @@ public class ControlButtonPlacement
         Assert.AreEqual(savedControlButton.type, controlButton.controlButtonAsset.name);
         Assert.AreEqual(EDGuiFocus.NoFocus, controlButton.configuredGuiFocus);
         Assert.AreEqual(EDStatusFlags.InMainShip, controlButton.configuredStatusFlag);
+
+    }
+
+    [Test]
+    public void StatusFlag2_ReadFromText_InSaveFile()
+    {
+        SavedControlButton savedControlButton = new SavedControlButton()
+        {
+            type = "Hyperspace",
+            anchorStatusFlag = "OnFoot",
+            anchorGuiFocus = "NoFocus",
+            overlayTransform = testOverlayTransform
+        };
+
+        Assert.DoesNotThrow(() =>
+        {
+            controlButtonManager.PlaceSavedControlButton(savedControlButton);
+        });
+        Assert.AreEqual(1, controlButtonManager.ControlButtons.Count);
+
+        ControlButton controlButton = controlButtonManager.ControlButtons[0];
+        Assert.AreEqual(savedControlButton.type, controlButton.controlButtonAsset.name);
+        Assert.AreEqual(EDGuiFocus.NoFocus, controlButton.configuredGuiFocus);
+        Assert.AreEqual(default(EDStatusFlags), controlButton.configuredStatusFlag);
+        Assert.AreEqual(EDStatusFlags2.OnFoot, controlButton.configuredStatusFlag2);
 
     }
 
@@ -208,50 +278,7 @@ public class ControlButtonPlacement
         Assert.AreNotEqual(controlButtonManager.ControlButtons[0].transform.parent.gameObject, controlButtonManager.ControlButtons[1].transform.parent.gameObject);
     }
 
-    [Test]
-    public void Anchor_IsCreated_IfNotPresent()
-    {
-        #region ------------ Arrange ---------------
-        // create SavedControlButton that doesn't match the existing anchor
-        SavedControlButton NightVision = new SavedControlButton()
-        {
-            type = "NightVisionToggle",
-            anchorStatusFlag = "InFighter",
-            anchorGuiFocus = "",
-            overlayTransform = testOverlayTransform
-        };
-        // Assert that scene doesn't have any matching Anchors
-        Assert.AreEqual(0, controlButtonManager.CockpitModeAnchors
-            .Where(anchor => anchor.activationSettings.Any(x => x.activationGuiFocus == EDGuiFocus.PanelOrNoFocus))
-            .Where(anchor => anchor.activationSettings.Any(y => y.shipActivationFlag == EDStatusFlags.InFighter))
-            .Count());
-
-        controlButtonManager.parentObject = new GameObject("SeatedOrigin");
-
-#if UNITY_EDITOR
-        string prefabPath = "Assets/Overlay/Prefabs/CockpitAnchor.prefab";
-        GameObject cockpitAnchorPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
-        if (cockpitAnchorPrefab == null) { Debug.LogError($"ControlButtonManager prefab could not be found. Expected path: {prefabPath}"); }
-#endif
-
-        controlButtonManager.CockpitAnchorPrefab = cockpitAnchorPrefab;
-        #endregion
-
-        #region ------------ Act ---------------
-        int initialAnchorCount = controlButtonManager.CockpitModeAnchors.Count;
-
-        // Place the controlbutton through the ControlButtonManager
-        controlButtonManager.PlaceSavedControlButton(NightVision);
-
-        #endregion
-
-        #region ------------ Assert ---------------
-        // No warnings or errors raised
-        LogAssert.NoUnexpectedReceived();
-        // Should have exactly one more CockpitModeAnchor in the list
-        Assert.AreEqual(initialAnchorCount + 1, controlButtonManager.CockpitModeAnchors.Count);
-        #endregion
-    }
+    
     // CockpitModeAnchor is created if necessary
     // new gameObject with expected properties is present in the scene
     // gameObject has the correct parent object (cockpitAnchor)

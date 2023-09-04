@@ -18,7 +18,7 @@ namespace EVRC.Desktop
         [Header("Templates and Scene Refs")]
         // UXML template for list entries
         [SerializeField] VisualTreeAsset m_BindingEntryTemplate;
-        [SerializeField] UIDocument parentUIDocument;
+        public UIDocument parentUIDocument;
 
 
         // Other ListView controllers always include a custom class for the list items, but this one only has a single property...

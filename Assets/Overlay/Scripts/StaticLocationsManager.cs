@@ -25,9 +25,19 @@ namespace EVRC.Core.Overlay
         {
             registeredObjects = new List<staticLocationKeyTargetMap>();
             StartCoroutine(GetAnchors());
+            CheckForDuplicateAnchors();
         }
 
-        
+        private void CheckForDuplicateAnchors()
+        {
+            int distinctKeys = registeredObjects.Select(a => a.key).Distinct().Count();
+            if (registeredObjects.Count != distinctKeys)
+            {
+                Debug.LogError($"Duplicate keys found in StaticLocationAnchor list! {gameObject.name}");
+            }
+        }
+
+
         /// <summary>
         /// Use the StaticLocationAnchors from the scene to map parent gameObjects. SavedGameObjects will be identified based on the details in the Anchor.
         /// </summary>
@@ -45,11 +55,7 @@ namespace EVRC.Core.Overlay
                     key = anchor.key,
                     target = anchor.movable.targetTransform.gameObject,
                 });
-            }
-            if (registeredObjects.Count != registeredObjects.Select(a => a.key).Distinct().Count())
-            {
-                Debug.LogError($"Duplicate keys found in StaticLocationAnchor list! {gameObject.name}");
-            }
+            }          
 
             yield return new WaitForSeconds(1.0f);
             ready = true;

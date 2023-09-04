@@ -8,6 +8,9 @@ using EVRC.Desktop;
 using System.IO;
 using EVRC.Core.Overlay;
 using UnityEngine.TestTools;
+using UnityEngine.UIElements;
+using System.Xml.Linq;
+using UnityEditor;
 
 public class MissingBindingsTests : MonoBehaviour
 {
@@ -18,6 +21,7 @@ public class MissingBindingsTests : MonoBehaviour
 
     //Component we're testing
     public MissingBindingsListController missingBindingsListController;
+    public UIDocument uiDocument;
 
     private string tempBindsFilePath;
 
@@ -38,6 +42,26 @@ public class MissingBindingsTests : MonoBehaviour
         missingBindingsListController.savedGameState = savedGameState;
         missingBindingsListController.bindingsState = bindingsState;
         missingBindingsListController.assetCatalog = assetCatalog;
+
+        // Construct the full path to the UXML file.
+        string uxmlPath = "Assets/Desktop/BindingsView/BindingsContainer.uxml";
+
+        // Load the UXML document.
+        //VisualTreeAsset visualTreeAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(uxmlPath);
+
+        //if (visualTreeAsset != null)
+        //{
+        //    // Clone the UXML content and bind it to the UIDocument.
+        //    var clonedTree = visualTreeAsset.CloneTree();
+        //    // Create a new UIDocument and bind it to the UXML content.
+        //    uiDocument = new UIDocument();
+        //    uiDocument.panelSettings.visualTree.Add(clonedTree);
+        //}
+        //else
+        //{
+        //    Debug.LogError("UXML file not found at path: " + uxmlPath);
+        //}
+        //missingBindingsListController.parentUIDocument = parentUIDoc;
 
         // Create a bindings manager and assign our bindingsState object
         GameObject cbm = new GameObject("BindingsManager");

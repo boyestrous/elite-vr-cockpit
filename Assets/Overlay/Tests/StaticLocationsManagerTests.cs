@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StaticLocationsManagerTests : MonoBehaviour
+public class StaticLocationsManagerTests
 {
     private StaticLocationsManager staticLocationsManager;
     private SavedGameObject[] loadedGameObjects;
@@ -110,19 +110,13 @@ public class StaticLocationsManagerTests : MonoBehaviour
         });
     }
 
-    /// <summary>
-    /// If the user is using an old version of the savedState file, they may not have certain static locations
-    /// When the game loads, those objects will be in the default positions. This test will ensure that the 
-    /// locations of the new objects are saved to the file.
-    /// </summary>
-    //[Test]
-    //public void NewRegisteredObjects_SavedToFile()
-    //{
+    [TearDown]
+    public void TearDown()
+    {
+        GameObject.DestroyImmediate(objectOne);
+        GameObject.DestroyImmediate(objectTwo);
+        GameObject.DestroyImmediate(objectThree);
+    }
 
-
-
-    //    staticLocationsManager.OnEnable();
-    //}
-    // Anchor in file, but not in scene
 
 }

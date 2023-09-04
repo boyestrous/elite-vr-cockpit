@@ -72,10 +72,12 @@ namespace EVRC.Core.Overlay
             // Use the asset type to instantiate a new controlButton
             var _type = buttonToPlace.type;
             var controlButtonAsset = controlButtonCatalog.GetByName(_type);
-            EDStatusFlags anchorStatusFlag = Utils.EnumUtils.ParseEnumOrDefault<EDStatusFlags>(buttonToPlace.anchorStatusFlag);
+            var parsedValue = Utils.EnumUtils.ParseEnumsOrDefault<EDStatusFlags, EDStatusFlags2>(buttonToPlace.anchorStatusFlag);           
+            EDStatusFlags anchorStatusFlag = parsedValue.Item2;
+            EDStatusFlags2 anchorStatusFlags2 = parsedValue.Item3;
             EDGuiFocus anchorGuiFocus =  Utils.EnumUtils.ParseEnumOrDefault<EDGuiFocus>(buttonToPlace.anchorGuiFocus, EDGuiFocus.PanelOrNoFocus);
 
-            ControlButton _button = InstantiateControlButton(controlButtonAsset, anchorGuiFocus, anchorStatusFlag);
+            ControlButton _button = InstantiateControlButton(controlButtonAsset, anchorGuiFocus, anchorStatusFlag, anchorStatusFlags2);
 
             // Place it based on the loaded state settings
             _button.transform.localPosition = buttonToPlace.overlayTransform.pos;
@@ -115,7 +117,7 @@ namespace EVRC.Core.Overlay
         /// </summary>
         /// <param name="controlButtonAsset"></param>
         /// <returns>newly instantiated ControlButton</returns>
-        public ControlButton InstantiateControlButton(ControlButtonAsset controlButtonAsset, EDGuiFocus anchorGuiFocus, EDStatusFlags anchorShipStatusFlag, EDStatusFlags2 anchorFootStatusFlag = 0)
+        public ControlButton InstantiateControlButton(ControlButtonAsset controlButtonAsset, EDGuiFocus anchorGuiFocus, EDStatusFlags anchorShipStatusFlag, EDStatusFlags2 anchorFootStatusFlag)
         {
             var prefab = controlButtonCatalog.controlButtonPrefab;
             prefab.SetActive(false);
@@ -125,6 +127,7 @@ namespace EVRC.Core.Overlay
             controlButton.label = controlButtonAsset.GetLabelText();
             controlButton.controlButtonAsset = controlButtonAsset;
             controlButton.configuredStatusFlag = anchorShipStatusFlag;
+            controlButton.configuredStatusFlag2 = anchorFootStatusFlag;
             controlButton.configuredGuiFocus = anchorGuiFocus;
 
             var matchingAnchor = cockpitModeAnchors
@@ -134,7 +137,7 @@ namespace EVRC.Core.Overlay
 
             if (matchingAnchor == null)
             {
-                // anchorFootStatusFlag is theoretically there for controlButtons to be saved for On-Foot controls, but likely won't get used
+                // anchorFootStatusFlag is 
                 matchingAnchor = CreateCockpitModeAnchor(anchorGuiFocus, anchorShipStatusFlag, anchorFootStatusFlag);
             }
 
