@@ -113,7 +113,14 @@ namespace EVRC.Core.Actions
         {
             return AddOutputActionHandler(handler, OutputAction.POV3);
         }
-
+        public ActionsControllerPressManager VectorPOV1(StateChangeHandlerDelegate<Vector2ActionChangeEvent> handler)
+        {
+            return AddOutputActionHandler(handler, OutputAction.POV1);
+        }
+        public ActionsControllerPressManager VectorPOV3(StateChangeHandlerDelegate<Vector2ActionChangeEvent> handler)
+        {
+            return AddOutputActionHandler(handler, OutputAction.POV3);
+        }
         public ActionsControllerPressManager MenuBack(PressHandlerDelegate<ActionChange> handler)
         {
             return AddOutputActionHandler(handler, OutputAction.MenuBack);

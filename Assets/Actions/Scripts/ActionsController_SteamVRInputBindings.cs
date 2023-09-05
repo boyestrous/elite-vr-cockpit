@@ -82,9 +82,11 @@ namespace EVRC.Core.Actions
             });
         }
 
-        /**
-         * Add a SteamVR Input listener for a boolean (button) action we want events from each hand individually
-         */
+        /// <summary>
+        /// Add a SteamVR Input listener for a boolean (button) action we want events from each hand individually
+        /// </summary>
+        /// <param name="action"></param>
+        /// <param name="inputAction"></param>
         void AddHandedBooleanChangeListener(SteamVR_Action_Boolean action, InputAction inputAction)
         {
             booleanActionMap[action] = inputAction;
@@ -103,6 +105,117 @@ namespace EVRC.Core.Actions
                 Deregister();
             });
         }
+
+        /// <summary>
+        /// Add a SteamVR Input listener for a boolean (button) action that must be HELD DOWN. We want events from each hand individually
+        /// </summary>
+        /// <param name="action"></param>
+        /// <param name="inputAction"></param>
+        void AddHandedHeldBooleanChangeListener(SteamVR_Action_Boolean action, InputAction inputAction)
+        {
+            booleanActionMap[action] = inputAction;
+
+            action.AddOnStateDownListener(OnBooleanDown, SteamVR_Input_Sources.LeftHand);
+            action.AddOnStateDownListener(OnBooleanDown, SteamVR_Input_Sources.RightHand);
+            action.AddOnStateUpListener(OnBooleanUp, SteamVR_Input_Sources.LeftHand);
+            action.AddOnStateUpListener(OnBooleanUp, SteamVR_Input_Sources.RightHand);
+
+            var Deregister = inputBindingNameInfo.RegisterBinding(inputAction, BindingMode.Button, action, new SteamVR_Input_Sources[] {
+                SteamVR_Input_Sources.LeftHand,
+                SteamVR_Input_Sources.RightHand,
+            });
+
+            changeListenerCleanupActions.Add(() =>
+            {
+                action.RemoveOnStateDownListener(OnBooleanDown, SteamVR_Input_Sources.LeftHand);
+                action.RemoveOnStateDownListener(OnBooleanDown, SteamVR_Input_Sources.RightHand);
+                action.RemoveOnStateUpListener(OnBooleanUp, SteamVR_Input_Sources.LeftHand);
+                action.RemoveOnStateUpListener(OnBooleanUp, SteamVR_Input_Sources.RightHand);
+                Deregister();
+            });
+        }
+
+        
+
+        ///// <summary>
+        ///// Add a SteamVR Input listener for a boolean (button) action that requires another boolean action to "activate"
+        ///// </summary>
+        ///// <param name="action"></param>
+        ///// <param name="inputAction"></param>
+        //void AddHandedBooleanChangeListener(SteamVR_Action_Boolean action, SteamVR_Action_Boolean activateAction, InputAction inputAction)
+        //{
+        //    booleanActionMap[action] = inputAction;
+
+
+        //    // Track the hands that the control is bound to
+        //    Dictionary<SteamVR_Input_Sources, bool> isActivateBound = new Dictionary<SteamVR_Input_Sources, bool>
+        //    {
+        //        { SteamVR_Input_Sources.LeftHand, false },
+        //        { SteamVR_Input_Sources.RightHand, false },
+        //    };
+        //    Dictionary<SteamVR_Input_Sources, bool> isActive = new Dictionary<SteamVR_Input_Sources, bool>
+        //    {
+        //        { SteamVR_Input_Sources.LeftHand, false },
+        //        { SteamVR_Input_Sources.RightHand, false },
+        //    };
+
+        //    void OnActivateBind(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource, bool active)
+        //    {
+        //        var hand = GetHandForInputSource(fromSource);
+        //        isActivateBound[fromSource] = active;
+        //        if (!active)
+        //        {
+        //            //actionsController.TriggerVector2AxisChangeAction(inputAction, hand, Vector2.zero)
+        //            actionsController.TriggerBooleanInputAction(inputAction, hand, false);
+        //        }
+        //    }
+        //    void OnActivateChange(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource, bool newState)
+        //    {
+        //        var hand = GetHandForInputSource(fromSource);
+        //        isActive[fromSource] = newState;
+        //        if (!newState)
+        //        {
+        //            //actionsController.TriggerVector2AxisChangeAction(inputAction, hand, Vector2.zero);
+        //            actionsController.TriggerBooleanInputAction(inputAction, hand, false);
+        //        }
+        //    }
+
+        //    activateAction.AddOnActiveChangeListener(OnActivateBind, SteamVR_Input_Sources.LeftHand);
+        //    activateAction.AddOnActiveChangeListener(OnActivateBind, SteamVR_Input_Sources.RightHand);
+        //    activateAction.AddOnChangeListener(OnActivateChange, SteamVR_Input_Sources.LeftHand);
+        //    activateAction.AddOnChangeListener(OnActivateChange, SteamVR_Input_Sources.RightHand);
+        //    action.AddOnChangeListener(OnBooleanActionChange, SteamVR_Input_Sources.LeftHand);
+        //    action.AddOnChangeListener(OnBooleanActionChange, SteamVR_Input_Sources.RightHand);
+
+        //    //changeListenerCleanupActions.Add(() =>
+        //    //{
+        //    //    activateAction.RemoveOnActiveChangeListener(OnActivateBind, SteamVR_Input_Sources.LeftHand);
+        //    //    activateAction.RemoveOnActiveChangeListener(OnActivateBind, SteamVR_Input_Sources.RightHand);
+        //    //    activateAction.RemoveOnChangeListener(OnActivateChange, SteamVR_Input_Sources.LeftHand);
+        //    //    activateAction.RemoveOnChangeListener(OnActivateChange, SteamVR_Input_Sources.RightHand);
+        //    //    vectorAction.RemoveOnChangeListener(OnAxisChange, SteamVR_Input_Sources.LeftHand);
+        //    //    vectorAction.RemoveOnChangeListener(OnAxisChange, SteamVR_Input_Sources.RightHand);
+        //    //});
+
+        //    //action.AddOnChangeListener(OnBooleanActionChange, SteamVR_Input_Sources.LeftHand);
+        //    //action.AddOnChangeListener(OnBooleanActionChange, SteamVR_Input_Sources.RightHand);
+
+        //    var Deregister = inputBindingNameInfo.RegisterBinding(inputAction, BindingMode.Button, action, new SteamVR_Input_Sources[] {
+        //        SteamVR_Input_Sources.LeftHand,
+        //        SteamVR_Input_Sources.RightHand,
+        //    });
+
+        //    changeListenerCleanupActions.Add(() =>
+        //    {
+        //        activateAction.RemoveOnActiveChangeListener(OnActivateBind, SteamVR_Input_Sources.LeftHand);
+        //        activateAction.RemoveOnActiveChangeListener(OnActivateBind, SteamVR_Input_Sources.RightHand);
+        //        activateAction.RemoveOnChangeListener(OnActivateChange, SteamVR_Input_Sources.LeftHand);
+        //        activateAction.RemoveOnChangeListener(OnActivateChange, SteamVR_Input_Sources.RightHand);
+        //        action.RemoveOnChangeListener(OnBooleanActionChange, SteamVR_Input_Sources.LeftHand);
+        //        action.RemoveOnChangeListener(OnBooleanActionChange, SteamVR_Input_Sources.RightHand);
+        //        Deregister();
+        //    });
+        //}
 
         /**
          * Add a SteamVR Input listener for a vector2 action we want events from each hand individually
@@ -188,11 +301,15 @@ namespace EVRC.Core.Actions
             });
         }
 
-        /**
-         * Add a SteamVR Input listener for a Vector2 axis axion we want events for from each hand individually
-         */
+        /// <summary>
+        /// Add a SteamVR Input listener that requires an "activation action" before emitting the Vector2 axis action.
+        /// </summary>
+        /// <remarks>Activation means you have to hold down another action in order to use the vector2 action. For example, holding Grip + moving the joystick.</remarks>
+        /// <param name="vectorAction"></param>
+        /// <param name="inputAction"></param>
         void AddHandedVector2AxisChangeListener(SteamVR_Action_Vector2 vectorAction, SteamVR_Action_Boolean activateAction, InputAction inputAction)
         {
+            // store the action being assigned
             vector2ActionMap[vectorAction] = inputAction;
 
             Dictionary<SteamVR_Input_Sources, bool> isActivateBound = new Dictionary<SteamVR_Input_Sources, bool>
@@ -246,6 +363,31 @@ namespace EVRC.Core.Actions
                 activateAction.RemoveOnActiveChangeListener(OnActivateBind, SteamVR_Input_Sources.RightHand);
                 activateAction.RemoveOnChangeListener(OnActivateChange, SteamVR_Input_Sources.LeftHand);
                 activateAction.RemoveOnChangeListener(OnActivateChange, SteamVR_Input_Sources.RightHand);
+                vectorAction.RemoveOnChangeListener(OnAxisChange, SteamVR_Input_Sources.LeftHand);
+                vectorAction.RemoveOnChangeListener(OnAxisChange, SteamVR_Input_Sources.RightHand);
+            });
+        }
+
+        /// <summary>
+        /// Add a non-activated SteamVR Input listener for a Vector2 axis action.
+        /// </summary>
+        /// <param name="vectorAction"></param>
+        /// <param name="inputAction"></param>
+        void AddHandedVector2AxisChangeListener(SteamVR_Action_Vector2 vectorAction, InputAction inputAction)
+        {
+            vector2ActionMap[vectorAction] = inputAction;
+
+            void OnAxisChange(SteamVR_Action_Vector2 fromAction, SteamVR_Input_Sources fromSource, Vector2 axis, Vector2 delta)
+            {
+                var hand = GetHandForInputSource(fromSource);
+                actionsController.TriggerVector2AxisChangeAction(inputAction, hand, axis);
+            }
+
+            vectorAction.AddOnChangeListener(OnAxisChange, SteamVR_Input_Sources.LeftHand);
+            vectorAction.AddOnChangeListener(OnAxisChange, SteamVR_Input_Sources.RightHand);
+
+            changeListenerCleanupActions.Add(() =>
+            {
                 vectorAction.RemoveOnChangeListener(OnAxisChange, SteamVR_Input_Sources.LeftHand);
                 vectorAction.RemoveOnChangeListener(OnAxisChange, SteamVR_Input_Sources.RightHand);
             });
@@ -378,11 +520,16 @@ namespace EVRC.Core.Actions
             AddHandedJoystickChangeListener(
                 SteamVR_Actions.uI_UITabJoystickPosition,
                 InputAction.UITabJoystick);
-            // FSS Mode Axis
+            // Axis Controls
             AddHandedVector2AxisChangeListener(
                 SteamVR_Actions.fSSControls_CameraControl,
-                SteamVR_Actions.fSSControls_CameraControlActivate,
                 InputAction.FSSCameraControl);
+            AddHandedVector2AxisChangeListener(
+                SteamVR_Actions.cockpitControls_POV1JoystickPosition,                
+                InputAction.POV1Joystick);
+            AddHandedVector2AxisChangeListener(
+                SteamVR_Actions.cockpitControls_POV3JoystickPosition,
+                InputAction.POV3Joystick);
             // FSS Mode Zoom Trackpad
             AddHandedTrackpadSlideChangeListener(
                 SteamVR_Actions.fSSControls_ZoomTrackpadTouch,
@@ -458,6 +605,34 @@ namespace EVRC.Core.Actions
                 var inputAction = booleanActionMap[fromAction];
                 var hand = GetHandForInputSource(fromSource);
                 actionsController.TriggerBooleanInputAction(inputAction, hand, newState);
+            }
+            else
+            {
+                Debug.LogWarningFormat("Unknown SteamVR Input action source: {0}", fromAction.fullPath);
+            }
+        }
+
+        private void OnBooleanDown(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
+        {
+            if (booleanActionMap.ContainsKey(fromAction))
+            {
+                var inputAction = booleanActionMap[fromAction];
+                var hand = GetHandForInputSource(fromSource);
+                actionsController.TriggerBooleanInputAction(inputAction, hand, true);
+            }
+            else
+            {
+                Debug.LogWarningFormat("Unknown SteamVR Input action source: {0}", fromAction.fullPath);
+            }
+        }
+
+        private void OnBooleanUp(SteamVR_Action_Boolean fromAction, SteamVR_Input_Sources fromSource)
+        {
+            if (booleanActionMap.ContainsKey(fromAction))
+            {
+                var inputAction = booleanActionMap[fromAction];
+                var hand = GetHandForInputSource(fromSource);
+                actionsController.TriggerBooleanInputAction(inputAction, hand, false);
             }
             else
             {
