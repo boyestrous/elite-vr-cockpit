@@ -10,7 +10,7 @@ namespace EVRC.Core
     using static EVRC.Core.Actions.ActionsController;
     using Direction = ActionsController.Direction;
     using static KeyboardInterface;
-    using static EVRC.Core.Actions.VirtualJoystick;
+    using DirectionActionChangeUnpressHandler = PressManager.UnpressHandlerDelegate<ActionsController.DirectionActionChange>;
 
     public class OnFootLeftController : OnFootGrippedController
     {        
@@ -25,16 +25,35 @@ namespace EVRC.Core
         {
             base.OnEnable();
             actionsPressManager = new ActionsControllerPressManager(this)
-                .VectorPOV3(OnPOV3Direction)
+                .VectorPOV3(OnPOV3Vector)
                 .ButtonPOV3(OnButtonPOV3)
                 ;
 
             POV3Press = EDControlButton.HumanoidSprintButton;
             PrimaryButton = EDControlButton.HumanoidThrowGrenadeButton;
             SecondaryButton = EDControlButton.HumanoidCrouchButton;
-            AltButton = EDControlButton.HumanoidItemWheelButton;
+            AltButton = EDControlButton.HumanoidMeleeButton; // This isn't available on Vive Wands, assign with caution
 
         }
+
+        // Map of action presses to Elite Dangerous Actions        
+        //private static Dictionary<Direction, EDControlButton> footActionMap = new Dictionary<Direction, EDControlButton>()
+        //{
+        //    { Direction.Up, EDControlButton.HumanoidItemWheelButton },
+        //};
+
+        //private DirectionActionChangeUnpressHandler OnPOV3Direction(DirectionActionChange ev)
+        //{
+        //    // If the correct control is not gripped (valid hand)
+        //    // Or the actionMap doesn't contain a key for this direction
+        //    // Return a null unpress
+        //    if (!IsValidHand(ev.hand) || !footActionMap.ContainsKey(ev.direction)) return (uEv) => { };
+
+        //    EDControlButton button = footActionMap[ev.direction];
+        //    Action unpress = CallbackPress(controlBindingsState.GetControlButton(button));
+        //    return (uEv) => unpress();
+
+        //}
 
         private PressManager.UnpressHandlerDelegate<ActionsController.ActionChange> OnButtonPOV3(ActionsController.ActionChange ev)
         {
@@ -44,7 +63,7 @@ namespace EVRC.Core
             return (uEv) => unpress();
         }
 
-        private void OnPOV3Direction(Vector2ActionChangeEvent ev)
+        private void OnPOV3Vector(Vector2ActionChangeEvent ev)
         {
             if (!IsValidHand(ev.hand)) return;
 

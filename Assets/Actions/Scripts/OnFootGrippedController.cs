@@ -29,7 +29,6 @@ namespace EVRC.Core
         {
             if (!IsValidHand(ev.hand)) return (uEv) => { };
 
-            Debug.LogFormat($"Alt pressed with hand: {ev.hand}");
             Action unpress = CallbackPress(controlBindingsState.GetControlButton(AltButton));
             return (uEv) => unpress();
         }
@@ -38,7 +37,6 @@ namespace EVRC.Core
         {
             if (!IsValidHand(ev.hand)) return (uEv) => { };
 
-            Debug.LogFormat($"Secondary pressed with hand: {ev.hand}");
             Action unpress = CallbackPress(controlBindingsState.GetControlButton(SecondaryButton));
             return (uEv) => unpress();
         }
@@ -47,7 +45,6 @@ namespace EVRC.Core
         {
             if (!IsValidHand(ev.hand)) return (uEv) => { };
 
-            Debug.LogFormat($"Primary pressed with hand: {ev.hand}");
             Action unpress = CallbackPress(controlBindingsState.GetControlButton(PrimaryButton));
             return (uEv) => unpress();
         }

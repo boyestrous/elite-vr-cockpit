@@ -137,7 +137,6 @@ namespace EVRC.Core.Actions
         {
             return AddOutputActionHandler(handler, OutputAction.MenuNavigate);
         }
-
         public ActionsControllerPressManager UIBack(PressHandlerDelegate<ActionChange> handler)
         {
             return AddOutputActionHandler(handler, OutputAction.UIBack);
