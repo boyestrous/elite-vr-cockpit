@@ -530,6 +530,12 @@ namespace EVRC.Core.Actions
             AddHandedVector2AxisChangeListener(
                 SteamVR_Actions.cockpitControls_POV3JoystickPosition,
                 InputAction.POV3Joystick);
+            AddHandedVector2AxisChangeListener(
+                SteamVR_Actions.cockpitControls_POV1TrackpadPosition,
+                InputAction.POV1Trackpad);
+            AddHandedVector2AxisChangeListener(
+                SteamVR_Actions.cockpitControls_POV3TrackpadPosition,
+                InputAction.POV3Trackpad);
             // FSS Mode Zoom Trackpad
             AddHandedTrackpadSlideChangeListener(
                 SteamVR_Actions.fSSControls_ZoomTrackpadTouch,
