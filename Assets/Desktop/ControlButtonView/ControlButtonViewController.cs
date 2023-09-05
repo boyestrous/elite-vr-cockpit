@@ -23,7 +23,7 @@ namespace EVRC.Desktop
         public GameEvent controlButtonRemovedEvent;
 
         private VisualElement root; // the root of the whole UI
-        private Dictionary<(EDStatusFlags?, EDGuiFocus?), ControlButtonList> controlButtonLists;
+        private Dictionary<(string, string), ControlButtonList> controlButtonLists;
         
         // the anchor object that all of the lists will go inside of
         private ScrollView controlListContainer;
@@ -32,7 +32,7 @@ namespace EVRC.Desktop
         public void OnEnable()
         {
             root = parentUIDocument.rootVisualElement;
-            controlButtonLists = new Dictionary<(EDStatusFlags?, EDGuiFocus?), ControlButtonList>();
+            controlButtonLists = new Dictionary<(string, string), ControlButtonList>();
             controlListContainer = root.Q<ScrollView>("control-list-container");
 
             savedState.Load();
@@ -56,10 +56,7 @@ namespace EVRC.Desktop
             string type = addedControlButton.type;
             ControlButtonAsset controlButtonAsset = controlButtonCatalog.GetByName(type);
 
-            // Get the GuiFocus and StatusFlag for placing the button
-            EDGuiFocus? guiFocus = addedControlButton.anchorGuiFocus == string.Empty ? null : EnumUtils.ParseEnumOrDefault<EDGuiFocus>(addedControlButton.anchorGuiFocus);
-            EDStatusFlags? statusFlag = addedControlButton.anchorStatusFlag == string.Empty ? null : EnumUtils.ParseEnumOrDefault<EDStatusFlags>(addedControlButton.anchorStatusFlag);
-            var cat = (statusFlag, guiFocus);
+            var cat = (addedControlButton.anchorStatusFlag, addedControlButton.anchorGuiFocus);
 
             // Check if a ListView exists for the item's category
             if (!controlButtonLists.ContainsKey(cat))

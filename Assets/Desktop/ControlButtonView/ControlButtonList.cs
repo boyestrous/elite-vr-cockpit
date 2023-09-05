@@ -8,6 +8,7 @@ using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
 using System;
 using EVRC.Core.Overlay;
+using EVRC.Core.Utils;
 
 namespace EVRC.Desktop
 {
@@ -24,7 +25,7 @@ namespace EVRC.Desktop
         private GameEvent controlButtonRemovedEvent;
 
 
-        public ControlButtonList((EDStatusFlags?, EDGuiFocus?) category, VisualTreeAsset listEntryTemplate, SavedGameState savedGameStateObject, ControlButtonAssetCatalog mainCatalog, GameEvent removedEvent)
+        public ControlButtonList((string, string) category, VisualTreeAsset listEntryTemplate, SavedGameState savedGameStateObject, ControlButtonAssetCatalog mainCatalog, GameEvent removedEvent)
         {
             m_ControlButtonEntryTemplate = listEntryTemplate;
             savedGameState = savedGameStateObject;
@@ -35,9 +36,20 @@ namespace EVRC.Desktop
             listView = new ListView();
 
             // use the Category to construct a null-safe name for the list
-            string flag = category.Item1 == null ? "Any Flag" : category.Item1.ToString();
-            string guiFocus = category.Item2 == null ? "Any Focus" : category.Item2.ToString();
-            listView.name = $"{flag} | {guiFocus}";          
+            var parsedFlag = EnumUtils.ParseEnumsOrDefault<EDStatusFlags, EDStatusFlags2>(category.Item1);
+
+            //If it's a Ship based StatusFlag, display both the StatusFlag and the GuiFocus
+            if (parsedFlag.Item2 != default(EDStatusFlags)) 
+            {
+                string flag = category.Item1 == "" ? "Any Flag" : category.Item1.ToString();
+                string guiFocus = category.Item2 == "" ? "Any Focus" : category.Item2.ToString();
+                listView.name = $"{flag} | {guiFocus}";
+            }
+            else //Foot based status flags don't care about GuiFocus
+            {
+                string flag = category.Item1 == "" ? "Any Flag" : category.Item1.ToString();
+                listView.name = $"{flag}";
+            }                      
             
             // Create a sourceList
             sourceList = new List<ControlButtonDesktopItem>();

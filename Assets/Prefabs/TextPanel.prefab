@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 3975159748112801424}
   - component: {fileID: 6861420599816362161}
   - component: {fileID: 4721664746448399084}
+  - component: {fileID: 3005919019541307178}
   m_Layer: 10
   m_Name: TextPanel
   m_TagString: Untagged
@@ -159,6 +160,19 @@ MonoBehaviour:
   renderTexture: {fileID: 0}
   renderWidthPx: 1024
   renderHeightPx: 768
+--- !u!114 &3005919019541307178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 135083221323331035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 100dfd34ff9fd104e947d3c9d3e4d20c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fps: 10
 --- !u!1 &807991739444140293
 GameObject:
   m_ObjectHideFlags: 0

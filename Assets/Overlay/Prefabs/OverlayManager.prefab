@@ -318,21 +318,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5af2c6417bb5ca409c6f620717a3324, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  registeredObjects:
-  - key: metaPanel
-    target: {fileID: 0}
-  - key: shipPowerDeliveryPanel
-    target: {fileID: 0}
-  - key: srvThrottle
-    target: {fileID: 0}
-  - key: shipThrottle
-    target: {fileID: 0}
-  - key: shipJoystick
-    target: {fileID: 0}
-  - key: srvPowerDeliveryPanel
-    target: {fileID: 0}
-  - key: srvJoystick
-    target: {fileID: 0}
+  registeredObjects: []
 --- !u!1001 &6272571918575814425
 PrefabInstance:
   m_ObjectHideFlags: 0
