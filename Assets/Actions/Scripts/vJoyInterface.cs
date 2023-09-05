@@ -595,6 +595,13 @@ namespace EVRC.Core.Actions
             iReport.Slider = 0;
             iReport.AxisZ = 0;
             iReport.Dial = 0;
+            iReport2.AxisX = 0;
+            iReport2.AxisY = 0;
+            iReport2.AxisZ = 0;
+            iReport2.AxisXRot = 0;
+            iReport2.AxisYRot = 0;
+            iReport2.AxisZRot = 0;
+            iReport2.Dial = 0;
         }
     }
 }
