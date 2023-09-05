@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace EVRC.Core.Actions
@@ -8,12 +9,15 @@ namespace EVRC.Core.Actions
     {
         public GameObject controlButtonPrefab;
         public ControlButtonAsset[] controlButtons;
+        
         public Dictionary<string, ControlButtonAsset> nameMap = new Dictionary<string, ControlButtonAsset>();
         public Texture defaultTexture;
         [Tooltip("The alt texture (off) - where applicable")] public Texture defaultOffTexture;
 
-        private void OnEnable()
+        public void OnEnable()
         {
+            controlButtons ??= new ControlButtonAsset[0];
+            
             foreach (ControlButtonAsset controlButtonAsset in controlButtons)
             {
                 // If a texture is missing, set the default texture(s) 
@@ -47,6 +51,6 @@ namespace EVRC.Core.Actions
         {
             return nameMap[name];
         }
-
+       
     }
 }
