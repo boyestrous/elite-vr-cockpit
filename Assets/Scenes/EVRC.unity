@@ -1553,7 +1553,11 @@ PrefabInstance:
 
 
         Use the buttons on the holographic
-        panels for the remaining controls (don''t forget to ungrip)'
+        panels for the remaining controls (don''t forget to ungrip)
+
+
+        Use
+        Menu Mode to interact with in-game UI (terminals, etc.)'
       objectReference: {fileID: 0}
     - target: {fileID: 5362727773040855592, guid: 01884d3a5f7b38c488bdf5f31d2489d7,
         type: 3}
@@ -4975,7 +4979,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5bc44a8812661c34e97f3b68bdd78dc0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6e385a9bc6315c5438b8dc46c73a78d3, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
