@@ -1,15 +1,10 @@
 using EVRC.Core.Actions;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace EVRC.Core
 {
-    using static EVRC.Core.Actions.ActionsController;
-    using Direction = ActionsController.Direction;
     using static KeyboardInterface;
-    using static Codice.Client.BaseCommands.Import.Commit;
 
     public class OnFootGrippedController : VirtualControlButtons
     {

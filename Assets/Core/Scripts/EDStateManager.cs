@@ -1,8 +1,6 @@
-﻿using Codice.Client.Commands;
-using EVRC.Core.Overlay;
+﻿using EVRC.Core.Overlay;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
