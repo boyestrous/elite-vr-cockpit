@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -20,6 +21,13 @@ namespace EVRC.Core
 
         private void OnEnable()
         {
+            StartCoroutine(FirstLoad());
+        }
+
+        //Slight delay is required to make this load correctly. Otherwise, the desktop UI tries to populate stuff to fast
+        private IEnumerator FirstLoad()
+        {
+            yield return new WaitForSeconds(1.0f);
             Reload();
         }
 
@@ -27,6 +35,7 @@ namespace EVRC.Core
         {
             LoadControlBindings();
             WatchControlBindings();
+            eliteBindingsLoadedEvent.Raise();
         }
 
         private void SetBindingsFile()
@@ -38,7 +47,7 @@ namespace EVRC.Core
         /// Overload for setting a custom path (mostly for testing)
         /// </summary>
         /// <param name="path"></param>
-        public void SetBindingsFile(string path)
+        internal void SetBindingsFile(string path)
         {
             bindingsFile = path;
             bindingsPath = Path.GetDirectoryName(bindingsFile);

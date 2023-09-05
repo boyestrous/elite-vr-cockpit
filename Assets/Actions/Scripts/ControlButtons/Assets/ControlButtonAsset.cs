@@ -20,6 +20,8 @@ namespace EVRC.Core.Actions
         ///     LandingGearDown flag => all of the "_Landing" controls
         [Description("Filter the statusFlags where this ControlButton can be placed. This affects the placement feature in the Desktop UI. See ControlButtonAsset class for additional details.")]
         public EDStatusFlags statusFlagFilters;
+        [Description("Filter the statusFlags2 (mostly OnFoot) where this ControlButton can be placed. This affects the placement feature in the Desktop UI. See ControlButtonAsset class for additional details.")]
+        public EDStatusFlags2 statusFlag2Filters;
 
         /// <summary>
         /// GuiFocus is not often used in combination with StatusFlags. For example, the Galaxy Map GuiFocus effectively overrides whatever ship mode, it looks the same whether the user is in the Mainship, Fighter, or SRV

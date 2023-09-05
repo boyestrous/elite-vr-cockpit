@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 108bcab9bc1ec384da481ab790def12e, type: 3}
+  m_Name: HumanoidToggleToolModeButton
+  m_EditorClassIdentifier: 
+  statusFlagFilters: 0
+  statusFlag2Filters: 1
+  guiFocusRequired: 
+  text: Toggle Tool Mode
+  texture: {fileID: 2800000, guid: 93873168515744c4a81451aa19e138ba, type: 3}
+  control: 314
+  defaultKeycombo: 
+  label: Toggle Tool Mode

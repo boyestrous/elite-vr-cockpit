@@ -1,0 +1,5 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Label text="vJoy Bindings from File" display-tooltip-when-elided="true" name="bindings-list-label" style="-unity-font-style: bold; font-size: 16px; min-width: 250px;" />
+    <ui:Label text="These bindings are read from your bindings file. This list is configured to only show the vJoy-specific controls." display-tooltip-when-elided="true" name="bindings-list-description" style="white-space: normal; min-width: 250px; font-size: 10px;" />
+    <ui:ListView focusable="true" name="required-bindings-list" style="min-height: 350px; min-width: 250px;" />
+</ui:UXML>

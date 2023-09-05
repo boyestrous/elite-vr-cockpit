@@ -123,6 +123,12 @@ namespace Valve.VR
         
         private static SteamVR_Action_Vector2 p_cockpitControls_POV3JoystickPosition;
         
+        private static SteamVR_Action_Boolean p_cockpitControls_POV3TrackpadPress;
+        
+        private static SteamVR_Action_Boolean p_cockpitControls_POV3TrackpadTouch;
+        
+        private static SteamVR_Action_Vector2 p_cockpitControls_POV3TrackpadPosition;
+        
         private static SteamVR_Action_Boolean p_fSSControls_ExitFSS;
         
         private static SteamVR_Action_Vector2 p_fSSControls_CameraControl;
@@ -587,6 +593,30 @@ namespace Valve.VR
             }
         }
         
+        public static SteamVR_Action_Boolean cockpitControls_POV3TrackpadPress
+        {
+            get
+            {
+                return SteamVR_Actions.p_cockpitControls_POV3TrackpadPress.GetCopy<SteamVR_Action_Boolean>();
+            }
+        }
+        
+        public static SteamVR_Action_Boolean cockpitControls_POV3TrackpadTouch
+        {
+            get
+            {
+                return SteamVR_Actions.p_cockpitControls_POV3TrackpadTouch.GetCopy<SteamVR_Action_Boolean>();
+            }
+        }
+        
+        public static SteamVR_Action_Vector2 cockpitControls_POV3TrackpadPosition
+        {
+            get
+            {
+                return SteamVR_Actions.p_cockpitControls_POV3TrackpadPosition.GetCopy<SteamVR_Action_Vector2>();
+            }
+        }
+        
         public static SteamVR_Action_Boolean fSSControls_ExitFSS
         {
             get
@@ -803,6 +833,9 @@ namespace Valve.VR
                     SteamVR_Actions.cockpitControls_POV2JoystickPosition,
                     SteamVR_Actions.cockpitControls_ButtonPOV3,
                     SteamVR_Actions.cockpitControls_POV3JoystickPosition,
+                    SteamVR_Actions.cockpitControls_POV3TrackpadPress,
+                    SteamVR_Actions.cockpitControls_POV3TrackpadTouch,
+                    SteamVR_Actions.cockpitControls_POV3TrackpadPosition,
                     SteamVR_Actions.fSSControls_ExitFSS,
                     SteamVR_Actions.fSSControls_CameraControl,
                     SteamVR_Actions.fSSControls_CameraControlActivate,
@@ -876,6 +909,9 @@ namespace Valve.VR
                     SteamVR_Actions.cockpitControls_POV2JoystickPosition,
                     SteamVR_Actions.cockpitControls_ButtonPOV3,
                     SteamVR_Actions.cockpitControls_POV3JoystickPosition,
+                    SteamVR_Actions.cockpitControls_POV3TrackpadPress,
+                    SteamVR_Actions.cockpitControls_POV3TrackpadTouch,
+                    SteamVR_Actions.cockpitControls_POV3TrackpadPosition,
                     SteamVR_Actions.fSSControls_ExitFSS,
                     SteamVR_Actions.fSSControls_CameraControl,
                     SteamVR_Actions.fSSControls_CameraControlActivate,
@@ -942,6 +978,8 @@ namespace Valve.VR
                     SteamVR_Actions.cockpitControls_POV2TrackpadPress,
                     SteamVR_Actions.cockpitControls_POV2TrackpadTouch,
                     SteamVR_Actions.cockpitControls_ButtonPOV3,
+                    SteamVR_Actions.cockpitControls_POV3TrackpadPress,
+                    SteamVR_Actions.cockpitControls_POV3TrackpadTouch,
                     SteamVR_Actions.fSSControls_ExitFSS,
                     SteamVR_Actions.fSSControls_CameraControlActivate,
                     SteamVR_Actions.fSSControls_TargetCurrentSignal,
@@ -972,6 +1010,7 @@ namespace Valve.VR
                     SteamVR_Actions.cockpitControls_POV2TrackpadPosition,
                     SteamVR_Actions.cockpitControls_POV2JoystickPosition,
                     SteamVR_Actions.cockpitControls_POV3JoystickPosition,
+                    SteamVR_Actions.cockpitControls_POV3TrackpadPosition,
                     SteamVR_Actions.fSSControls_CameraControl,
                     SteamVR_Actions.fSSControls_ZoomTrackpadPosition,
                     SteamVR_Actions.fSSControls_SteppedZoomTrackpadPosition,
@@ -1029,6 +1068,9 @@ namespace Valve.VR
                     SteamVR_Actions.cockpitControls_POV2JoystickPosition,
                     SteamVR_Actions.cockpitControls_ButtonPOV3,
                     SteamVR_Actions.cockpitControls_POV3JoystickPosition,
+                    SteamVR_Actions.cockpitControls_POV3TrackpadPress,
+                    SteamVR_Actions.cockpitControls_POV3TrackpadTouch,
+                    SteamVR_Actions.cockpitControls_POV3TrackpadPosition,
                     SteamVR_Actions.fSSControls_ExitFSS,
                     SteamVR_Actions.fSSControls_CameraControl,
                     SteamVR_Actions.fSSControls_CameraControlActivate,
@@ -1106,6 +1148,9 @@ namespace Valve.VR
             SteamVR_Actions.p_cockpitControls_POV2JoystickPosition = ((SteamVR_Action_Vector2)(SteamVR_Action.Create<SteamVR_Action_Vector2>("/actions/CockpitControls/in/POV2JoystickPosition")));
             SteamVR_Actions.p_cockpitControls_ButtonPOV3 = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/CockpitControls/in/ButtonPOV3")));
             SteamVR_Actions.p_cockpitControls_POV3JoystickPosition = ((SteamVR_Action_Vector2)(SteamVR_Action.Create<SteamVR_Action_Vector2>("/actions/CockpitControls/in/POV3JoystickPosition")));
+            SteamVR_Actions.p_cockpitControls_POV3TrackpadPress = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/CockpitControls/in/POV3TrackpadPress")));
+            SteamVR_Actions.p_cockpitControls_POV3TrackpadTouch = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/CockpitControls/in/POV3TrackpadTouch")));
+            SteamVR_Actions.p_cockpitControls_POV3TrackpadPosition = ((SteamVR_Action_Vector2)(SteamVR_Action.Create<SteamVR_Action_Vector2>("/actions/CockpitControls/in/POV3TrackpadPosition")));
             SteamVR_Actions.p_fSSControls_ExitFSS = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/FSSControls/in/ExitFSS")));
             SteamVR_Actions.p_fSSControls_CameraControl = ((SteamVR_Action_Vector2)(SteamVR_Action.Create<SteamVR_Action_Vector2>("/actions/FSSControls/in/CameraControl")));
             SteamVR_Actions.p_fSSControls_CameraControlActivate = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/FSSControls/in/CameraControlActivate")));

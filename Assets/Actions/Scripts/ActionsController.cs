@@ -342,6 +342,8 @@ namespace EVRC.Core.Actions
             MapTrackpadPressToDirectionAndButtonOptionAction(InputAction.FSSTune, OutputAction.FSSTune, OutputAction.FSSTune);
             // FSS mode axis
             MapVector2InputActionToOutputAction(InputAction.FSSCameraControl, OutputAction.FSSCameraControl);
+            MapVector2InputActionToOutputAction(InputAction.POV1Joystick, OutputAction.POV1);
+            MapVector2InputActionToOutputAction(InputAction.POV3Joystick, OutputAction.POV3);
         }
 
         void OnDisable()

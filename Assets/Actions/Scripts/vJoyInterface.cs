@@ -4,6 +4,7 @@ using UnityEngine;
 using Valve.VR;
 using vJoyInterfaceWrap;
 using static EVRC.Core.Actions.ActionsController;
+using static EVRC.Core.Actions.Virtual6DOFController;
 
 namespace EVRC.Core.Actions
 {
@@ -14,7 +15,6 @@ namespace EVRC.Core.Actions
     public class vJoyInterface : MonoBehaviour
     {
         public VJoyState vJoyState;
-        //public static VJoyStatus vJoyStatus { get; private set; } = VJoyStatus.Unknown;
         public GameEvent vJoyStatusChange;
         public static SteamVR_Events.Event<VJoyStatus> VJoyStatusChange = new SteamVR_Events.Event<VJoyStatus>();
 
@@ -44,19 +44,26 @@ namespace EVRC.Core.Actions
         public float directionalThrustersDeadzonePercentage = 0f;
 
         private vJoy vjoy;
-        private vJoy.JoystickState iReport = new vJoy.JoystickState();
-        private vJoy.JoystickState iReport2 = new vJoy.JoystickState();
+
+        // These two devices must be configured in the vJoy Configuration GUI
+        private vJoy.JoystickState iReport = new vJoy.JoystickState(); // Device 1
+        private vJoy.JoystickState iReport2 = new vJoy.JoystickState(); // Device 2
 
         public static uint deviceId = 1;
         public static uint secondaryDeviceId = 2;
         
 
         public bool MapAxisEnabled { get; private set; } = false;
-        private VirtualJoystick.StickAxis stickAxis = VirtualJoystick.StickAxis.Zero;
-        private Virtual6DOFController.ThrusterAxis thrusterAxis = Virtual6DOFController.ThrusterAxis.Zero;
-        private float throttle = 0f;
-        private float radarRange = 0f;
-        private float fssTuning = 0f;
+
+        // All axis values should be ratio values between -1 and +1
+        private float xAxis = 0f;
+        private float yAxis = 0f;
+        private float zAxis = 0f;
+        private float r_xAxis = 0f;
+        private float r_yAxis = 0f;
+        private float r_zAxis = 0f;
+        private float sliderAxis = 0f;
+        private float dialAxis = 0f;
         private Vector3 mapTranslationAxis = Vector3.zero;
         private float mapPitchAxis = 0;
         private float mapYawAxis = 0;
@@ -64,61 +71,13 @@ namespace EVRC.Core.Actions
         private uint buttons = 0;
 
 
+        // Each value in this list represents a HAT/POV switch. They can each independently be a single direction at a time.
         private HatDirection[] hat = new HatDirection[] {
             HatDirection.Neutral,
             HatDirection.Neutral,
             HatDirection.Neutral,
             HatDirection.Neutral,
         };
-
-        public static Dictionary<string, (OutputAction, NameType, Hand)> vJoyNamesMap = new Dictionary<string, (OutputAction, NameType, Hand)>()
-        {
-            { "Joy_1", (OutputAction.ButtonPrimary, NameType.Button, Hand.Right) },
-            { "Joy_2", (OutputAction.ButtonSecondary, NameType.Button, Hand.Right) },
-            { "Joy_3", (OutputAction.ButtonAlt, NameType.Button, Hand.Right) },
-            { "Joy_4", (OutputAction.POV1, NameType.Button, Hand.Right) },
-            { "Joy_5", (OutputAction.POV2, NameType.Button, Hand.Right) },
-            { "Joy_POV1Up", (OutputAction.POV1, NameType.Direction, Hand.Right) },
-            { "Joy_POV1Down", (OutputAction.POV1, NameType.Direction, Hand.Right) },
-            { "Joy_POV1Left", (OutputAction.POV1, NameType.Direction, Hand.Right) },
-            { "Joy_POV1Right", (OutputAction.POV1, NameType.Direction, Hand.Right) },
-            { "Joy_POV2Up", (OutputAction.POV2, NameType.Direction, Hand.Right) },
-            { "Joy_POV2Down", (OutputAction.POV2, NameType.Direction, Hand.Right) },
-            { "Joy_POV2Left", (OutputAction.POV2, NameType.Direction, Hand.Right) },
-            { "Joy_POV2Right", (OutputAction.POV2, NameType.Direction, Hand.Right) },
-            { "Joy_6", (OutputAction.POV3, NameType.Button, Hand.Left) },
-            { "Joy_7", (OutputAction.ButtonSecondary, NameType.Button, Hand.Left) },
-            { "Joy_8", (OutputAction.ButtonPrimary, NameType.Button, Hand.Left) },
-            { "Joy_9", (OutputAction.ButtonAlt, NameType.Button, Hand.Left) },
-            { "Joy_POV3Up", (OutputAction.POV3, NameType.Direction, Hand.Left) },
-            { "Joy_POV3Down", (OutputAction.POV3, NameType.Direction, Hand.Left) },
-            { "Joy_POV3Left", (OutputAction.POV3, NameType.Direction, Hand.Left) },
-            { "Joy_POV3Right", (OutputAction.POV3, NameType.Direction, Hand.Left) },
-        };
-        //public Dictionary<string, (InputAction[], Hand)> vJoyNamesMap = new Dictionary<string, (InputAction[], Hand)>()
-        //{
-        //    { "Joy_1", (new InputAction[1] {InputAction.ButtonPrimary} , Hand.Right) },
-        //    { "Joy_2", (new InputAction[1] {InputAction.ButtonSecondary }, Hand.Right) },
-        //    { "Joy_3", (new InputAction[1] {InputAction.ButtonAlt }, Hand.Right) },
-        //    { "Joy_4", (new InputAction[1] {InputAction.ButtonPOV1 }, Hand.Right) },
-        //    { "Joy_5", (new InputAction[1] {InputAction.ButtonPOV2 }, Hand.Right) },
-        //    { "Joy_POV1Up", (new InputAction[2] {InputAction.POV1Trackpad, InputAction.POV1Joystick}, Hand.Right) },
-        //    { "Joy_POV1Down", (new InputAction[2] {InputAction.POV1Trackpad, InputAction.POV1Joystick}, Hand.Right) },
-        //    { "Joy_POV1Left", (new InputAction[2] {InputAction.POV1Trackpad, InputAction.POV1Joystick}, Hand.Right) },
-        //    { "Joy_POV1Right", (new InputAction[2] {InputAction.POV1Trackpad, InputAction.POV1Joystick}, Hand.Right) },
-        //    { "Joy_POV2Up", (new InputAction[2] {InputAction.POV2Trackpad, InputAction.POV2Joystick}, Hand.Right) },
-        //    { "Joy_POV2Down", (new InputAction[2] {InputAction.POV2Trackpad, InputAction.POV2Joystick}, Hand.Right) },
-        //    { "Joy_POV2Left", (new InputAction[2] {InputAction.POV2Trackpad, InputAction.POV2Joystick}, Hand.Right) },
-        //    { "Joy_POV2Right", (new InputAction[2] {InputAction.POV2Trackpad, InputAction.POV2Joystick}, Hand.Right) },
-        //    { "Joy_6", (new InputAction[1] {InputAction.ButtonPOV3}, Hand.Left) },
-        //    { "Joy_7", (new InputAction[1] {InputAction.ButtonSecondary}, Hand.Left) },
-        //    { "Joy_8", (new InputAction[1] {InputAction.ButtonPrimary}, Hand.Left) },
-        //    { "Joy_9", (new InputAction[1] {InputAction.ButtonAlt}, Hand.Left) },
-        //    { "Joy_POV3Up", (new InputAction[2] {InputAction.POV3Trackpad, InputAction.POV3Joystick}, Hand.Left) },
-        //    { "Joy_POV3Down", (new InputAction[2] {InputAction.POV3Trackpad, InputAction.POV3Joystick}, Hand.Left) },
-        //    { "Joy_POV3Left", (new InputAction[2] {InputAction.POV3Trackpad, InputAction.POV3Joystick}, Hand.Left) },
-        //    { "Joy_POV3Right", (new InputAction[2] {InputAction.POV3Trackpad, InputAction.POV3Joystick}, Hand.Left) },
-        //};
 
         void SetStatus(VJoyStatus status)
         {
@@ -151,6 +110,7 @@ namespace EVRC.Core.Actions
                 return;
             }
 
+
             VjdStat deviceStatus = vjoy.GetVJDStatus(deviceId);
             VjdStat secondaryDeviceStatus = vjoy.GetVJDStatus(secondaryDeviceId);
             if (!IsDeviceStatusOk(deviceId, deviceStatus) || !IsDeviceStatusOk(secondaryDeviceId, secondaryDeviceStatus))
@@ -175,7 +135,7 @@ namespace EVRC.Core.Actions
                 return;
             }
 
-            if(!AcquireDevice(deviceId, deviceStatus) || !AcquireDevice(secondaryDeviceId, secondaryDeviceStatus))
+            if (!AcquireDevice(deviceId, deviceStatus) || !AcquireDevice(secondaryDeviceId, secondaryDeviceStatus))
             {
                 enabled = false;
                 return;
@@ -340,9 +300,15 @@ namespace EVRC.Core.Actions
         /**
          * Update the joystick axis
          */
-        public void SetStickAxis(VirtualJoystick.StickAxis axis)
+        public void SetVirtualJoystick(VirtualJoystick.StickAxis axis)
         {
-            stickAxis = axis;
+            //stickAxis = axis;
+            var stick = axis.WithDeadzone(joystickDeadzoneDegrees);
+            
+            // @todo fix this so it passes normalized vectors instead of doing the conversion here
+            yAxis = -stick.Pitch / joystickMaxDegrees;
+            xAxis = stick.Roll / joystickMaxDegrees;
+            r_zAxis = stick.Yaw / joystickMaxDegrees;
         }
 
         /**
@@ -350,7 +316,15 @@ namespace EVRC.Core.Actions
          */
         public void SetThrusters(Virtual6DOFController.ThrusterAxis axis)
         {
-            thrusterAxis = axis;
+            //thrusterAxis = axis;
+
+            var dThrusters = axis.WithDeadzone(directionalThrustersDeadzonePercentage / 100f);
+
+            Vector3 simpleThruster = dThrusters.Value.normalized;        
+
+            r_xAxis = simpleThruster.x;
+            r_yAxis = simpleThruster.y;
+            sliderAxis = simpleThruster.z;
         }
 
         /**
@@ -358,22 +332,50 @@ namespace EVRC.Core.Actions
          */
         public void SetThrottle(float throttle)
         {
-            this.throttle = throttle;
+            //this.throttle = throttle;
+            zAxis = throttle;
+        }
+
+        /**
+         * Update the axes for pitch/rotate in Humanoid mode
+         */
+        public void SetHumanoidLook(Vector2 lookAxis)
+        {
+            yAxis = lookAxis.y;
+            r_zAxis = lookAxis.x;
+        }
+
+        /**
+         * Update the axes for Humanoid movement (walk/strafe)
+         */
+        public void SetHumanoidMove(Vector2 moveAxis) 
+        {            
+            xAxis = moveAxis.x; 
+            zAxis = moveAxis.y;
+        }
+
+        /**
+        * Update the Humanoid Item Wheel Axis 
+        */
+        public void SetItemWheelAxis(Vector2 itemAxis)
+        {
+            sliderAxis = itemAxis.x;
+            dialAxis = itemAxis.y;
         }
 
         /**
          * Update the radar range (sensor zoom)
          */
-        public void SetRadarRange(float radarRange)
+        public void SetRadarRange(float newRadarRange)
         {
-            this.radarRange = radarRange;
+            dialAxis = newRadarRange;
         }
         /**
          * Update the fss tuning
          */
         public void SetFSSTuning(float fssTuning)
         {
-            this.fssTuning = fssTuning;
+            dialAxis = fssTuning;
         }
 
         /**
@@ -400,7 +402,7 @@ namespace EVRC.Core.Actions
         }
 
         /**
-         * Update the map translation axis
+         * Update the map translation axis (device 1)
          */
         public void SetMapTranslationAxis(Vector3 translation)
         {
@@ -408,7 +410,7 @@ namespace EVRC.Core.Actions
         }
 
         /**
-         * Update the map pitch axis
+         * Update the map pitch axis (device 1)
          */
         public void SetMapPitchAxis(float pitch)
         {
@@ -416,7 +418,7 @@ namespace EVRC.Core.Actions
         }
 
         /**
-         * Update the map yaw axis
+         * Update the map yaw axis (device 1)
          */
         public void SetMapYawAxis(float yaw)
         {
@@ -424,7 +426,7 @@ namespace EVRC.Core.Actions
         }
 
         /**
-         * Update the map zoom axis
+         * Update the map zoom axis (device 1)
          */
         public void SetMapZoomAxis(float zoom)
         {
@@ -463,7 +465,7 @@ namespace EVRC.Core.Actions
             {
                 throw new System.IndexOutOfRangeException("Button number 0 is too low, button numbers are zero indexed");
             }
-            if (hatIndex >= 4)
+            if (hatIndex > hat.Length)
             {
                 throw new System.IndexOutOfRangeException(string.Format("HAT index {0} is too high", hatIndex));
             }
@@ -471,15 +473,30 @@ namespace EVRC.Core.Actions
             hat[hatIndex] = dir;
         }
 
+        /// <summary>
+        /// Convert an Axis ratio (joystick degrees/max degrees) into an integer readable by vJoy.
+        /// </summary>
+        /// <param name="deviceId"></param>
+        /// <param name="axisRatio"></param>
+        /// <param name="hid"></param>
+        /// <returns></returns>
         int ConvertAxisRatioToAxisInt(uint deviceId, float axisRatio, HID_USAGES hid)
         {
             long min = 0, max = 0;
-            // @fixme This looks wrong
-            var gotMin = vjoy.GetVJDAxisMin(deviceId, HID_USAGES.HID_USAGE_X, ref min);
-            var gotMax = vjoy.GetVJDAxisMax(deviceId, HID_USAGES.HID_USAGE_X, ref max);
+
+            // Attempt to get the minimum axis value using the provided vjoy library
+            // gotMin will be true if the operation succeeded, and the retrieved value will be stored in 'min'
+            bool gotMin = vjoy.GetVJDAxisMin(deviceId, HID_USAGES.HID_USAGE_X, ref min);
+
+            // Attempt to get the maximum axis value using the provided vjoy library
+            // gotMax will be true if the operation succeeded, and the retrieved value will be stored in 'max'
+            bool gotMax = vjoy.GetVJDAxisMax(deviceId, HID_USAGES.HID_USAGE_X, ref max);
+
+            // Check if either getting the minimum or maximum value failed
             if (!gotMin || !gotMax)
             {
-                Debug.LogWarningFormat("Error getting min/max of HID axis {0}", hid.ToString());
+                // Return 0 to indicate an error condition or an inability to calculate the result
+                Debug.LogError($"Error getting min/max of HID axis {hid.ToString()}");
                 return 0;
             }
 
@@ -499,38 +516,22 @@ namespace EVRC.Core.Actions
             iReport.bDevice = (byte)deviceId;
             iReport2.bDevice = (byte)secondaryDeviceId;
 
-            // Device 1, joystick/throttle
+            // Device 1, joystick/throttle + humanoid
             if (!MapAxisEnabled)
             {
-                var stick = stickAxis.WithDeadzone(joystickDeadzoneDegrees);
 
-                iReport.AxisY = ConvertStickAxisDegreesToAxisInt(deviceId, -stick.Pitch, HID_USAGES.HID_USAGE_Y);
-                iReport.AxisX = ConvertStickAxisDegreesToAxisInt(deviceId, stick.Roll, HID_USAGES.HID_USAGE_X);
-                iReport.AxisZRot = ConvertStickAxisDegreesToAxisInt(deviceId, stick.Yaw, HID_USAGES.HID_USAGE_RZ);
-
-                var dThrusters = thrusterAxis.WithDeadzone(directionalThrustersDeadzonePercentage / 100f);
-
-                iReport.AxisXRot = ConvertAxisRatioToAxisInt(deviceId, dThrusters.Value.x, HID_USAGES.HID_USAGE_RX);
-                iReport.AxisYRot = ConvertAxisRatioToAxisInt(deviceId, dThrusters.Value.y, HID_USAGES.HID_USAGE_RY);
-                iReport.Slider = ConvertAxisRatioToAxisInt(deviceId, dThrusters.Value.z, HID_USAGES.HID_USAGE_SL0);
-
-                var throttleWithDeadZone = throttle;
-                iReport.AxisZ = ConvertAxisRatioToAxisInt(deviceId, throttleWithDeadZone, HID_USAGES.HID_USAGE_Z);
-
-                // Cockpit sensor zoom axis
-                iReport.Dial = ConvertAxisRatioToAxisInt(deviceId, radarRange, HID_USAGES.HID_USAGE_SL1);
+                iReport.AxisY = ConvertAxisRatioToAxisInt(deviceId, yAxis, HID_USAGES.HID_USAGE_Y);
+                iReport.AxisX = ConvertAxisRatioToAxisInt(deviceId, xAxis, HID_USAGES.HID_USAGE_X);
+                iReport.AxisZRot = ConvertAxisRatioToAxisInt(deviceId, r_zAxis, HID_USAGES.HID_USAGE_RZ);
+                iReport.AxisXRot = ConvertAxisRatioToAxisInt(deviceId, r_xAxis, HID_USAGES.HID_USAGE_RX);
+                iReport.AxisYRot = ConvertAxisRatioToAxisInt(deviceId, r_yAxis, HID_USAGES.HID_USAGE_RY);
+                iReport.Slider = ConvertAxisRatioToAxisInt(deviceId, sliderAxis, HID_USAGES.HID_USAGE_SL0); // (a.k.a. UAxis in vJoy)
+                iReport.AxisZ = ConvertAxisRatioToAxisInt(deviceId, zAxis, HID_USAGES.HID_USAGE_Z);
+                iReport.Dial = ConvertAxisRatioToAxisInt(deviceId, dialAxis, HID_USAGES.HID_USAGE_SL1); // (a.k.a. VAxis in vJoy)
             }
             else
             {
-                // Make sure all the joystick axis are reset
-                iReport.AxisY = ConvertStickAxisDegreesToAxisInt(deviceId, 0, HID_USAGES.HID_USAGE_Y);
-                iReport.AxisX = ConvertStickAxisDegreesToAxisInt(deviceId, 0, HID_USAGES.HID_USAGE_X);
-                iReport.AxisZRot = ConvertStickAxisDegreesToAxisInt(deviceId, 0, HID_USAGES.HID_USAGE_RZ);
-                iReport.AxisXRot = ConvertAxisRatioToAxisInt(deviceId, 0, HID_USAGES.HID_USAGE_RX);
-                iReport.AxisYRot = ConvertAxisRatioToAxisInt(deviceId, 0, HID_USAGES.HID_USAGE_RY);
-                iReport.Slider = ConvertAxisRatioToAxisInt(deviceId, 0, HID_USAGES.HID_USAGE_SL0);
-                iReport.AxisZ = ConvertAxisRatioToAxisInt(deviceId, 0, HID_USAGES.HID_USAGE_Z);
-                iReport.Dial = ConvertAxisRatioToAxisInt(deviceId, 0, HID_USAGES.HID_USAGE_SL1);
+                ResetAll();
             }
 
             iReport.Buttons = buttons;
@@ -552,8 +553,8 @@ namespace EVRC.Core.Actions
                 iReport2.AxisYRot = ConvertAxisRatioToAxisInt(secondaryDeviceId, mapPitchAxis, HID_USAGES.HID_USAGE_RX);
                 iReport2.AxisXRot = ConvertAxisRatioToAxisInt(secondaryDeviceId, mapYawAxis, HID_USAGES.HID_USAGE_RZ);
 
-                // FSS tuning axis
-                iReport2.Dial = ConvertAxisRatioToAxisInt(deviceId, fssTuning, HID_USAGES.HID_USAGE_SL1);
+                // FSS tuning axis (a.k.a. VAxis in vJoy)
+                iReport2.Dial = ConvertAxisRatioToAxisInt(deviceId, dialAxis, HID_USAGES.HID_USAGE_SL1);
 
                 // Zoom
                 iReport2.AxisZRot = ConvertAxisRatioToAxisInt(secondaryDeviceId, -mapZoomAxis, HID_USAGES.HID_USAGE_SL1);
@@ -582,6 +583,25 @@ namespace EVRC.Core.Actions
                 SetStatus(VJoyStatus.DeviceError);
                 enabled = false;
             }
+        }
+
+        public void ResetAll()
+        {
+            iReport.AxisY = 0;
+            iReport.AxisX = 0;
+            iReport.AxisZRot = 0;
+            iReport.AxisXRot = 0;
+            iReport.AxisYRot = 0;
+            iReport.Slider = 0;
+            iReport.AxisZ = 0;
+            iReport.Dial = 0;
+            iReport2.AxisX = 0;
+            iReport2.AxisY = 0;
+            iReport2.AxisZ = 0;
+            iReport2.AxisXRot = 0;
+            iReport2.AxisYRot = 0;
+            iReport2.AxisZRot = 0;
+            iReport2.Dial = 0;
         }
     }
 }

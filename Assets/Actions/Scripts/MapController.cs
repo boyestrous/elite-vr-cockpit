@@ -33,6 +33,9 @@ namespace EVRC.Core.Actions
                 .ButtonPOV1(OnButtonPOV1)
                 .ButtonPOV3(OnButtonPOV3)
                 ;
+
+            //Reset the map axes, so throttle/joystick controls don't carry over
+            vJoyInterface.instance.ResetAll();
         }
         private void OnDisable()
         {

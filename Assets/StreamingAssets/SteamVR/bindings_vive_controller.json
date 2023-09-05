@@ -74,6 +74,18 @@
                },
                "mode" : "trackpad",
                "path" : "/user/hand/right/input/trackpad"
+            },
+            {
+               "inputs" : {
+                  "click" : {
+                     "output" : "/actions/cockpitcontrols/in/pov3trackpadpress"
+                  },
+                  "position" : {
+                     "output" : "/actions/cockpitcontrols/in/pov3trackpadposition"
+                  }
+               },
+               "mode" : "trackpad",
+               "path" : "/user/hand/left/input/trackpad"
             }
          ]
       },

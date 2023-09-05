@@ -15,6 +15,7 @@ namespace EVRC.Core.Overlay
         public ControlBindingsState controlBindingsState;
         public ControlButtonAsset controlButtonAsset;
         public EDStatusFlags configuredStatusFlag;
+        public EDStatusFlags2 configuredStatusFlag2;
         public EDGuiFocus configuredGuiFocus;
         protected Tooltip tooltip;
         public string label;

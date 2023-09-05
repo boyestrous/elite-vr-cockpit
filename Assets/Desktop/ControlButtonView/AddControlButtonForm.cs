@@ -1,6 +1,7 @@
 using EVRC.Core;
 using EVRC.Core.Actions;
 using EVRC.Core.Overlay;
+using EVRC.Core.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,7 @@ namespace EVRC.Desktop
         private ControlButtonSpawnManager spawnManager;
 
         private EDStatusFlags? selectedStatusFlag;
+        private EDStatusFlags2? selectedStatusFlag2;
         private EDGuiFocus? selectedGuiFocus;
         private ControlButtonAsset selectedControlButton;
 
@@ -44,6 +46,7 @@ namespace EVRC.Desktop
             List<string> statusFlagList = new List<string>();
             statusFlagList.Add("--Any Flag--");
             statusFlagList.AddRange(Enum.GetNames(typeof(EDStatusFlags)).ToList());
+            statusFlagList.AddRange(Enum.GetNames(typeof(EDStatusFlags2)).ToList());
             statusFlagDropdown.choices = statusFlagList;
             statusFlagDropdown.index = 0;
 
@@ -51,7 +54,7 @@ namespace EVRC.Desktop
             List<string> guiFocusList = new List<string>();            
             guiFocusList.AddRange(Enum.GetNames(typeof(EDGuiFocus)).ToList());
 
-            // Move Panel or No Focus to the first position
+            // Move "PanelOrNoFocus" to the first position
             int panelOrNoFocusIndex = guiFocusList.IndexOf(EDGuiFocus.PanelOrNoFocus.ToString());
             guiFocusList.RemoveAt(panelOrNoFocusIndex);
             guiFocusList.Insert(0, EDGuiFocus.PanelOrNoFocus.ToString());
@@ -75,7 +78,7 @@ namespace EVRC.Desktop
 
         private bool BothNullCheck()
         {
-            if (selectedGuiFocus == null && selectedStatusFlag == null)
+            if (selectedGuiFocus == null && selectedStatusFlag == null && selectedStatusFlag2 == null)
             {
                 controlButtonDropdown.SetEnabled(false);
                 messageText.AddToClassList("warningMessage");
@@ -97,7 +100,14 @@ namespace EVRC.Desktop
             // Filter the catalog
             availableControlButtons.AddRange(
                 catalog.controlButtons
-                .Where(x => selectedStatusFlag.HasValue ? x.statusFlagFilters.HasFlag(selectedStatusFlag) : x.statusFlagFilters != 0)
+                .Where(x => selectedStatusFlag.HasValue ? 
+                            x.statusFlagFilters.HasFlag(selectedStatusFlag): 
+                            x.statusFlagFilters != 0
+                            )
+                .Where(x => selectedStatusFlag2.HasValue ?
+                            x.statusFlag2Filters.HasFlag(selectedStatusFlag2) :
+                            x.statusFlag2Filters != 0
+                            )
                 .Where(y => selectedGuiFocus.HasValue ? y.guiFocusRequired.Contains(selectedGuiFocus.Value) : y.guiFocusRequired.Count() == 0)
                 .Select(x => x.name).ToList()
                 );
@@ -107,8 +117,16 @@ namespace EVRC.Desktop
 
         public void OnStatusFlagChanged(ChangeEvent<string> evt)
         {
-            selectedStatusFlag = evt.newValue == "--Any Flag--" ? null : Enum.Parse<EDStatusFlags>(evt.newValue);
-
+            
+            if (evt.newValue == "--Any Flag--")
+            {
+                selectedStatusFlag = null;
+                selectedStatusFlag2 = null;
+            } else {
+                var parsedSelection = EnumUtils.ParseEnumsOrDefault<EDStatusFlags, EDStatusFlags2>(evt.newValue);
+                selectedStatusFlag = parsedSelection.Item2;
+                selectedStatusFlag2 = parsedSelection.Item3;
+            }                     
 
             controlButtonDropdown.value = "";
             selectedControlButton = null;
@@ -144,7 +162,7 @@ namespace EVRC.Desktop
                 {
                     type = selectedControlButton.name,
                     anchorGuiFocus = selectedGuiFocus.ToString(),
-                    anchorStatusFlag = selectedStatusFlag.ToString(),
+                    anchorStatusFlag = selectedStatusFlag != default(EDStatusFlags) ? selectedStatusFlag.ToString() : selectedStatusFlag2.ToString(),
                     overlayTransform = new OverlayTransform()
                     {
                         pos = placePosition,

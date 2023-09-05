@@ -27,24 +27,33 @@ namespace EVRC.Core.Actions
                 Value = axis * 1f;
             }
 
+            //public ThrusterAxis(Vector3 axis, float maxDistance)
+            //{
+            //    axis = axis / maxDistance;
+            //    Value = new Vector3(
+            //        Mathf.Abs(axis.x) > 1f ? axis.x / Mathf.Abs(axis.x) : axis.x,
+            //        Mathf.Abs(axis.y) > 1f ? axis.y / Mathf.Abs(axis.y) : axis.y,
+            //        Mathf.Abs(axis.z) > 1f ? axis.z / Mathf.Abs(axis.z) : axis.z);
+            //}
+
             public ThrusterAxis(Vector3 axis, float maxDistance)
             {
-                axis = axis / maxDistance;
-                Value = new Vector3(
-                    Mathf.Abs(axis.x) > 1f ? axis.x / Mathf.Abs(axis.x) : axis.x,
-                    Mathf.Abs(axis.y) > 1f ? axis.y / Mathf.Abs(axis.y) : axis.y,
-                    Mathf.Abs(axis.z) > 1f ? axis.z / Mathf.Abs(axis.z) : axis.z);
+                Value = Vector3.Normalize(axis / maxDistance);
             }
 
             /**
              * Returns a new ThrusterAxis with a deadZone limit
              */
+            //public ThrusterAxis WithDeadzone(float deadZone)
+            //{
+            //    return new ThrusterAxis(new Vector3(
+            //        Mathf.Abs(Value.x) < deadZone ? 0f : Value.x,
+            //        Mathf.Abs(Value.y) < deadZone ? 0f : Value.y,
+            //        Mathf.Abs(Value.z) < deadZone ? 0f : Value.z));
+            //}
             public ThrusterAxis WithDeadzone(float deadZone)
             {
-                return new ThrusterAxis(new Vector3(
-                    Mathf.Abs(Value.x) < deadZone ? 0f : Value.x,
-                    Mathf.Abs(Value.y) < deadZone ? 0f : Value.y,
-                    Mathf.Abs(Value.z) < deadZone ? 0f : Value.z));
+                return new ThrusterAxis(Vector3.ClampMagnitude(Value, Mathf.Max(0, Value.magnitude - deadZone)));
             }
 
             public override string ToString()
@@ -177,7 +186,7 @@ namespace EVRC.Core.Actions
                 if (output)
                 {
                     output.SetThrusters(ThrusterAxis.Zero);
-                    output.SetStickAxis(StickAxis.Zero);
+                    output.SetVirtualJoystick(StickAxis.Zero);
                 }
             }
         }
@@ -234,7 +243,7 @@ namespace EVRC.Core.Actions
             if (output)
             {
                 output.SetThrusters(thrusterAxis);
-                output.SetStickAxis(rotationAxis);
+                output.SetVirtualJoystick(rotationAxis);
             }
         }
     }

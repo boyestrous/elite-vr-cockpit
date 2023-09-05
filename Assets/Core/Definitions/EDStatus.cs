@@ -15,6 +15,7 @@ namespace EVRC.Core
     {
         public string timestamp;
         public uint Flags;
+        public uint Flags2;
         public byte[] Pips;
         public byte FireGroup;
         public byte GuiFocus;

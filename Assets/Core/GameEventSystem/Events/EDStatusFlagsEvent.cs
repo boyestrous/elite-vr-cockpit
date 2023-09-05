@@ -7,7 +7,7 @@ using UnityEngine;
 namespace EVRC.Core
 {
     [CreateAssetMenu(menuName = Constants.GAME_EVENT_PATH + "/EDStatus Flags Event"), System.Serializable]
-    public class EDStatusFlagsEvent : GameEvent<EDStatusFlags>
+    public class EDStatusFlagsEvent : GameEvent<EDStatusFlags,EDStatusFlags2>
     {
 		
     }

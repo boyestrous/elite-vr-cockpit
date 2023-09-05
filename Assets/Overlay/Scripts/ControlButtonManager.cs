@@ -72,10 +72,12 @@ namespace EVRC.Core.Overlay
             // Use the asset type to instantiate a new controlButton
             var _type = buttonToPlace.type;
             var controlButtonAsset = controlButtonCatalog.GetByName(_type);
-            EDStatusFlags anchorStatusFlag = Utils.EnumUtils.ParseEnumOrDefault<EDStatusFlags>(buttonToPlace.anchorStatusFlag);
+            var parsedValue = Utils.EnumUtils.ParseEnumsOrDefault<EDStatusFlags, EDStatusFlags2>(buttonToPlace.anchorStatusFlag);           
+            EDStatusFlags anchorStatusFlag = parsedValue.Item2;
+            EDStatusFlags2 anchorStatusFlags2 = parsedValue.Item3;
             EDGuiFocus anchorGuiFocus =  Utils.EnumUtils.ParseEnumOrDefault<EDGuiFocus>(buttonToPlace.anchorGuiFocus, EDGuiFocus.PanelOrNoFocus);
 
-            ControlButton _button = InstantiateControlButton(controlButtonAsset, anchorGuiFocus, anchorStatusFlag);
+            ControlButton _button = InstantiateControlButton(controlButtonAsset, anchorGuiFocus, anchorStatusFlag, anchorStatusFlags2);
 
             // Place it based on the loaded state settings
             _button.transform.localPosition = buttonToPlace.overlayTransform.pos;
@@ -115,7 +117,7 @@ namespace EVRC.Core.Overlay
         /// </summary>
         /// <param name="controlButtonAsset"></param>
         /// <returns>newly instantiated ControlButton</returns>
-        public ControlButton InstantiateControlButton(ControlButtonAsset controlButtonAsset, EDGuiFocus anchorGuiFocus, EDStatusFlags anchorStatusFlag)
+        public ControlButton InstantiateControlButton(ControlButtonAsset controlButtonAsset, EDGuiFocus anchorGuiFocus, EDStatusFlags anchorShipStatusFlag, EDStatusFlags2 anchorFootStatusFlag)
         {
             var prefab = controlButtonCatalog.controlButtonPrefab;
             prefab.SetActive(false);
@@ -124,17 +126,19 @@ namespace EVRC.Core.Overlay
             controlButtonInstance.name = controlButtonAsset.name;
             controlButton.label = controlButtonAsset.GetLabelText();
             controlButton.controlButtonAsset = controlButtonAsset;
-            controlButton.configuredStatusFlag = anchorStatusFlag;
+            controlButton.configuredStatusFlag = anchorShipStatusFlag;
+            controlButton.configuredStatusFlag2 = anchorFootStatusFlag;
             controlButton.configuredGuiFocus = anchorGuiFocus;
 
             var matchingAnchor = cockpitModeAnchors
                 .Where(anchor => anchor.activationSettings.Any(x => x.activationGuiFocus == anchorGuiFocus))
-                .Where(anchor => anchor.activationSettings.Any(y => y.activationStatusFlag == anchorStatusFlag))
+                .Where(anchor => anchor.activationSettings.Any(y => y.shipActivationFlag == anchorShipStatusFlag))
                 .FirstOrDefault();
 
             if (matchingAnchor == null)
             {
-                matchingAnchor = CreateCockpitModeAnchor(anchorGuiFocus, anchorStatusFlag);
+                // anchorFootStatusFlag is 
+                matchingAnchor = CreateCockpitModeAnchor(anchorGuiFocus, anchorShipStatusFlag, anchorFootStatusFlag);
             }
 
             matchingAnchor.AddControlButton(controlButton);
@@ -149,20 +153,20 @@ namespace EVRC.Core.Overlay
         /// <param name="anchorGuiFocus"></param>
         /// <param name="anchorStatusFlag"></param>
         /// <returns></returns>
-        public CockpitModeAnchor CreateCockpitModeAnchor(EDGuiFocus anchorGuiFocus, EDStatusFlags anchorStatusFlag)
+        public CockpitModeAnchor CreateCockpitModeAnchor(EDGuiFocus anchorGuiFocus, EDStatusFlags anchorShipStatusFlag, EDStatusFlags2 anchorFootStatusFlag)
         {
             // Create a new anchor and parent gameObject
             var anchorObject = Instantiate(CockpitAnchorPrefab);
-            anchorObject.name = $"{anchorGuiFocus}|{anchorStatusFlag}";
+            anchorObject.name = $"{anchorGuiFocus}|{anchorShipStatusFlag}";
             anchorObject.transform.SetParent(parentObject.transform, false);
             anchorObject.SetActive(true);
 
             var newAnchor = anchorObject.GetComponent<CockpitModeAnchor>();
 
             // Set it to match the required flags/guifocus
-            newAnchor.AddAnchorSetting(anchorStatusFlag, anchorGuiFocus);
+            newAnchor.AddAnchorSetting(anchorShipStatusFlag, anchorGuiFocus, anchorFootStatusFlag);
             //newAnchor.activationGuiFocus = anchorGuiFocus;
-            //newAnchor.activationStatusFlag = anchorStatusFlag;
+            //newAnchor.shipActivationFlag = anchorStatusFlag;
             newAnchor.OnEnable(); // force initialization
 
             cockpitModeAnchors.Add(newAnchor);

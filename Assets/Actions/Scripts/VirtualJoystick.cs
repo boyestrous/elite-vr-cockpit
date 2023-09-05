@@ -118,7 +118,7 @@ namespace EVRC.Core.Actions
                     buttons.Ungrabbed();
                 }
 
-                vJoyInterface.instance?.SetStickAxis(StickAxis.Zero);
+                vJoyInterface.instance?.SetVirtualJoystick(StickAxis.Zero);
             }
         }
 
@@ -130,7 +130,7 @@ namespace EVRC.Core.Actions
 
             var axis = new StickAxis(rotationPoint.localEulerAngles);
 
-            vJoyInterface.instance?.SetStickAxis(axis);
+            vJoyInterface.instance?.SetVirtualJoystick(axis);
         }
     }
 }

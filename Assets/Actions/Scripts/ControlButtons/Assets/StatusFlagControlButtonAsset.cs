@@ -16,7 +16,8 @@ namespace EVRC.Core.Actions
         private void OnEnable()
         {
             isOn = IsOn();
-            EDStateManager.FlagsChanged.Listen(OnFlagsChanged);
+            //EDStateManager.FlagsChanged.Listen(OnFlagsChanged);
+            eliteDangerousState.statusFlagsEvent.Event += OnFlagsChanged;
 
             if (eliteDangerousState == null)
             {
@@ -27,10 +28,11 @@ namespace EVRC.Core.Actions
 
         private void OnDisable()
         {
-            EDStateManager.FlagsChanged.Remove(OnFlagsChanged);
+            //EDStateManager.FlagsChanged.Remove(OnFlagsChanged);
+            eliteDangerousState.statusFlagsEvent.Event -= OnFlagsChanged;
         }
 
-        private void OnFlagsChanged(EDStatusFlags flags)
+        private void OnFlagsChanged(EDStatusFlags flags, EDStatusFlags2 flags2)
         {
             if (flags.HasFlag(flag) != isOn)
             {

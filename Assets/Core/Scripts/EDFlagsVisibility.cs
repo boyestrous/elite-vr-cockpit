@@ -31,13 +31,15 @@ namespace EVRC.Core
 
         private void OnEnable()
         {
-            EDStateManager.FlagsChanged.Listen(OnStatusFlagsChanged);
+            //EDStateManager.FlagsChanged.Listen(OnStatusFlagsChanged);
+            eliteDangerousState.statusFlagsEvent.Event += OnStatusFlagsChanged;
             Refresh();
         }
 
         private void OnDisable()
         {
-            EDStateManager.FlagsChanged.Remove(OnStatusFlagsChanged);
+            //EDStateManager.FlagsChanged.Remove(OnStatusFlagsChanged);
+            eliteDangerousState.statusFlagsEvent.Event -= OnStatusFlagsChanged;
         }
 
         private void OnEditLockedStateChanged(bool editLocked)
@@ -45,7 +47,7 @@ namespace EVRC.Core
             Refresh();
         }
 
-        private void OnStatusFlagsChanged(EDStatusFlags flags)
+        private void OnStatusFlagsChanged(EDStatusFlags flags, EDStatusFlags2 flags2)
         {
             Refresh();
         }

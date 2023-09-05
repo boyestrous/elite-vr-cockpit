@@ -1,7 +1,6 @@
 ﻿using EVRC.Core.Overlay;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -30,7 +29,7 @@ namespace EVRC.Core
         // Replace these Steam Events with GameEvents
         public static Events.Event<uint, string> CurrentProcessChanged = new Events.Event<uint, string>();
         
-        public static Events.Event<EDStatusFlags> FlagsChanged = new Events.Event<EDStatusFlags>();
+        //public static Events.Event<EDStatusFlags> FlagsChanged = new Events.Event<EDStatusFlags>();
 
         // If false, a new GuiFocusEvent will not be raised if only the focus panel changes. (ex: going from NoFocus to InternalPanel)
         // This should save some unnceccessary evaluation.
@@ -167,14 +166,42 @@ namespace EVRC.Core
             raiseForGuiPanelEvents = false;
         }
 
+        internal void UpdateFlags(EDStatus status)
+        {
+            if (eliteDangerousState.lastStatusFromFile.Flags == status.Flags && eliteDangerousState.lastStatusFromFile.Flags2 == status.Flags2) return;
+            
+            // Read Status Flags (Ship Stuff)
+            eliteDangerousState.statusFlags = (EDStatusFlags)status.Flags;        
+            // Read Status Flags2 (mostly on-foot, but a couple ship statuses)
+            eliteDangerousState.statusFlags2 = (EDStatusFlags2)status.Flags2;
+            eDStatusFlagsEvent.Raise(eliteDangerousState.statusFlags, eliteDangerousState.statusFlags2);
+            
+        }
+
+        internal void UpdateGuiFocus(EDStatus status)
+        {
+            if (eliteDangerousState.lastStatusFromFile.GuiFocus != status.GuiFocus)
+            {
+                var guiFocus = Enum.IsDefined(typeof(EDGuiFocus), status.GuiFocus)
+                    ? (EDGuiFocus)status.GuiFocus
+                    : EDGuiFocus.NoFocus;
+
+                eliteDangerousState.guiFocus = guiFocus;
+                eDGuiFocusEvent.Raise(guiFocus);
+            }
+        }
+
        
         private IEnumerator WatchStatusFile()
         {
             var statusFile = Paths.StatusFilePath;
             UnityEngine.Debug.LogFormat("Watching Elite Dangerous Status.json at {0}", statusFile);
-            eDGuiFocusEvent.Raise(EDGuiFocus.NoFocus); // initialize the cockpitModeAnchors
-            eDStatusFlagsEvent.Raise(EDStatusFlags.InMainShip);
+            
+            // initialize the cockpitModeAnchors
+            eDGuiFocusEvent.Raise(EDGuiFocus.NoFocus); 
+            eDStatusFlagsEvent.Raise(EDStatusFlags.InMainShip,0);
             eliteDangerousState.lastStatusFromFile.Flags = 0;
+            eliteDangerousState.lastStatusFromFile.Flags2 = 0;
             eliteDangerousState.lastStatusFromFile.GuiFocus = 0;
 
             while (eliteDangerousState.running)
@@ -190,24 +217,9 @@ namespace EVRC.Core
                         {
                             statusChanged.Raise();
 
-                            if (eliteDangerousState.lastStatusFromFile.GuiFocus != status.GuiFocus)
-                            {
-                                var guiFocus = Enum.IsDefined(typeof(EDGuiFocus), status.GuiFocus)
-                                    ? (EDGuiFocus)status.GuiFocus
-                                    : EDGuiFocus.NoFocus;
+                            UpdateGuiFocus(status);
+                            UpdateFlags(status);                            
 
-                                eliteDangerousState.guiFocus = guiFocus;
-                                eDGuiFocusEvent.Raise(guiFocus);
-                            }
-
-                            if (eliteDangerousState.lastStatusFromFile.Flags != status.Flags)
-                            {
-                                // StatusFlags = (EDStatusFlags)status.Flags;
-                                eliteDangerousState.statusFlags = (EDStatusFlags)status.Flags;
-                                FlagsChanged.Send(eliteDangerousState.statusFlags);
-                                eDStatusFlagsEvent.Raise(eliteDangerousState.statusFlags);
-                            }
-                            
                             eliteDangerousState.lastStatusFromFile = status;
                         }
                     }

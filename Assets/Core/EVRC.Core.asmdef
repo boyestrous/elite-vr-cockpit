@@ -22,5 +22,5 @@
     "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],    
-    "testablesAssemblies": [ "EVRC.Overlay.Tests" ]
+    "testablesAssemblies": [ "EVRC.Overlay.Tests", "EVRC.Core.Tests" ]
 }

@@ -252,6 +252,21 @@
       "type": "vector2"
     },
     {
+      "name": "/actions/CockpitControls/in/POV3TrackpadPress",
+      "type": "boolean",
+      "requirement": "optional"
+    },
+    {
+      "name": "/actions/CockpitControls/in/POV3TrackpadTouch",
+      "type": "boolean",
+      "requirement": "optional"
+    },
+    {
+      "name": "/actions/CockpitControls/in/POV3TrackpadPosition",
+      "type": "vector2",
+      "requirement": "optional"
+    },
+    {
       "name": "/actions/FSSControls/in/ExitFSS",
       "type": "boolean",
       "requirement": "suggested"
@@ -463,7 +478,10 @@
       "/actions/FSSControls/in/DiscoveryScan": "FSS Discovery Scan",
       "/actions/FSSControls/in/TuneTrackpadPress": "Tuning (Trackpad Press)",
       "/actions/FSSControls/in/TuneTrackpadTouch": "Tuning (Trackpad Touch)",
-      "/actions/FSSControls/in/TuneTrackpadPosition": "Tuning (Trackpad Press)"
+      "/actions/FSSControls/in/TuneTrackpadPosition": "Tuning (Trackpad Press)",
+      "/actions/CockpitControls/in/POV3TrackpadPress": "POV 3 (Trackpad Press)",
+      "/actions/CockpitControls/in/POV3TrackpadTouch": "POV 3 (Trackpad Touch)",
+      "/actions/CockpitControls/in/POV3TrackpadPosition": "POV 3 (Trackpad Position)"
     }
   ]
 }

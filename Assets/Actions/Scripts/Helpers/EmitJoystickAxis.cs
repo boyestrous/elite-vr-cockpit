@@ -21,7 +21,7 @@ namespace EVRC.Core.Actions
             var output = vJoyInterface.instance;
             Vector3 axis = new Vector3();
             axis[(int)outAxis] = (float)axisSign * output.joystickMaxDegrees;
-            output.SetStickAxis(new VirtualJoystick.StickAxis(axis));
+            output.SetVirtualJoystick(new VirtualJoystick.StickAxis(axis));
         }
     }
 }

@@ -72,7 +72,7 @@ public class CockpitModeAnchorOverlayEvents
             new CockpitModeAnchor.AnchorSetting()
             {
                 activationGuiFocus = EDGuiFocus.FSSMode,
-                activationStatusFlag = default(EDStatusFlags)
+                shipActivationFlag = default(EDStatusFlags)
             });
 
         //Create a second anchor that is configured for System Map
@@ -86,7 +86,7 @@ public class CockpitModeAnchorOverlayEvents
             new CockpitModeAnchor.AnchorSetting()
             {
                 activationGuiFocus = EDGuiFocus.SystemMap,
-                activationStatusFlag = default(EDStatusFlags)
+                shipActivationFlag = default(EDStatusFlags)
             });
 
         //Create a third anchor that is configured for SRV Mode
@@ -95,12 +95,12 @@ public class CockpitModeAnchorOverlayEvents
         CockpitModeAnchor anchorThreeAnchor = anchorThree.Item2;
         GameObject anchorThreeChild = anchorThree.Item3;
         anchorThreeChild.SetActive(false);
-        //anchorThreeAnchor.activationStatusFlag = EDStatusFlags.InSRV;
+        //anchorThreeAnchor.shipActivationFlag = EDStatusFlags.InSRV;
         anchorThreeAnchor.activationSettings.Add(
             new CockpitModeAnchor.AnchorSetting()
             {
                 activationGuiFocus = EDGuiFocus.PanelOrNoFocus,
-                activationStatusFlag = EDStatusFlags.InSRV
+                shipActivationFlag = EDStatusFlags.InSRV
             });
 
         //Configure the simulated EliteDangerousState as if we're in FSS mode when we deactivate
