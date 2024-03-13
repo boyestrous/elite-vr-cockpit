@@ -275,6 +275,15 @@
                },
                "mode" : "button",
                "path" : "/user/hand/right/input/a"
+            },
+            {
+               "inputs" : {
+                  "touch" : {
+                     "output" : "/actions/fsscontrols/in/cameracontrolactivate"
+                  }
+               },
+               "mode" : "trigger",
+               "path" : "/user/hand/left/input/grip"
             }
          ]
       },
@@ -465,9 +474,9 @@
    },
    "category" : "steamvr_input",
    "controller_type" : "oculus_touch",
-   "description" : "",
+   "description" : "Updated 3/12/2024",
    "interaction_profile" : "",
-   "name" : "Oculus Touch - Elite VR Cockpit configuration",
+   "name" : "Elite VR Cockpit configuration for Oculus Touch Controller",
    "options" : {},
    "simulated_actions" : []
 }

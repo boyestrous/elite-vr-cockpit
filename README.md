@@ -5,6 +5,7 @@ Elite VR Cockpit (Beta)
 
 * [Download](https://github.com/boyestrous/elite-vr-cockpit/releases)
 * [Getting Started](Assets/Documentation/GETTING-STARTED.md)
+* [Sample Cockpit Layout](Assetes/Documentation/SavedState_Example.json)
 * [Youtube - Getting Started](https://www.youtube.com/channel/UCZcxz-04m5DO8kJgm1qorFA)
 * [Report a bug](https://github.com/boyestrous/elite-vr-cockpit/issues)
 * [Oculus Rift SteamVR Workaround](Assets/Documentation/OCULUS-WORKAROUND.md)
@@ -68,6 +69,7 @@ The overlay provides a variety of ship functions as holographic buttons.
   * A binding must be present for the holographic button to work properly. *any* binding will do... Buttons for ship functions that you have not bound to a keyboard key yet will appear red.
 * Most toggle functions have tooltips that will automatically change when ship status changes. (e.g. The landing gear button will switch between "Deploy landing gear" and "Retract landing gear" depending on whether the gear is up or down)
 * New holographic buttons can be spawned and deleted from the Desktop Interface
+* A sample layout has been provided in the Documentation Folder [Sample Cockpit Layout](Assetes/Documentation/SavedState_Example.json). Copy this file into your `%AppData%/LocalLow/Boyestrous/Elite VR Cockpit` folder and rename it to "SavedState.json"
 
 ## Elite Dangerous integration
 

@@ -36,10 +36,14 @@ namespace EVRC.Core.Actions
 
             //Reset the map axes, so throttle/joystick controls don't carry over
             vJoyInterface.instance.ResetAll();
+            vJoyInterface.instance.EnableMapAxis();
+
         }
         private void OnDisable()
         {
             actionsPressManager.Clear();
+            vJoyInterface.instance.DisableMapAxis();
+            vJoyInterface.instance.ResetAll();
         }
 
         

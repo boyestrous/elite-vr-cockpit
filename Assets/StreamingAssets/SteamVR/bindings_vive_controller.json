@@ -232,6 +232,15 @@
             {
                "inputs" : {
                   "click" : {
+                     "output" : "/actions/fsscontrols/in/cameracontrolactivate"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/left/input/grip"
+            },
+            {
+               "inputs" : {
+                  "click" : {
                      "output" : "/actions/fsscontrols/in/targetcurrentsignal"
                   }
                },
