@@ -1,6 +1,7 @@
 using EVRC.Core;
 using EVRC.Core.Actions;
 using EVRC.Core.Overlay;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -83,6 +84,17 @@ namespace EVRC.Desktop
             return missingBindings.Count != 0;
         }
 
+        private void OnMissingItemSelected(IEnumerable<object> enumerable)
+        {
+            // Log the selected items
+            foreach (object item in enumerable)
+            {
+                // Assuming each item is of type MissingBindingItem
+                MissingBindingItem selectedItem = (MissingBindingItem)item;
+                Debug.Log("Selected Item Name: " + selectedItem.buttonName);
+            }
+        }
+
         void SetListBindingMethods()
         {
             //Set up a make item function for a list entry
@@ -104,6 +116,8 @@ namespace EVRC.Desktop
                 return newListEntry;
             };
 
+            missingBindingsListView.onSelectionChange += OnMissingItemSelected;
+
             // Set up bind function for a specific list entry
             missingBindingsListView.bindItem = (item, index) =>
             {
@@ -116,6 +130,8 @@ namespace EVRC.Desktop
             // Set the actual item's source list/array
             missingBindingsListView.itemsSource = m_missingBindings;
         }
+
+       
     }
     public class MissingItemDisplay
     {

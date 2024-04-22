@@ -1,0 +1,4 @@
+.unity-base-field__label {
+    min-width: 70px;
+    width: 75px;
+}

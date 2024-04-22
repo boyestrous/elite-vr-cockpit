@@ -9,7 +9,7 @@ namespace EVRC.Desktop
         public BindingItemsListController BindingItemsListController;
 
         VisualElement missingBindingsContainer;
-        VisualElement vJoyBindingsContainer;
+        VisualElement allBindingsContainer;
 
         [SerializeField] UIDocument parentUIDocument;
 
@@ -19,9 +19,11 @@ namespace EVRC.Desktop
             
             //parent containers for the whole section
             missingBindingsContainer = root.Q<VisualElement>("MissingBindingsList"); 
-            vJoyBindingsContainer = root.Q<VisualElement>("BindingItemsList"); 
+            allBindingsContainer = root.Q<VisualElement>("BindingItemsList");
 
-            if (missingBindingsContainer == null || vJoyBindingsContainer == null) 
+
+
+            if (missingBindingsContainer == null || allBindingsContainer == null) 
             {
                 Debug.LogError("Cannot get reference to bindings containers in Desktop UI");
             }
@@ -36,7 +38,7 @@ namespace EVRC.Desktop
             // If bindings are missing, display the missingBindings List
             missingBindingsContainer.style.display = missingBindings ? DisplayStyle.Flex : DisplayStyle.None;
             missingBindingsContainer.style.width = missingBindings ? Length.Percent(50) : 0;
-            vJoyBindingsContainer.style.width = missingBindings ? Length.Percent(50) : Length.Percent(100);
+            allBindingsContainer.style.width = missingBindings ? Length.Percent(50) : Length.Percent(100);
 
 
         }

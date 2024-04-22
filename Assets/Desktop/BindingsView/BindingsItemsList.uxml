@@ -1,5 +1,13 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <ui:Label text="vJoy Bindings from File" display-tooltip-when-elided="true" name="bindings-list-label" style="-unity-font-style: bold; font-size: 16px; min-width: 250px;" />
-    <ui:Label text="These bindings are read from your bindings file. This list is configured to only show the vJoy-specific controls." display-tooltip-when-elided="true" name="bindings-list-description" style="white-space: normal; min-width: 250px; font-size: 10px;" />
-    <ui:ListView focusable="true" name="required-bindings-list" style="min-height: 350px; min-width: 250px;" />
+    <Style src="project://database/Assets/Desktop/unity_uss_overrides.uss?fileID=7433441132597879392&amp;guid=00c71a919149def4b8a4b4161d9f034a&amp;type=3#unity_uss_overrides" />
+    <ui:VisualElement name="TitleArea" style="min-height: 60px; max-height: 100px; height: 5%;">
+        <ui:Label text="Placeholder Bindings List Title" display-tooltip-when-elided="true" name="bindings-list-label" style="-unity-font-style: bold; font-size: 16px; min-width: 250px;" />
+        <ui:Label text="Placeholder description of the bindings list" display-tooltip-when-elided="true" name="bindings-list-description" style="white-space: normal; min-width: 250px; font-size: 10px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;" />
+    </ui:VisualElement>
+    <ui:VisualElement name="ListArea" style="min-height: 400px; height: 95%; margin-top: 5px; padding-right: 5px;">
+        <ui:VisualElement name="FilterArea" style="margin-bottom: 10px;">
+            <ui:Toggle label="vJoy Only" tooltip="Show only controls that have a vJoy binding" name="vjoy-toggle" style="justify-content: flex-start; flex-direction: row-reverse; border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); width: 20%; font-size: 12px; align-items: center; -unity-text-align: middle-left; min-width: 115px; height: 30px;" />
+        </ui:VisualElement>
+        <ui:ListView focusable="true" name="required-bindings-list" show-alternating-row-backgrounds="ContentOnly" reorderable="true" header-title="Placeholder List Header Title" show-bound-collection-size="false" style="min-height: 350px; min-width: 250px; margin-top: 15px; padding-top: 5px;" />
+    </ui:VisualElement>
 </ui:UXML>

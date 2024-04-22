@@ -1,4 +1,5 @@
 using EVRC.Core;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -12,6 +13,9 @@ namespace EVRC.Desktop
         [SerializeField] VisualTreeAsset m_BindingEntryTemplate;
         [SerializeField] UIDocument parentUIDocument;
         [SerializeField] ControlBindingsState bindings;
+        [SerializeField] bool vJoyOnly; // filter for showing vJoy bindings only
+        
+        Toggle vJoyToggleElement;
 
         // UI element references
         ListView requiredBindingListView;
@@ -20,13 +24,19 @@ namespace EVRC.Desktop
         [SerializeField] List<BindingItem> m_requiredBindings;
 
         public void OnEnable()
-        {
+        {            
+            // filter starts as off
+            vJoyOnly = false;
+
             m_requiredBindings = new List<BindingItem>();
 
             VisualElement root = parentUIDocument.rootVisualElement;
 
             // Store a reference to the log list element
             requiredBindingListView = root.Q<ListView>("required-bindings-list");
+            vJoyToggleElement = root.Q<Toggle>("vjoy-toggle");
+
+            vJoyToggleElement.RegisterValueChangedCallback(OnVJoyToggleChange);
 
             SetListBindingMethods();
             m_requiredBindings.Add(new BindingItem() 
@@ -37,6 +47,13 @@ namespace EVRC.Desktop
                 deviceValue = "Boyestrous"            
             });
 
+            Refresh();
+        }
+
+        private void OnVJoyToggleChange(ChangeEvent<bool> evt)
+        {
+            //Debug.Log($"Bindings list toggle value changed to: {evt.newValue} || from: {evt.previousValue}");
+            vJoyOnly = evt.newValue;
             Refresh();
         }
 
@@ -60,7 +77,7 @@ namespace EVRC.Desktop
 
                     m_requiredBindings.Add(tempBindingItem);
                 } 
-                else if (binding.Value.HasKeyboardKeybinding)
+                else if (binding.Value.HasKeyboardKeybinding && !vJoyOnly)
                 {
                     BindingItem tempBindingItem = new BindingItem()
                     {

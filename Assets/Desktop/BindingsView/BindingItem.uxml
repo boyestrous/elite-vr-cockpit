@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/Desktop/BindingsView/bindingsStyles.uss?fileID=7433441132597879392&amp;guid=486398ca079e92444881f179de7726f0&amp;type=3#bindingsStyles" />
-    <ui:VisualElement name="BindingRow" class="bindingRow" style="border-bottom-width: 1px; border-bottom-color: rgba(0, 0, 0, 255); max-width: 500px; justify-content: space-between;">
+    <ui:VisualElement name="BindingRow" class="bindingRow" style="border-bottom-width: 1px; border-bottom-color: rgb(0, 0, 0); max-width: 500px; justify-content: space-between; align-items: stretch; padding-top: 2px;">
         <ui:Label text="SampleBinding" display-tooltip-when-elided="true" name="binding-label" class="bindingLabel" />
         <ui:VisualElement style="flex-direction: row;">
             <ui:Label text="Joy_ABAxis" display-tooltip-when-elided="true" name="key-value" class="bindingValue" />
