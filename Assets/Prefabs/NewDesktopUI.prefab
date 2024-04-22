@@ -151,7 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   missingBindingsListController: {fileID: 5052489821320121753}
-  vJoyBindingsListController: {fileID: 4726670226658153969}
+  BindingItemsListController: {fileID: 4726670226658153969}
   parentUIDocument: {fileID: 6465645074838448022}
 --- !u!114 &4630692459872260786
 MonoBehaviour:
@@ -489,7 +489,7 @@ GameObject:
   - component: {fileID: 7559442749638383542}
   - component: {fileID: 4726670226658153969}
   m_Layer: 6
-  m_Name: vJoyBindingsList
+  m_Name: BindingItemsList
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

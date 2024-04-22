@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 namespace EVRC.Desktop
 {
-    public class VJoyBindingsListController : MonoBehaviour
+    public class BindingItemsListController : MonoBehaviour
     {
         [Header("Templates and Scene Refs")]
         // UXML template for list entries
@@ -17,11 +17,11 @@ namespace EVRC.Desktop
         ListView requiredBindingListView;
         
 
-        [SerializeField] List<VJoyBindingItem> m_requiredBindings;
+        [SerializeField] List<BindingItem> m_requiredBindings;
 
         public void OnEnable()
         {
-            m_requiredBindings = new List<VJoyBindingItem>();
+            m_requiredBindings = new List<BindingItem>();
 
             VisualElement root = parentUIDocument.rootVisualElement;
 
@@ -29,7 +29,7 @@ namespace EVRC.Desktop
             requiredBindingListView = root.Q<ListView>("required-bindings-list");
 
             SetListBindingMethods();
-            m_requiredBindings.Add(new VJoyBindingItem() 
+            m_requiredBindings.Add(new BindingItem() 
             { 
                 name = "BindingsNotReadYet", 
                 keyValue = "Joy_ZYXAxis",
@@ -48,18 +48,33 @@ namespace EVRC.Desktop
 
             foreach(var binding in bindings.buttonBindings)
             {
-                if (!binding.Value.HasVJoyKeybinding) continue;
-
-                var tempBindingItem = new VJoyBindingItem()
+                if (binding.Value.HasVJoyKeybinding)
                 {
-                    name = binding.Key.ToString(),
-                    keyValue = binding.Value.VJoyKeybinding.Value.Key,
-                    deviceValue = binding.Value.VJoyKeybinding.Value.Device
-                };
+                    BindingItem tempBindingItem = new BindingItem()
+                    {
+                        name = binding.Key.ToString(),
+                        keyValue = binding.Value.VJoyKeybinding.Value.Key,
+                        deviceValue = binding.Value.VJoyKeybinding.Value.Device
+                    };
+                    tempBindingItem.deviceIndexValue = binding.Value.VJoyKeybinding.Value.DeviceIndex == null ? null : binding.Value.VJoyKeybinding.Value.DeviceIndex;
 
-                tempBindingItem.deviceIndexValue = binding.Value.VJoyKeybinding.Value.DeviceIndex == null ? null : binding.Value.VJoyKeybinding.Value.DeviceIndex;
+                    m_requiredBindings.Add(tempBindingItem);
+                } 
+                else if (binding.Value.HasKeyboardKeybinding)
+                {
+                    BindingItem tempBindingItem = new BindingItem()
+                    {
+                        name = binding.Key.ToString(),
+                        keyValue = binding.Value.KeyboardKeybinding.Value.Key,
+                        deviceValue = binding.Value.KeyboardKeybinding.Value.Device
+                    };
+                    tempBindingItem.deviceIndexValue = binding.Value.KeyboardKeybinding.Value.DeviceIndex == null ? null : binding.Value.KeyboardKeybinding.Value.DeviceIndex;
 
-                m_requiredBindings.Add(tempBindingItem);
+                    m_requiredBindings.Add(tempBindingItem);
+                } 
+
+                else { continue; }
+                
             }
 
             requiredBindingListView.Rebuild();
@@ -74,7 +89,7 @@ namespace EVRC.Desktop
                 var newListEntry = m_BindingEntryTemplate.Instantiate();
 
                 // Instantiate a controller for the data
-                var newListEntryLogic = new VJoyBindingItemDisplay();
+                var newListEntryLogic = new BindingItemDisplay();
 
                 // Assign the controller script to the visual element
                 newListEntry.userData = newListEntryLogic;
@@ -89,7 +104,7 @@ namespace EVRC.Desktop
             // Set up bind function for a specific list entry
             requiredBindingListView.bindItem = (item, index) =>
             {
-                (item.userData as VJoyBindingItemDisplay).SetBindingData(m_requiredBindings[index]);
+                (item.userData as BindingItemDisplay).SetBindingData(m_requiredBindings[index]);
             };
 
             // Set a fixed item height

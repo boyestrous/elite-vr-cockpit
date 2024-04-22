@@ -6,7 +6,7 @@ namespace EVRC.Desktop
     public class BindingsParentController : MonoBehaviour
     {
         public MissingBindingsListController missingBindingsListController;
-        public VJoyBindingsListController vJoyBindingsListController;
+        public BindingItemsListController BindingItemsListController;
 
         VisualElement missingBindingsContainer;
         VisualElement vJoyBindingsContainer;
@@ -19,7 +19,7 @@ namespace EVRC.Desktop
             
             //parent containers for the whole section
             missingBindingsContainer = root.Q<VisualElement>("MissingBindingsList"); 
-            vJoyBindingsContainer = root.Q<VisualElement>("VJoyBindingsList"); 
+            vJoyBindingsContainer = root.Q<VisualElement>("BindingItemsList"); 
 
             if (missingBindingsContainer == null || vJoyBindingsContainer == null) 
             {
@@ -30,9 +30,9 @@ namespace EVRC.Desktop
 
         public void Refresh()
         {
-            vJoyBindingsListController.Refresh();
+            BindingItemsListController.Refresh();
 
-            var missingBindings = missingBindingsListController.ValidateBindings();
+            bool missingBindings = missingBindingsListController.ValidateBindings();
             // If bindings are missing, display the missingBindings List
             missingBindingsContainer.style.display = missingBindings ? DisplayStyle.Flex : DisplayStyle.None;
             missingBindingsContainer.style.width = missingBindings ? Length.Percent(50) : 0;

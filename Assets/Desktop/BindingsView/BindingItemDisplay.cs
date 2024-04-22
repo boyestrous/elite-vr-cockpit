@@ -2,7 +2,7 @@ using UnityEngine.UIElements;
 
 namespace EVRC.Desktop
 {
-    public class VJoyBindingItemDisplay
+    public class BindingItemDisplay
     {
         Label m_bindingLabel;
         Label m_keyValue;
@@ -17,7 +17,7 @@ namespace EVRC.Desktop
             m_deviceIndex = visualElement.Q<Label>("index-value");
         }
 
-        public void SetBindingData(VJoyBindingItem bindingItem)
+        public void SetBindingData(BindingItem bindingItem)
         {
             m_bindingLabel.text = bindingItem.name; 
             m_keyValue.text = bindingItem.keyValue;

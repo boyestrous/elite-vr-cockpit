@@ -3,7 +3,7 @@ using System;
 namespace EVRC.Desktop
 {
     [Serializable]
-    public class VJoyBindingItem
+    public class BindingItem
     {
         public string name;
         public string keyValue;
