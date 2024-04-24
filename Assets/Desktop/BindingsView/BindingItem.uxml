@@ -1,10 +1,13 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/Desktop/BindingsView/bindingsStyles.uss?fileID=7433441132597879392&amp;guid=486398ca079e92444881f179de7726f0&amp;type=3#bindingsStyles" />
-    <ui:VisualElement name="BindingRow" class="bindingRow" style="border-bottom-width: 1px; border-bottom-color: rgb(0, 0, 0); max-width: 500px; justify-content: space-between; align-items: stretch; padding-top: 2px;">
-        <ui:Label text="SampleBinding" display-tooltip-when-elided="true" name="binding-label" class="bindingLabel" />
-        <ui:VisualElement style="flex-direction: row;">
-            <ui:Label text="Joy_ABAxis" display-tooltip-when-elided="true" name="key-value" class="bindingValue" />
-            <ui:VisualElement name="device-details" style="flex-direction: column; min-width: 85px; align-items: flex-end; justify-content: flex-start;">
+    <ui:VisualElement name="BindingRow" class="bindingRow" style="border-bottom-width: 1px; border-bottom-color: rgb(0, 0, 0); max-width: 700px; justify-content: space-between; align-items: stretch; padding-top: 2px; min-width: 250px;">
+        <ui:VisualElement style="flex-direction: row; width: 80%; min-width: 350px; max-width: 540px;">
+            <ui:Label text="SampleBinding" display-tooltip-when-elided="true" name="binding-label" class="bindingLabel" style="min-width: 75px; max-width: 200px; width: 30%;" />
+            <ui:Label display-tooltip-when-elided="true" name="error-message" enable-rich-text="true" text="This is a sample error message of approximately 25 words. These are  more words to try to up the character count." style="font-size: 9px; white-space: normal; max-width: 500px; margin-top: 0; margin-bottom: 0; margin-right: 2px; padding-top: 2px; padding-bottom: 2px; padding-right: 0; padding-left: 0; width: 70%; min-width: 260px; display: none;" />
+        </ui:VisualElement>
+        <ui:VisualElement style="flex-direction: row; width: 20%; min-width: 140px; max-width: 160px;">
+            <ui:Label text="Joy_ABAxis" display-tooltip-when-elided="true" name="key-value" class="bindingValue" style="width: 50%; min-width: 65px; max-width: 100px;" />
+            <ui:VisualElement name="device-details" style="flex-direction: column; min-width: 65px; align-items: flex-end; justify-content: flex-start; max-width: 150px; width: 50%;">
                 <ui:VisualElement name="device-top-row" class="deviceRow" style="align-items: auto;">
                     <ui:Label text="device:" display-tooltip-when-elided="true" name="device-label" class="smallLabel" />
                     <ui:Label text="sample" display-tooltip-when-elided="true" name="device-value" class="smallValue" />

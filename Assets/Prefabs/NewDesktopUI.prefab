@@ -150,8 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0fb38ed66a311e4a8aa3dbd99346805, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  missingBindingsListController: {fileID: 5052489821320121753}
-  BindingItemsListController: {fileID: 4726670226658153969}
+  bindingItemsListController: {fileID: 4726670226658153969}
   parentUIDocument: {fileID: 6465645074838448022}
 --- !u!114 &4630692459872260786
 MonoBehaviour:
@@ -293,6 +292,7 @@ MonoBehaviour:
   m_BindingEntryTemplate: {fileID: 9197481963319205126, guid: 369281b6eaf3e7047abbb422ec8460a8,
     type: 3}
   parentUIDocument: {fileID: 6465645074838448022}
+  bindingParentController: {fileID: 0}
   missingBindings: 
 --- !u!1 &4769661530639456945
 GameObject:
@@ -526,6 +526,11 @@ MonoBehaviour:
     type: 3}
   parentUIDocument: {fileID: 6465645074838448022}
   bindings: {fileID: 11400000, guid: 1de2906d06cd6f745bab03c953c45a3a, type: 2}
+  savedGameState: {fileID: 11400000, guid: 6f013364a8a2fd4448e6e72d02d181c3, type: 2}
+  bindingsState: {fileID: 11400000, guid: 1de2906d06cd6f745bab03c953c45a3a, type: 2}
+  assetCatalog: {fileID: 11400000, guid: 83d2b71115eca78419410b43b99628b2, type: 2}
+  missingBindings: 
+  vJoyOnly: 0
   m_requiredBindings: []
 --- !u!1001 &650565485984119541
 PrefabInstance:

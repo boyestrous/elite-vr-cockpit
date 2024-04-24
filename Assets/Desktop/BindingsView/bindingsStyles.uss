@@ -59,3 +59,7 @@
     min-height: 250px;
     min-width: 400px;
 }
+
+.highlighted {
+    background-color: rgba(255, 234, 146, 255);
+}

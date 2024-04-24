@@ -21,6 +21,8 @@ namespace EVRC.Desktop
         [SerializeField] VisualTreeAsset m_BindingEntryTemplate;
         public UIDocument parentUIDocument;
 
+        public BindingsParentController bindingParentController;
+
 
         // Other ListView controllers always include a custom class for the list items, but this one only has a single property...
         // Including this class for uniformity, maybe not necessary
@@ -33,12 +35,13 @@ namespace EVRC.Desktop
         // UI element references
         ListView missingBindingsListView;
 
-        public List<EDControlButton> missingBindings = new List<EDControlButton>();
+        public List<EDControlButton> missingBindings;
         private List<SavedControlButton> controlButtons;
 
         public void OnEnable()
         {
             controlButtons = savedGameState.controlButtons;
+            missingBindings = new List<EDControlButton>();
             m_missingBindings = new List<MissingBindingItem>();
 
             VisualElement root = parentUIDocument.rootVisualElement;
@@ -51,20 +54,20 @@ namespace EVRC.Desktop
         /// <summary>
         /// Check that each ControlButtonAsset in the catalog has a valid binding in the bindings file
         /// </summary>
-        /// <returns>True if bindings are valid, False if bindings are missing.</returns>
-        public bool ValidateBindings()
-        {
+        ///// <returns>True if bindings are valid, False if bindings are missing.</returns>
+        //public bool ValidateBindings()
+        //{
 
-            //Get a list of controlButtons that are configured by the player and have no active bindings
-            List<EDControlButton> missing = controlButtons
-                .Select(button => assetCatalog.GetByName(button.type))
-                .Where(button => bindingsState.buttonBindings[button.GetControl()].HasKeyboardKeybinding == false && bindingsState.buttonBindings[button.GetControl()].HasVJoyKeybinding == false)
-                .Select(asset => asset.GetControl())
-                .ToList();
+        //    //Get a list of controlButtons that are configured by the player and have no active bindings
+        //    List<EDControlButton> missing = controlButtons
+        //        .Select(button => assetCatalog.GetByName(button.type))
+        //        .Where(button => bindingsState.buttonBindings[button.GetControl()].HasKeyboardKeybinding == false && bindingsState.buttonBindings[button.GetControl()].HasVJoyKeybinding == false)
+        //        .Select(asset => asset.GetControl())
+        //        .ToList();
 
-            missingBindings = missing;
-            return UpdateListView();
-        }
+        //    missingBindings = missing;
+        //    return UpdateListView();
+        //}
 
         private bool UpdateListView()
         {
@@ -82,17 +85,6 @@ namespace EVRC.Desktop
 
             missingBindingsListView.Rebuild();
             return missingBindings.Count != 0;
-        }
-
-        private void OnMissingItemSelected(IEnumerable<object> enumerable)
-        {
-            // Log the selected items
-            foreach (object item in enumerable)
-            {
-                // Assuming each item is of type MissingBindingItem
-                MissingBindingItem selectedItem = (MissingBindingItem)item;
-                Debug.Log("Selected Item Name: " + selectedItem.buttonName);
-            }
         }
 
         void SetListBindingMethods()
@@ -115,8 +107,6 @@ namespace EVRC.Desktop
                 // Return the root of the instantiated visual tree
                 return newListEntry;
             };
-
-            missingBindingsListView.onSelectionChange += OnMissingItemSelected;
 
             // Set up bind function for a specific list entry
             missingBindingsListView.bindItem = (item, index) =>

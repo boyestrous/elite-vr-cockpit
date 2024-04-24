@@ -1,6 +1,11 @@
 using EVRC.Core;
+using EVRC.Core.Actions;
+using EVRC.Core.Overlay;
+using EVRC.DesktopUI;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -13,33 +18,55 @@ namespace EVRC.Desktop
         [SerializeField] VisualTreeAsset m_BindingEntryTemplate;
         [SerializeField] UIDocument parentUIDocument;
         [SerializeField] ControlBindingsState bindings;
+        [SerializeField] RequiredBindingsState requiredBindings;
+        public SavedGameState savedGameState;
+        public ControlButtonAssetCatalog assetCatalog;
+        
+        // Filters and Toggles for the ListView
         [SerializeField] bool vJoyOnly; // filter for showing vJoy bindings only
-        
+        [SerializeField] bool validOnly; // filter for showing vJoy bindings only
+        [SerializeField] bool errorsOnly; // filter for showing vJoy bindings only
         Toggle vJoyToggleElement;
+        Toggle validToggleElement;
+        Toggle errorsToggleElement;
 
-        // UI element references
-        ListView requiredBindingListView;
+        //Lists of problematic bindings
+        Dictionary<EDControlButton, ControlButtonBinding> filteredButtonBindings;
+        public List<EDControlButton> missingRequiredBindings; //no binding, and default required
+        public List<EDControlButton> missingHolographicBindings; //no binding, but has a holo button
+        public List<EDControlButton> allErrorBindings; // combination of binds with all types of errors
+        ListView bindingsListView;
+
+        private List<SavedControlButton> controlButtons;
         
 
-        [SerializeField] List<BindingItem> m_requiredBindings;
+        [SerializeField] List<BindingItem> bindingItems;
 
         public void OnEnable()
         {            
             // filter starts as off
             vJoyOnly = false;
+            validOnly = false;
+            errorsOnly = false;
 
-            m_requiredBindings = new List<BindingItem>();
+            controlButtons = savedGameState.controlButtons;
+            bindingItems = new List<BindingItem>();
+            filteredButtonBindings = bindings.buttonBindings;
 
             VisualElement root = parentUIDocument.rootVisualElement;
 
             // Store a reference to the log list element
-            requiredBindingListView = root.Q<ListView>("required-bindings-list");
+            bindingsListView = root.Q<ListView>("required-bindings-list");
             vJoyToggleElement = root.Q<Toggle>("vjoy-toggle");
+            validToggleElement = root.Q<Toggle>("valid-toggle");
+            errorsToggleElement = root.Q<Toggle>("errors-toggle");
 
             vJoyToggleElement.RegisterValueChangedCallback(OnVJoyToggleChange);
+            validToggleElement.RegisterValueChangedCallback(OnValidToggleChange);
+            errorsToggleElement.RegisterValueChangedCallback(OnErrorsToggleChange);
 
             SetListBindingMethods();
-            m_requiredBindings.Add(new BindingItem() 
+            bindingItems.Add(new BindingItem() 
             { 
                 name = "BindingsNotReadYet", 
                 keyValue = "Joy_ZYXAxis",
@@ -47,60 +74,145 @@ namespace EVRC.Desktop
                 deviceValue = "Boyestrous"            
             });
 
-            Refresh();
+            RefreshBindingsList();
+        }
+
+        public void UpdateErrorBindings()
+        {
+            allErrorBindings.Clear();
+            allErrorBindings.AddRange(missingHolographicBindings);
+            allErrorBindings.AddRange(missingRequiredBindings);
+        }
+
+        public void FindMissingBindings()
+        {
+
+            //Get a list of controlButtons that are configured by the player and have no active bindings
+            List<EDControlButton> holoMissing = controlButtons
+                .Select(button => assetCatalog.GetByName(button.type))
+                .Where(button => bindings.buttonBindings[button.GetControl()].HasKeyboardKeybinding == false && bindings.buttonBindings[button.GetControl()].HasVJoyKeybinding == false)
+                .Select(asset => asset.GetControl())
+                .ToList();
+
+            missingHolographicBindings = holoMissing;
+
+            List<EDControlButton> reqMissing = bindings.buttonBindings
+                .Where(kv => bindings.buttonBindings[kv.Key].HasKeyboardKeybinding == false && bindings.buttonBindings[kv.Key].HasVJoyKeybinding == false)
+                .Select(kv => kv.Key)
+                .Where(button => requiredBindings.requiredBindings.Contains(button))
+                .ToList(); // Convert to List<EDControlButton>
+
+            missingRequiredBindings = reqMissing;
+
+            UpdateErrorBindings();
         }
 
         private void OnVJoyToggleChange(ChangeEvent<bool> evt)
         {
             //Debug.Log($"Bindings list toggle value changed to: {evt.newValue} || from: {evt.previousValue}");
             vJoyOnly = evt.newValue;
-            Refresh();
+            RefreshBindingsList();
         }
 
-        public void Refresh()
+        private void OnValidToggleChange(ChangeEvent<bool> evt)
         {
-            m_requiredBindings.Clear();
+            //Debug.Log($"Bindings list toggle value changed to: {evt.newValue} || from: {evt.previousValue}");
+            validOnly = evt.newValue;
+            RefreshBindingsList();
+        }
 
-            if (bindings.buttonBindings == null) return;
+        private void OnErrorsToggleChange(ChangeEvent<bool> evt)
+        {
+            //Debug.Log($"Bindings list toggle value changed to: {evt.newValue} || from: {evt.previousValue}");
+            errorsOnly = evt.newValue;
 
-            foreach(var binding in bindings.buttonBindings)
+            RefreshBindingsList();
+        }
+
+        private BindingItemState GetBindingItemState(EDControlButton controlButton)
+        {
+            if (missingHolographicBindings.Contains(controlButton))
             {
-                if (binding.Value.HasVJoyKeybinding)
-                {
-                    BindingItem tempBindingItem = new BindingItem()
-                    {
-                        name = binding.Key.ToString(),
-                        keyValue = binding.Value.VJoyKeybinding.Value.Key,
-                        deviceValue = binding.Value.VJoyKeybinding.Value.Device
-                    };
-                    tempBindingItem.deviceIndexValue = binding.Value.VJoyKeybinding.Value.DeviceIndex == null ? null : binding.Value.VJoyKeybinding.Value.DeviceIndex;
-
-                    m_requiredBindings.Add(tempBindingItem);
-                } 
-                else if (binding.Value.HasKeyboardKeybinding && !vJoyOnly)
-                {
-                    BindingItem tempBindingItem = new BindingItem()
-                    {
-                        name = binding.Key.ToString(),
-                        keyValue = binding.Value.KeyboardKeybinding.Value.Key,
-                        deviceValue = binding.Value.KeyboardKeybinding.Value.Device
-                    };
-                    tempBindingItem.deviceIndexValue = binding.Value.KeyboardKeybinding.Value.DeviceIndex == null ? null : binding.Value.KeyboardKeybinding.Value.DeviceIndex;
-
-                    m_requiredBindings.Add(tempBindingItem);
-                } 
-
-                else { continue; }
-                
+                return BindingItemState.MissingHolographic;
             }
 
-            requiredBindingListView.Rebuild();
+            if (missingRequiredBindings.Contains(controlButton))
+            {
+                return BindingItemState.MissingRequired;
+            }
+
+            return BindingItemState.Good;
         }
+
+        public void RefreshBindingsList()
+        {
+            bindingItems.Clear();
+            if (bindings.buttonBindings == null) return;
+
+            // Filter buttonBindings based to include only errors
+            if (errorsOnly)
+            {
+                filteredButtonBindings = bindings.buttonBindings
+                    .Where(kv => allErrorBindings.Contains(kv.Key))
+                    .ToDictionary(kv => kv.Key, kv => kv.Value);
+            }
+            else
+            {
+                filteredButtonBindings = bindings.buttonBindings;
+            }
+
+            // Loop through and select items for the list
+            foreach (var binding in filteredButtonBindings)
+            {
+                bool isValid = (!validOnly) ||
+                               (binding.Value.HasVJoyKeybinding || binding.Value.HasKeyboardKeybinding);
+
+                if (!isValid) continue;
+
+                if (vJoyOnly && !binding.Value.HasVJoyKeybinding) continue;
+
+                var tempBindingItem = new BindingItem()
+                {
+                    name = binding.Key.ToString()
+                };
+
+                if (binding.Value.HasVJoyKeybinding)
+                {
+                    tempBindingItem.keyValue = binding.Value.VJoyKeybinding.Value.Key;
+                    tempBindingItem.deviceValue = binding.Value.VJoyKeybinding.Value.Device;
+                    tempBindingItem.deviceIndexValue = binding.Value.VJoyKeybinding.Value.DeviceIndex;
+                    tempBindingItem.state = GetBindingItemState(binding.Key);
+                }
+                else if (binding.Value.HasKeyboardKeybinding)
+                {
+                    tempBindingItem.keyValue = binding.Value.KeyboardKeybinding.Value.Key;
+                    tempBindingItem.deviceValue = binding.Value.KeyboardKeybinding.Value.Device;
+                    tempBindingItem.deviceIndexValue = binding.Value.KeyboardKeybinding.Value.DeviceIndex;
+                    tempBindingItem.state = GetBindingItemState(binding.Key);
+                }
+                else
+                {
+                    var primary = binding.Value.Primary;
+                    var secondary = binding.Value.Secondary;
+
+                    tempBindingItem.deviceValue = !string.IsNullOrEmpty(primary.Device) && primary.Device != "{NoDevice}" ? primary.Device : secondary.Device;
+                    tempBindingItem.deviceIndexValue = primary.DeviceIndex ?? secondary.DeviceIndex;
+                    tempBindingItem.state = GetBindingItemState(binding.Key);
+
+                }
+
+                bindingItems.Add(tempBindingItem);
+            }
+
+            bindingsListView.Rebuild();
+        }
+
+
 
         void SetListBindingMethods()
         {
             //Set up a make item function for a list entry
-            requiredBindingListView.makeItem = () =>
+            bindingsListView.makeItem = () =>
             {
                 // Instantiate the UXML template for the entry
                 var newListEntry = m_BindingEntryTemplate.Instantiate();
@@ -119,16 +231,17 @@ namespace EVRC.Desktop
             };
 
             // Set up bind function for a specific list entry
-            requiredBindingListView.bindItem = (item, index) =>
+            bindingsListView.bindItem = (item, index) =>
             {
-                (item.userData as BindingItemDisplay).SetBindingData(m_requiredBindings[index]);
+                (item.userData as BindingItemDisplay).SetBindingData(bindingItems[index]);
             };
 
             // Set a fixed item height
             //m_LogList.fixedItemHeight = 45;
 
             // Set the actual item's source list/array
-            requiredBindingListView.itemsSource = m_requiredBindings;
+            bindingsListView.itemsSource = bindingItems;
         }
+
     }
 }

@@ -2,6 +2,14 @@ using System;
 
 namespace EVRC.Desktop
 {
+    public enum BindingItemState
+    {
+        Good,
+        MissingRecommended,
+        MissingHolographic,
+        MissingRequired
+    }
+
     [Serializable]
     public class BindingItem
     {
@@ -9,5 +17,6 @@ namespace EVRC.Desktop
         public string keyValue;
         public string deviceValue;
         public string deviceIndexValue;
+        public BindingItemState state;
     }
 }
