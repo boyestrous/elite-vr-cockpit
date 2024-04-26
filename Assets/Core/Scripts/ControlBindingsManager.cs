@@ -42,6 +42,7 @@ namespace EVRC.Core
         {
             bindingsFile = Paths.ControlBindingsPath;
             bindingsPath = Path.GetDirectoryName(bindingsFile);
+            controlBindingsState.bindingsFilePath = bindingsFile;
         }
         /// <summary>
         /// Overload for setting a custom path (mostly for testing)

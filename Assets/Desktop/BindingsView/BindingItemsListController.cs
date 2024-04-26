@@ -5,7 +5,9 @@ using EVRC.DesktopUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Plastic.Antlr3.Runtime;
 using UnityEditor.Search;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -16,6 +18,7 @@ namespace EVRC.Desktop
         [Header("Templates and Scene Refs")]
         // UXML template for list entries
         [SerializeField] VisualTreeAsset m_BindingEntryTemplate;
+        [SerializeField] VisualTreeAsset m_FixBindingModalTemplate;
         [SerializeField] UIDocument parentUIDocument;
         [SerializeField] ControlBindingsState bindings;
         [SerializeField] RequiredBindingsState requiredBindings;
@@ -30,12 +33,17 @@ namespace EVRC.Desktop
         Toggle validToggleElement;
         Toggle errorsToggleElement;
 
+        VisualElement modalUI; //fix bindings modal
+
         //Lists of problematic bindings
         Dictionary<EDControlButton, ControlButtonBinding> filteredButtonBindings;
         public List<EDControlButton> missingRequiredBindings; //no binding, and default required
         public List<EDControlButton> missingHolographicBindings; //no binding, but has a holo button
         public List<EDControlButton> allErrorBindings; // combination of binds with all types of errors
+
+        private List<string> availableSingleKeyBindings;
         ListView bindingsListView;
+        BindingItem selectedItem;
 
         private List<SavedControlButton> controlButtons;
         
@@ -74,7 +82,33 @@ namespace EVRC.Desktop
                 deviceValue = "Boyestrous"            
             });
 
+
+
             RefreshBindingsList();
+        }
+
+        void OnClickButtonInRow(ClickEvent evt)
+        {
+            // Get the clicked element
+            VisualElement clickedElement = evt.target as VisualElement;
+
+            // Check if the clicked element is a button
+            if (clickedElement.name == "auto-fix-button")
+            {
+                // Get the parent of the button, which should be the ListView row
+                VisualElement listViewRow = clickedElement.parent;
+
+                string clickedBindingName = listViewRow.Q<Label>("binding-label").text;
+
+                // Get the index of the ListView row
+                int index = bindingsListView.IndexOf(listViewRow);
+
+                // Update the selected item of the ListView
+                bindingsListView.selectedIndex = index;
+
+                // Manually invoke the onSelectionChange method
+                LaunchFixBindingModal(clickedBindingName);
+            }
         }
 
         public void UpdateErrorBindings()
@@ -82,7 +116,9 @@ namespace EVRC.Desktop
             allErrorBindings.Clear();
             allErrorBindings.AddRange(missingHolographicBindings);
             allErrorBindings.AddRange(missingRequiredBindings);
-        }
+
+            RefreshBindingsList();
+        }    
 
         public void FindMissingBindings()
         {
@@ -125,7 +161,6 @@ namespace EVRC.Desktop
         {
             //Debug.Log($"Bindings list toggle value changed to: {evt.newValue} || from: {evt.previousValue}");
             errorsOnly = evt.newValue;
-
             RefreshBindingsList();
         }
 
@@ -144,9 +179,80 @@ namespace EVRC.Desktop
             return BindingItemState.Good;
         }
 
+        private void FindAvailableKeyCombos()
+        {
+            // Get all available key strings that could be used 
+            List<string> allKeyStrings = KeyboardInterface.GetAllKeycodeStrings();
+
+            // These key strings are not great for consistent implementation. Avoid auto-assigning them.
+            List<string> ignoreKeyStrings = new List<string> {
+                "Key_Escape",
+                "Key_LeftShift",
+                "Key_LeftControl",
+                "Key_LeftAlt",
+                "Key_RightShift",
+                "Key_RightControl",
+                "Key_RightAlt",
+                "Key_Backspace",
+                "Key_Tab",
+                "Key_Enter",
+                "Key_CapsLock",
+                "Key_Space",
+                "Key_PageUp",
+                "Key_PageDown",
+                "Key_End",
+                "Key_Home",
+                "Key_LeftArrow",
+                "Key_UpArrow",
+                "Key_RightArrow",
+                "Key_DownArrow",
+                "Key_Insert",
+                "Key_Delete",
+            };
+
+            // Filter out the ignored strings
+            allKeyStrings = allKeyStrings.Where(item => !ignoreKeyStrings.Contains(item)).ToList();
+
+            // Initialize a list to store strings without matching key bindings
+            List<string> availableKeyCombos = new List<string>();
+
+            // Check each key string for matching key bindings
+            foreach (string keyString in allKeyStrings)
+            {
+                // Check if any key binding (Primary or Secondary) matches the key string
+                bool hasMatchingKey = bindings.buttonBindings.Values
+                    .Any(binding => binding.Primary.Key == keyString || binding.Secondary.Key == keyString);
+
+                // If there are no matching key bindings for the current key string, add it to the list
+                if (!hasMatchingKey)
+                {
+                    availableKeyCombos.Add(keyString);
+                }
+            }
+
+            if (availableKeyCombos.Count > 0)
+            {
+                // Found strings without matching key bindings
+                Debug.Log($"There are {availableKeyCombos.Count} available keys that could be used for the missing bindings.");
+                //foreach (string keyCombo in availableKeyCombos)
+                //{
+                //    Debug.Log($" >>>> {keyCombo}");
+                //}
+            }
+            else
+            {
+                // No key strings found without matching key bindings
+                Debug.LogWarning("BindingItemsListController: No key_combos were found to be available without an existing binding. You will be unable to fix the missing bindings.");
+
+            }
+            availableSingleKeyBindings = availableKeyCombos;
+        }
+
         public void RefreshBindingsList()
         {
             bindingItems.Clear();
+
+
             if (bindings.buttonBindings == null) return;
 
             // Filter buttonBindings based to include only errors
@@ -204,21 +310,98 @@ namespace EVRC.Desktop
                 bindingItems.Add(tempBindingItem);
             }
 
-            bindingsListView.Rebuild();
+            bindingsListView.RefreshItems();
+
+            if (allErrorBindings.Count > 0)
+            {
+                FindAvailableKeyCombos();
+            }
         }
 
+        void LaunchFixBindingModal(string bindingName)
+        {
+            modalUI = m_FixBindingModalTemplate.Instantiate();
+            //availableSingleKeyBindings
+            Button okButton = modalUI.Q<Button>("ok-button");
+            Button cancelButton = modalUI.Q<Button>("cancel-button");
+            Button xButton = modalUI.Q<Button>("x-button");
+            Label bindingLabel = modalUI.Q<Label>("control-binding-name");
+            DropdownField availableKeys = modalUI.Q<DropdownField>("available-keys-dropdown");
 
+            okButton.clicked += SubmitFixBinding;
+            cancelButton.clicked += CloseFixBindingModal;
+            xButton.clicked += CloseFixBindingModal;
+            bindingLabel.text = bindingName;
+            availableKeys.choices = availableSingleKeyBindings;
+            availableKeys.RegisterCallback<ChangeEvent<string>>(OnBindingFixDropdownSelectionChanged);
+
+            // Get the VisualElement representing the ListView
+            VisualElement listViewElement = bindingsListView.hierarchy.parent;
+
+            // Now you can use the RectTransform listViewRectTransform as needed
+            // For example, you can get its position, size, etc.
+            Vector2 listViewPosition = listViewElement.contentRect.position;
+            Vector2 listViewSize = listViewElement.contentRect.size;
+
+            // Calculate the center position of the ListView
+            Vector2 listViewCenter = new Vector2(listViewPosition.x + (listViewSize.x / 2f),
+                                                 listViewPosition.y + (listViewSize.y / 2f));
+
+            // Set the position of modalUI
+            modalUI.style.position = Position.Absolute;
+            modalUI.style.left = listViewCenter.x;
+            modalUI.style.top = listViewCenter.y;
+
+            parentUIDocument.rootVisualElement.Add(modalUI);
+        }
+
+        void SubmitFixBinding()
+        {
+            var controlName = modalUI.Q<Label>("control-binding-name");            
+            var dropdownField = modalUI.Q<DropdownField>("available-keys-dropdown");
+            var newValue = dropdownField.value;
+
+            Debug.Log($"Updating binding for {controlName} to {newValue}");
+
+            EDControlBindingsUtils.UpdateBindingXml(bindings.bindingsFilePath, controlName.text, newValue);
+
+            CloseFixBindingModal();
+        }
+
+        void OnBindingFixDropdownSelectionChanged(ChangeEvent<string> evt)
+        {
+            Button okButton = modalUI.Q<Button>("ok-button");
+
+            if (evt.newValue != null)
+            {
+                okButton.SetEnabled(true);
+                okButton.RemoveFromClassList("disabledBtn");
+            }
+            else
+            {
+                okButton.SetEnabled(false);
+                okButton.AddToClassList("disabledBtn");
+            }
+
+            //Debug.Log($"dropdown changed: {evt.newValue}");
+        }
+
+        void CloseFixBindingModal()
+        {
+            modalUI.RemoveFromHierarchy();
+        }
 
         void SetListBindingMethods()
         {
+
             //Set up a make item function for a list entry
             bindingsListView.makeItem = () =>
             {
                 // Instantiate the UXML template for the entry
-                var newListEntry = m_BindingEntryTemplate.Instantiate();
+                TemplateContainer newListEntry = m_BindingEntryTemplate.Instantiate();
 
                 // Instantiate a controller for the data
-                var newListEntryLogic = new BindingItemDisplay();
+                BindingItemDisplay newListEntryLogic = new BindingItemDisplay();
 
                 // Assign the controller script to the visual element
                 newListEntry.userData = newListEntryLogic;
@@ -226,8 +409,21 @@ namespace EVRC.Desktop
                 // Initialize the controller script
                 newListEntryLogic.SetVisualElement(newListEntry);
 
+                // Find the button in the listItem prefab
+                Button button = newListEntry.Q<Button>("auto-fix-button");
+
+                // Add a click listener to the button
+                //button.clicked += LaunchFixBindingModal; 
+                button.RegisterCallback<ClickEvent>(OnClickButtonInRow);
+
                 // Return the root of the instantiated visual tree
                 return newListEntry;
+            };
+
+            bindingsListView.onSelectionChange += (IEnumerable<object> selections) =>
+            {             
+                selectedItem = selections.FirstOrDefault() as BindingItem;
+                Debug.Log($"selected Item: {selectedItem.name}");
             };
 
             // Set up bind function for a specific list entry

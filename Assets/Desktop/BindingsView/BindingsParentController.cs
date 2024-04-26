@@ -28,7 +28,7 @@ namespace EVRC.Desktop
 
         public void Refresh()
         {
-            bindingItemsListController.RefreshBindingsList();
+            //bindingItemsListController.RefreshBindingsList();
             bindingItemsListController.FindMissingBindings();
         }
     }

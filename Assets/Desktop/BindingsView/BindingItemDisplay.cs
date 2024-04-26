@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 
 namespace EVRC.Desktop
@@ -10,6 +12,8 @@ namespace EVRC.Desktop
         Label m_deviceIndex;
         Label m_errorMessage;
         VisualElement m_rowContainer;
+        public Button m_autoFixButton;
+        public DropdownField m_chooseKeyDropdown;
 
         public void SetVisualElement(VisualElement visualElement)
         {
@@ -18,6 +22,8 @@ namespace EVRC.Desktop
             m_deviceValue = visualElement.Q<Label>("device-value");
             m_deviceIndex = visualElement.Q<Label>("index-value");
             m_errorMessage = visualElement.Q<Label>("error-message");
+            m_autoFixButton = visualElement.Q<Button>("auto-fix-button");
+            m_chooseKeyDropdown = visualElement.Q<DropdownField>("choose-key-dropdown");
             m_rowContainer = visualElement;
         }
 
@@ -37,8 +43,9 @@ namespace EVRC.Desktop
                 m_rowContainer.AddToClassList("errorRow");
                 m_deviceValue.text = "N/A";
                 m_keyValue.text = "MISSING";
+                m_autoFixButton.style.display = DisplayStyle.Flex;
                 m_errorMessage.style.display = DisplayStyle.Flex; 
-                m_errorMessage.text = "There is a holographic button configured for this control. A binding is required in order to operate a holographic button";
+                m_errorMessage.text = "There is a holographic button configured for this control. You can set this binding to ANY valid key";
             }
 
             if (bindingItem.state == BindingItemState.MissingRequired)
@@ -46,8 +53,9 @@ namespace EVRC.Desktop
                 m_rowContainer.AddToClassList("errorRow");
                 m_deviceValue.text = "N/A";
                 m_keyValue.text = "MISSING";
+                m_autoFixButton.style.display = DisplayStyle.Flex;
                 m_errorMessage.style.display = DisplayStyle.Flex;
-                m_errorMessage.text = "This binding is required for EVRC functions.";
+                m_errorMessage.text = "This binding is required for EVRC functions. Try to set it to something memorable...";
             }
         }
     }

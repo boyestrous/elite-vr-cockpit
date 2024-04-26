@@ -12,6 +12,7 @@ namespace EVRC.Core
     {
         public Dictionary<EDControlButton, ControlButtonBinding> buttonBindings = new Dictionary<EDControlButton, ControlButtonBinding>();
         public bool ready = false;
+        public string bindingsFilePath;
 
         
         public override string GetStatusText()

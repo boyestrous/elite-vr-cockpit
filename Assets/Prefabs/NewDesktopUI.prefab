@@ -133,7 +133,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2688429832135916705}
   - {fileID: 7559442749638383542}
   m_Father: {fileID: 6465645074838448020}
   m_RootOrder: 3
@@ -242,58 +241,6 @@ Transform:
   m_Father: {fileID: 6465645074838448020}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &3779239808811944745
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2688429832135916705}
-  - component: {fileID: 5052489821320121753}
-  m_Layer: 6
-  m_Name: MissingBindings
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2688429832135916705
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3779239808811944745}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6904863876773597988}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5052489821320121753
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3779239808811944745}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3556f02bb1dd9c3409980578d1f4212d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  savedGameState: {fileID: 11400000, guid: 6f013364a8a2fd4448e6e72d02d181c3, type: 2}
-  bindingsState: {fileID: 11400000, guid: 1de2906d06cd6f745bab03c953c45a3a, type: 2}
-  assetCatalog: {fileID: 11400000, guid: 83d2b71115eca78419410b43b99628b2, type: 2}
-  m_BindingEntryTemplate: {fileID: 9197481963319205126, guid: 369281b6eaf3e7047abbb422ec8460a8,
-    type: 3}
-  parentUIDocument: {fileID: 6465645074838448022}
-  bindingParentController: {fileID: 0}
-  missingBindings: 
 --- !u!1 &4769661530639456945
 GameObject:
   m_ObjectHideFlags: 0
@@ -508,7 +455,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6904863876773597988}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4726670226658153969
 MonoBehaviour:
@@ -524,14 +471,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_BindingEntryTemplate: {fileID: 9197481963319205126, guid: a4e5a72a43cd33d4ca76cd2283c05644,
     type: 3}
+  m_FixBindingModalTemplate: {fileID: 9197481963319205126, guid: 836954df4531976408681c7c0b69277c,
+    type: 3}
   parentUIDocument: {fileID: 6465645074838448022}
   bindings: {fileID: 11400000, guid: 1de2906d06cd6f745bab03c953c45a3a, type: 2}
+  requiredBindings: {fileID: 11400000, guid: 7baa37a7f24b0c2478d0122fea0db811, type: 2}
   savedGameState: {fileID: 11400000, guid: 6f013364a8a2fd4448e6e72d02d181c3, type: 2}
-  bindingsState: {fileID: 11400000, guid: 1de2906d06cd6f745bab03c953c45a3a, type: 2}
   assetCatalog: {fileID: 11400000, guid: 83d2b71115eca78419410b43b99628b2, type: 2}
-  missingBindings: 
   vJoyOnly: 0
-  m_requiredBindings: []
+  validOnly: 0
+  errorsOnly: 0
+  missingRequiredBindings: 
+  missingHolographicBindings: 
+  allErrorBindings: 
+  bindingItems: []
 --- !u!1001 &650565485984119541
 PrefabInstance:
   m_ObjectHideFlags: 0

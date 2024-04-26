@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Xml;
 using System.Xml.Linq;
 using UnityEngine;
 
@@ -67,6 +68,144 @@ namespace EVRC.Core
                                     .FirstOrDefault(attr => attr.Name.LocalName.ToLowerInvariant() == localName);
 
             return attribute?.Value;  // Return the attribute value if found, otherwise return null
+        }
+
+        public static void UpdateBindingXml(string filePath, string tagName, string newKey)
+        {
+            // Save a copy, just in case
+            SaveCopyWithTimestamp(filePath);
+
+            // Load XML document from file
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(filePath);
+
+
+            // Find elements with the specified tag name
+            XmlNodeList nodes = xmlDoc.GetElementsByTagName(tagName);
+
+            // Iterate through the found elements
+            foreach (XmlNode node in nodes)
+            {
+                // Get the "Secondary" element
+                XmlNode secondaryNode = node.SelectSingleNode("Secondary");
+                if (secondaryNode != null)
+                {
+                    // Update the "Device" and "Key" properties of the "Secondary" element
+                    XmlNode deviceAttr = secondaryNode.Attributes.GetNamedItem("Device");
+                    if (deviceAttr != null)
+                    {
+                        deviceAttr.Value = "Keyboard";
+                    }
+
+                    XmlNode keyAttr = secondaryNode.Attributes.GetNamedItem("Key");
+                    if (keyAttr != null)
+                    {
+                        keyAttr.InnerText = newKey;
+                    }
+                }
+            }
+
+            // Save the modified XML back to the file
+            xmlDoc.Save(filePath);
+        }
+
+        public static void SaveCopyWithTimestamp(string originalFilePath)
+        {
+            try
+            {
+                // Check if the original file exists
+                if (!File.Exists(originalFilePath))
+                {
+                    Debug.LogError("Original file does not exist: " + originalFilePath);
+                    return;
+                }
+
+                // Get the directory and filename from the original file path
+                string directory = Path.GetDirectoryName(originalFilePath);
+                string filename = Path.GetFileNameWithoutExtension(originalFilePath);
+                string extension = Path.GetExtension(originalFilePath);
+
+                // Create the backup folder if it doesn't exist
+                string backupFolder = Path.Combine(directory, "backup_binds");
+                if (!Directory.Exists(backupFolder))
+                {
+                    Directory.CreateDirectory(backupFolder);
+                }
+
+                CleanBackupBindsFiles(originalFilePath); // cleanup old files before making more
+
+                // Construct the new filename with timestamp
+                string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+                string newFilename = $"{filename}_{timestamp}{extension}";
+
+                // Construct the path for the copy within the backup folder
+                string copyFilePath = Path.Combine(backupFolder, newFilename);
+
+                // Copy the original file to the new path
+                File.Copy(originalFilePath, copyFilePath);
+
+                Debug.Log("Copy of bindings file saved: " + copyFilePath);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError("Error while saving file copy: " + ex.Message);
+            }
+        }
+
+        public static void CleanBackupBindsFiles(string originalFilePath)
+        {
+
+            // Get the directory and filename from the original file path
+            string directory = Path.GetDirectoryName(originalFilePath);
+            string backupFolderPath = Path.Combine(directory, "backup_binds");
+
+            try
+            {
+                // Check if the backup folder exists
+                if (!Directory.Exists(backupFolderPath))
+                {
+                    Debug.LogError("Backup folder does not exist: " + backupFolderPath);
+                    return;
+                }
+
+                // Get all files in the backup folder
+                string[] files = Directory.GetFiles(backupFolderPath);
+
+                // Loop through each file
+                foreach (string file in files)
+                {
+                    // Get the datetime from the file name
+                    string filename = Path.GetFileNameWithoutExtension(file);
+                    string[] parts = filename.Split('_');
+                    if (parts.Length < 2)
+                    {
+                        // Skip files without datetime in the name
+                        continue;
+                    }
+
+                    if (!DateTime.TryParseExact(parts[1], "yyyyMMdd", null, System.Globalization.DateTimeStyles.None, out DateTime fileDateTime))
+                    {
+                        Debug.LogWarning("Failed to parse datetime from file name: " + filename);
+                        continue;
+                    }
+
+                    // Calculate the difference in days between the file datetime and current datetime
+                    TimeSpan difference = DateTime.Now - fileDateTime;
+                    double daysDifference = difference.TotalDays;
+
+                    // Check if the file is older than 30 days
+                    if (daysDifference > 30)
+                    {
+                        // Delete the file
+                        File.Delete(file);
+                        Debug.Log($"Backup Binds File deleted, older than 30 days: {Path.GetFileNameWithoutExtension(file)}");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError("Error while cleaning backup files: " + ex.Message);
+            }
         }
 
 
