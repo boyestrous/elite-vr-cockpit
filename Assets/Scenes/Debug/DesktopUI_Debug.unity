@@ -135,6 +135,11 @@ PrefabInstance:
       propertyPath: uiDocument
       value: 
       objectReference: {fileID: 508984842}
+    - target: {fileID: 3339672887010423997, guid: 13dfd2ff77290bb4faf75012641f360d,
+        type: 3}
+      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3457673712947369564, guid: 13dfd2ff77290bb4faf75012641f360d,
         type: 3}
       propertyPath: uiDocument
@@ -243,11 +248,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5923639315931899, guid: 0f91a9bf1a905184da5d5bcf5560442e, type: 3}
-      propertyPath: eliteBindingsLoadedEvent
-      value: 
-      objectReference: {fileID: 11400000, guid: 9ef35765c2c2aba4ab6e582c50e6e559,
-        type: 2}
     - target: {fileID: 5923639315931900, guid: 0f91a9bf1a905184da5d5bcf5560442e, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -296,21 +296,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ControlBindingsManager
       objectReference: {fileID: 0}
-    - target: {fileID: 5923639315931901, guid: 0f91a9bf1a905184da5d5bcf5560442e, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 712752728800491271, guid: 0f91a9bf1a905184da5d5bcf5560442e,
         type: 3}
-      propertyPath: Source
-      value: 
-      objectReference: {fileID: 11400000, guid: 9f4ea0e82caa98c4bbc2ae79e12655ff,
-        type: 2}
-    - target: {fileID: 8412992471219907198, guid: 0f91a9bf1a905184da5d5bcf5560442e,
-        type: 3}
-      propertyPath: Source
-      value: 
-      objectReference: {fileID: 11400000, guid: 04866ef497ad6ef459a3f09bd4b4bd7f,
-        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f91a9bf1a905184da5d5bcf5560442e, type: 3}

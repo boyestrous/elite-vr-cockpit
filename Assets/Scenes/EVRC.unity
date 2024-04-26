@@ -7639,11 +7639,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 751941968}
     m_Modifications:
-    - target: {fileID: 5923639315931899, guid: 0f91a9bf1a905184da5d5bcf5560442e, type: 3}
-      propertyPath: eliteBindingsLoadedEvent
-      value: 
-      objectReference: {fileID: 11400000, guid: 9ef35765c2c2aba4ab6e582c50e6e559,
-        type: 2}
     - target: {fileID: 5923639315931900, guid: 0f91a9bf1a905184da5d5bcf5560442e, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -7692,22 +7687,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: ControlBindingsManager
       objectReference: {fileID: 0}
-    - target: {fileID: 5923639315931901, guid: 0f91a9bf1a905184da5d5bcf5560442e, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 712752728800491271, guid: 0f91a9bf1a905184da5d5bcf5560442e,
-        type: 3}
-      propertyPath: Source
-      value: 
-      objectReference: {fileID: 11400000, guid: 9f4ea0e82caa98c4bbc2ae79e12655ff,
-        type: 2}
-    - target: {fileID: 8412992471219907198, guid: 0f91a9bf1a905184da5d5bcf5560442e,
-        type: 3}
-      propertyPath: Source
-      value: 
-      objectReference: {fileID: 11400000, guid: 04866ef497ad6ef459a3f09bd4b4bd7f,
-        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f91a9bf1a905184da5d5bcf5560442e, type: 3}
 --- !u!1001 &436656096097677519

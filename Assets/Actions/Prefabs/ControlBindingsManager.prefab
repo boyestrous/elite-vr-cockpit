@@ -48,6 +48,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controlBindingsState: {fileID: 11400000, guid: 1de2906d06cd6f745bab03c953c45a3a,
     type: 2}
+  eliteBindingsLoadedEvent: {fileID: 11400000, guid: 9ef35765c2c2aba4ab6e582c50e6e559,
+    type: 2}
 --- !u!114 &712752728800491271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,7 +62,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1ef366d1adba714aa9442631db4e0b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Source: {fileID: 11400000, guid: 1e32b9862c3503c4db55b246757a21f7, type: 2}
+  Source: {fileID: 11400000, guid: 9f4ea0e82caa98c4bbc2ae79e12655ff, type: 2}
   Response:
     m_PersistentCalls:
       m_Calls:

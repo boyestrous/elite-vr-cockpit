@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 using UnityEngine;
 using Valve.VR;
@@ -21,14 +23,14 @@ namespace EVRC.Core
 
         private void OnEnable()
         {
-            StartCoroutine(FirstLoad());
+            _ = DelayAndExecute(Reload, 1);
         }
 
         //Slight delay is required to make this load correctly. Otherwise, the desktop UI tries to populate stuff to fast
-        private IEnumerator FirstLoad()
+        private async Task DelayAndExecute(Action methodToExecute, int delayInSeconds)
         {
-            yield return new WaitForSeconds(1.0f);
-            Reload();
+            await Task.Delay(delayInSeconds * 1000);
+            methodToExecute();
         }
 
         public void Reload()
@@ -107,8 +109,10 @@ namespace EVRC.Core
          */
         private void OnBindsChange(object sender, FileSystemEventArgs e)
         {
+            controlBindingsState.ready = false;
             LoadControlBindings();
             controlBindingsState.gameEvent.Raise();
+            
         }
 
         /**
