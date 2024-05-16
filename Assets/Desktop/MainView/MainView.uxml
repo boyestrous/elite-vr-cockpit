@@ -1,7 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="BindingsContainer" src="project://database/Assets/Desktop/BindingsView/BindingsContainer.uxml?fileID=9197481963319205126&amp;guid=7ba09a0769ebdd644993aa6f4058ed45&amp;type=3#BindingsContainer" />
     <ui:Template name="TwoColumnContentTemplate" src="project://database/Assets/Desktop/ControlButtonView/ControlButtonViewContent.uxml?fileID=9197481963319205126&amp;guid=273395de9dfbc964fb9cb8b19b6635d1&amp;type=3#ControlButtonViewContent" />
     <ui:Template name="DebugContainer" src="project://database/Assets/Desktop/DebugView/DebugContainer.uxml?fileID=9197481963319205126&amp;guid=cffbabeaa26fceb438ae4c9da353ef18&amp;type=3#DebugContainer" />
-    <ui:Template name="BindingsContainer" src="project://database/Assets/Desktop/BindingsView/BindingsContainer.uxml?fileID=9197481963319205126&amp;guid=7ba09a0769ebdd644993aa6f4058ed45&amp;type=3#BindingsContainer" />
     <Style src="project://database/Assets/Desktop/MainView/MainView.uss?fileID=7433441132597879392&amp;guid=716901478cd3cbb4bb76856e96aecce5&amp;type=3#MainView" />
     <ui:VisualElement style="flex-direction: row;">
         <ui:VisualElement name="sideBar" style="width: 20%; max-width: 250px; min-width: 240px; min-height: 600px; flex-direction: column; background-color: rgb(185, 185, 185); border-left-color: rgb(147, 147, 147); border-right-color: rgb(147, 147, 147); border-top-color: rgb(147, 147, 147); border-bottom-color: rgb(147, 147, 147);">
@@ -38,14 +38,23 @@
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="tabs" class="currentlySelectedTab" style="min-height: 150px;">
-                <ui:Label name="SettingsTab" text="Settings" class="tab currentlySelectedTab" />
-                <ui:Label name="DebugTab" text="Help / Debug" class="tab" />
-                <ui:Label name="BindingsTab" text="Bindings" class="tab" />
+                <ui:VisualElement name="SettingsTabContainer" class="tabContainer">
+                    <ui:Label name="SettingsTab" text="Settings" class="tab currentlySelectedTab" />
+                </ui:VisualElement>
+                <ui:VisualElement name="DebugTabContainer" class="tabContainer">
+                    <ui:Label name="DebugTab" text="Help / Debug" class="tab" />
+                </ui:VisualElement>
+                <ui:VisualElement name="BindingsTabContainer" class="tabContainer">
+                    <ui:Label name="BindingsTab" text="Bindings" class="tab">
+                        <ui:IMGUIContainer name="bindings-error-icon" class="disabledIcon" style="-unity-background-image-tint-color: rgb(226, 174, 20); background-image: url(&apos;project://database/Assets/Textures/Icons/Warning.png?fileID=2800000&amp;guid=0ce3f8efc40a73145834dcd72d8a7c03&amp;type=3#Warning&apos;); display: none;" />
+                    </ui:Label>
+                </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="OpenVR" style="width: 100%; align-items: center;">
-                <ui:Button text="Start VR Overlay" display-tooltip-when-elided="true" name="OpenVRButton" class="startVR startButtonBorder" style="width: 95%; margin-top: 15px;">
-                    <ui:IMGUIContainer name="button-icon" class="startIcon" />
+                <ui:Button text="Start VR Overlay" display-tooltip-when-elided="true" name="OpenVRButton" class="startVR disabledButton disabledButtonBorder" style="width: 95%; margin-top: 15px; flex-direction: row;">
+                    <ui:IMGUIContainer name="button-icon" class="disabledIcon" />
                 </ui:Button>
+                <ui:Label text="Fix Errors Before Starting" display-tooltip-when-elided="true" name="error-text" style="background-color: rgb(255, 232, 119); font-size: 10px; display: none;" />
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="content" style="flex-direction: column; width: 80%; min-width: 484px; min-height: 600px; height: 600px;">

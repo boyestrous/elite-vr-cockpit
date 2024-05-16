@@ -435,6 +435,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7559442749638383542}
   - component: {fileID: 4726670226658153969}
+  - component: {fileID: 4453171941430188555}
   m_Layer: 6
   m_Name: BindingItemsList
   m_TagString: Untagged
@@ -469,22 +470,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af4867fe2e8fd214faf6baa5fddd6add, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  preLaunchController: {fileID: 4453171941430188555}
+  parentUIDocument: {fileID: 6465645074838448022}
   m_BindingEntryTemplate: {fileID: 9197481963319205126, guid: a4e5a72a43cd33d4ca76cd2283c05644,
     type: 3}
+  bindings: {fileID: 11400000, guid: 1de2906d06cd6f745bab03c953c45a3a, type: 2}
   m_FixBindingModalTemplate: {fileID: 9197481963319205126, guid: 836954df4531976408681c7c0b69277c,
     type: 3}
-  parentUIDocument: {fileID: 6465645074838448022}
-  bindings: {fileID: 11400000, guid: 1de2906d06cd6f745bab03c953c45a3a, type: 2}
   requiredBindings: {fileID: 11400000, guid: 7baa37a7f24b0c2478d0122fea0db811, type: 2}
   savedGameState: {fileID: 11400000, guid: 6f013364a8a2fd4448e6e72d02d181c3, type: 2}
   assetCatalog: {fileID: 11400000, guid: 83d2b71115eca78419410b43b99628b2, type: 2}
+  requestBindingsReloadEvent: {fileID: 11400000, guid: d36b750e591c4da4c9b7da361069ee74,
+    type: 2}
   vJoyOnly: 0
   validOnly: 0
   errorsOnly: 0
-  missingRequiredBindings: 
-  missingHolographicBindings: 
-  allErrorBindings: 
-  bindingItems: []
+--- !u!114 &4453171941430188555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7707757889235039289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c014f14f3726b2b4288c26ecd2a15e6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tabname: bindings
 --- !u!1001 &650565485984119541
 PrefabInstance:
   m_ObjectHideFlags: 0

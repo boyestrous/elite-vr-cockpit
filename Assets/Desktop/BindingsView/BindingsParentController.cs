@@ -18,7 +18,7 @@ namespace EVRC.Desktop
             VisualElement root = parentUIDocument.rootVisualElement;
             
             //parent containers for the whole section
-            allBindingsContainer = root.Q<VisualElement>("BindingItemsList");
+            allBindingsContainer = root.Q<VisualElement>("BindingsItemsList");
 
             if (allBindingsContainer == null) 
             {

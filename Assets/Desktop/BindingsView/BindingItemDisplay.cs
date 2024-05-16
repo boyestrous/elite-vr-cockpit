@@ -38,6 +38,12 @@ namespace EVRC.Desktop
 
         public void AddStatusStyles(BindingItem bindingItem)
         {
+            // Reset the styles, so the ListView doesn't retain the styles on the recycled pool items
+            m_rowContainer.RemoveFromClassList("errorRow");
+            m_autoFixButton.style.display = DisplayStyle.None;
+            m_errorMessage.style.display = DisplayStyle.None;
+            m_errorMessage.text = "Placeholder Error Text";
+
             if (bindingItem.state == BindingItemState.MissingHolographic)
             {
                 m_rowContainer.AddToClassList("errorRow");

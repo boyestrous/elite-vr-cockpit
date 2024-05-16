@@ -4,7 +4,10 @@ using EVRC.Core.Overlay;
 using EVRC.DesktopUI;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
+using System.Threading.Tasks;
 using Unity.Plastic.Antlr3.Runtime;
 using UnityEditor.Search;
 using UnityEditor.UIElements;
@@ -13,68 +16,79 @@ using UnityEngine.UIElements;
 
 namespace EVRC.Desktop
 {
-    public class BindingItemsListController : MonoBehaviour
+    public class BindingItemsListController : PreCheck
     {
         [Header("Templates and Scene Refs")]
         // UXML template for list entries
-        [SerializeField] VisualTreeAsset m_BindingEntryTemplate;
-        [SerializeField] VisualTreeAsset m_FixBindingModalTemplate;
         [SerializeField] UIDocument parentUIDocument;
+        [SerializeField] VisualTreeAsset m_BindingEntryTemplate;
         [SerializeField] ControlBindingsState bindings;
+
+        [SerializeField] VisualTreeAsset m_FixBindingModalTemplate;
         [SerializeField] RequiredBindingsState requiredBindings;
         public SavedGameState savedGameState;
         public ControlButtonAssetCatalog assetCatalog;
+        public GameEvent requestBindingsReloadEvent;
         
         // Filters and Toggles for the ListView
         [SerializeField] bool vJoyOnly; // filter for showing vJoy bindings only
         [SerializeField] bool validOnly; // filter for showing vJoy bindings only
         [SerializeField] bool errorsOnly; // filter for showing vJoy bindings only
+        Label bindingsFilenameElement;
         Toggle vJoyToggleElement;
         Toggle validToggleElement;
         Toggle errorsToggleElement;
+        Button reloadButtonElement;
 
         VisualElement modalUI; //fix bindings modal
 
         //Lists of problematic bindings
         Dictionary<EDControlButton, ControlButtonBinding> filteredButtonBindings;
-        public List<EDControlButton> missingRequiredBindings; //no binding, and default required
-        public List<EDControlButton> missingHolographicBindings; //no binding, but has a holo button
-        public List<EDControlButton> allErrorBindings; // combination of binds with all types of errors
+        private List<EDControlButton> missingRequiredBindings; //no binding, and default required
+        private List<EDControlButton> missingHolographicBindings; //no binding, but has a holo button
+        private List<EDControlButton> allErrorBindings; // combination of binds with all types of errors
+        //public bool bindingsHaveErrors;
 
         private List<string> availableSingleKeyBindings;
         ListView bindingsListView;
         BindingItem selectedItem;
 
         private List<SavedControlButton> controlButtons;
-        
+       
 
-        [SerializeField] List<BindingItem> bindingItems;
+        public override void OnEnable()
+        {
+            base.OnEnable();
 
-        public void OnEnable()
-        {            
             // filter starts as off
             vJoyOnly = false;
             validOnly = false;
             errorsOnly = false;
 
+            allErrorBindings = new List<EDControlButton>();
+
             controlButtons = savedGameState.controlButtons;
-            bindingItems = new List<BindingItem>();
             filteredButtonBindings = bindings.buttonBindings;
 
             VisualElement root = parentUIDocument.rootVisualElement;
 
             // Store a reference to the log list element
             bindingsListView = root.Q<ListView>("required-bindings-list");
+            bindingsFilenameElement = root.Q<Label>("binding-filename-value");
             vJoyToggleElement = root.Q<Toggle>("vjoy-toggle");
             validToggleElement = root.Q<Toggle>("valid-toggle");
             errorsToggleElement = root.Q<Toggle>("errors-toggle");
+            reloadButtonElement = root.Q<Button>("reload-button");
+
 
             vJoyToggleElement.RegisterValueChangedCallback(OnVJoyToggleChange);
             validToggleElement.RegisterValueChangedCallback(OnValidToggleChange);
             errorsToggleElement.RegisterValueChangedCallback(OnErrorsToggleChange);
+            reloadButtonElement.RegisterCallback<ClickEvent>(OnReloadButtonPressed);
 
-            SetListBindingMethods();
-            bindingItems.Add(new BindingItem() 
+            
+            List<BindingItem> notLoadedList = new List<BindingItem>();
+            notLoadedList.Add(new BindingItem() 
             { 
                 name = "BindingsNotReadYet", 
                 keyValue = "Joy_ZYXAxis",
@@ -82,10 +96,9 @@ namespace EVRC.Desktop
                 deviceValue = "Boyestrous"            
             });
 
-
-
-            RefreshBindingsList();
+            PopulateListView(notLoadedList);
         }
+
 
         void OnClickButtonInRow(ClickEvent evt)
         {
@@ -110,6 +123,12 @@ namespace EVRC.Desktop
                 LaunchFixBindingModal(clickedBindingName);
             }
         }
+        private void RemoveFromErrorLists(EDControlButton eDControlButton)
+        {
+            missingHolographicBindings.Remove(eDControlButton);
+            missingRequiredBindings.Remove(eDControlButton);
+            UpdateErrorBindings();
+        }
 
         public void UpdateErrorBindings()
         {
@@ -117,7 +136,7 @@ namespace EVRC.Desktop
             allErrorBindings.AddRange(missingHolographicBindings);
             allErrorBindings.AddRange(missingRequiredBindings);
 
-            RefreshBindingsList();
+            FilterList();
         }    
 
         public void FindMissingBindings()
@@ -143,25 +162,45 @@ namespace EVRC.Desktop
             UpdateErrorBindings();
         }
 
-        private void OnVJoyToggleChange(ChangeEvent<bool> evt)
+        private async Task ClearAllAndReload()
+        {
+            //Debug.Log("Reload Button Pressed");
+            bindingsListView.Clear();
+            allErrorBindings.Clear();
+            filteredButtonBindings.Clear();
+
+            await Task.Delay(1500);
+            FilterList();
+        }
+
+        private void OnReloadButtonPressed(ClickEvent evt)
+        {
+            _ = ClearAllAndReload();            
+
+            requestBindingsReloadEvent.Raise();
+        }
+
+        private void OnVJoyToggleChange(ChangeEvent<bool> evt)  
         {
             //Debug.Log($"Bindings list toggle value changed to: {evt.newValue} || from: {evt.previousValue}");
             vJoyOnly = evt.newValue;
-            RefreshBindingsList();
+            FilterList();
+
         }
 
         private void OnValidToggleChange(ChangeEvent<bool> evt)
         {
             //Debug.Log($"Bindings list toggle value changed to: {evt.newValue} || from: {evt.previousValue}");
             validOnly = evt.newValue;
-            RefreshBindingsList();
+            FilterList();
         }
 
         private void OnErrorsToggleChange(ChangeEvent<bool> evt)
         {
             //Debug.Log($"Bindings list toggle value changed to: {evt.newValue} || from: {evt.previousValue}");
             errorsOnly = evt.newValue;
-            RefreshBindingsList();
+            FilterList();
+
         }
 
         private BindingItemState GetBindingItemState(EDControlButton controlButton)
@@ -248,10 +287,9 @@ namespace EVRC.Desktop
             availableSingleKeyBindings = availableKeyCombos;
         }
 
-        public void RefreshBindingsList()
-        {
-            bindingItems.Clear();
-
+        public void FilterList()
+        { 
+            List<BindingItem> filteredBindings = new List<BindingItem>();
 
             if (bindings.buttonBindings == null) return;
 
@@ -307,15 +345,31 @@ namespace EVRC.Desktop
 
                 }
 
-                bindingItems.Add(tempBindingItem);
+                filteredBindings.Add(tempBindingItem);
             }
-
-            bindingsListView.RefreshItems();
 
             if (allErrorBindings.Count > 0)
             {
                 FindAvailableKeyCombos();
             }
+
+            RebuildListView(filteredBindings);
+
+            bool readyToLaunch = allErrorBindings.Count > 0 ? true : false;
+            preLaunchController.SetReady(readyToLaunch);
+
+        }
+
+        private void RebuildListView(List<BindingItem> items)
+        {
+            // Clear the ListView by setting an empty list as the itemsSource
+            bindingsListView.itemsSource = new List<BindingItem>();
+
+            // Refresh the ListView to clear it
+            bindingsListView.Rebuild();
+
+            // Repopulate ListView with new items
+            PopulateListView(items);
         }
 
         void LaunchFixBindingModal(string bindingName)
@@ -364,6 +418,7 @@ namespace EVRC.Desktop
             Debug.Log($"Updating binding for {controlName} to {newValue}");
 
             EDControlBindingsUtils.UpdateBindingXml(bindings.bindingsFilePath, controlName.text, newValue);
+            RemoveFromErrorLists((EDControlButton)Enum.Parse(typeof(EDControlButton), controlName.text));
 
             CloseFixBindingModal();
         }
@@ -391,8 +446,17 @@ namespace EVRC.Desktop
             modalUI.RemoveFromHierarchy();
         }
 
-        void SetListBindingMethods()
+        public void SetBindingsFileName()
         {
+            if (bindings != null)
+            {
+                bindingsFilenameElement.text = bindings.bindingsFileName != null ? bindings.bindingsFileName : "-- Not Yet Set --";
+            }
+        }
+
+        void PopulateListView(List<BindingItem> items)
+        {
+            SetBindingsFileName();
 
             //Set up a make item function for a list entry
             bindingsListView.makeItem = () =>
@@ -429,14 +493,13 @@ namespace EVRC.Desktop
             // Set up bind function for a specific list entry
             bindingsListView.bindItem = (item, index) =>
             {
-                (item.userData as BindingItemDisplay).SetBindingData(bindingItems[index]);
+                (item.userData as BindingItemDisplay).SetBindingData(items[index]);
             };
 
-            // Set a fixed item height
-            //m_LogList.fixedItemHeight = 45;
 
-            // Set the actual item's source list/array
-            bindingsListView.itemsSource = bindingItems;
+            bindingsListView.itemsSource = items;
+
+            bindingsListView.Rebuild();
         }
 
     }

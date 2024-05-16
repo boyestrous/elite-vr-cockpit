@@ -56,6 +56,20 @@ namespace EVRC.Desktop
             
         }
 
+        public void DisableStartButton()
+        {
+            if (button == null) { return; }
+            button.SetEnabled(false);
+            ApplyDisabledStyle();
+        }
+
+        public void EnableStartButton()
+        {
+            if (button == null) { return; }
+            button.SetEnabled(true);
+            ApplyStoppedStyle();
+        }
+
         /// <summary>
         /// Style for when OpenVR is running
         /// </summary>
@@ -76,10 +90,29 @@ namespace EVRC.Desktop
         {           
             button.RemoveFromClassList("stopButtonBorder");
             icon.RemoveFromClassList("stopIcon");
+            button.RemoveFromClassList("disabledButtonBorder");
+            button.RemoveFromClassList("disabledButton");
+            icon.RemoveFromClassList("disabledIcon");
 
             button.AddToClassList("startButtonBorder");
             icon.AddToClassList("startIcon");
 
+            button.text = startButtonText;
+        }
+
+        // <summary>
+        /// Style for when the start button is disabled
+        /// </summary>
+        private void ApplyDisabledStyle()
+        {
+            button.RemoveFromClassList("startButtonBorder");
+            icon.RemoveFromClassList("startIcon");
+            button.RemoveFromClassList("stopButtonBorder");
+            icon.RemoveFromClassList("stopIcon");
+
+            button.AddToClassList("disabledButtonBorder");
+            button.AddToClassList("disabledButton");
+            icon.AddToClassList("disabledIcon");
             button.text = startButtonText;
         }
     }

@@ -13,6 +13,16 @@
     margin-right: 5px;
     margin-top: 5px;
     margin-bottom: 5px;
+    min-height: 25px;
+    padding-left: 1px;
+    padding-right: 2px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    justify-content: center;
+}
+
+.tabContainer {
+    min-height: 50px;
 }
 
 .currentlySelectedTab {
@@ -186,5 +196,28 @@
     width: 24px;
     height: 24px;
     -unity-background-image-tint-color: rgb(229, 14, 5);
+    margin-left: 15px;
+}
+
+.disabledButton {
+    color: rgba(161, 161, 161, 255);
+}
+
+.disabledButtonBorder {
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-left-color: rgb(103, 103, 103);
+    border-right-color: rgb(103, 103, 103);
+    border-top-color: rgb(103, 103, 103);
+    border-bottom-color: rgb(103, 103, 103);
+}
+
+.disabledIcon {
+    background-image: url('project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=-4521532143779581420&guid=c9e8e768bdf29824781d9db0add1918e&type=3#arrow-right');
+    width: 24px;
+    height: 24px;
+    -unity-background-image-tint-color: rgb(144, 144, 144);
     margin-left: 15px;
 }
