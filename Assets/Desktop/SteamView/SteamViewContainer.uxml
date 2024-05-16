@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="BindingsArea" style="flex-direction: row; margin-left: 5px; margin-right: 5px; margin-top: 5px; margin-bottom: 5px;">
+        <ui:Label text="SteamVR Bindings Name:" display-tooltip-when-elided="true" name="BindingsNameLabel" style="-unity-font-style: bold;" />
+        <ui:Label text="version 0.x.y" display-tooltip-when-elided="true" name="steamvr-binding-version" />
+    </ui:VisualElement>
+    <ui:VisualElement name="ControllersArea" style="flex-direction: row; margin-left: 5px; margin-right: 5px; margin-top: 5px; margin-bottom: 5px;">
+        <ui:Label text="Your Device:" display-tooltip-when-elided="true" name="YourDeviceLabel" style="-unity-font-style: bold;" />
+        <ui:Label text="Your Device Placeholder" display-tooltip-when-elided="true" name="vr-device-value" />
+    </ui:VisualElement>
+</ui:UXML>

@@ -13,16 +13,16 @@
     margin-right: 5px;
     margin-top: 5px;
     margin-bottom: 5px;
-    min-height: 25px;
     padding-left: 1px;
     padding-right: 2px;
     padding-top: 4px;
     padding-bottom: 4px;
     justify-content: center;
+    -unity-text-align: middle-center;
 }
 
 .tabContainer {
-    min-height: 50px;
+    height: 35px;
 }
 
 .currentlySelectedTab {
@@ -200,7 +200,7 @@
 }
 
 .disabledButton {
-    color: rgba(161, 161, 161, 255);
+    color: rgb(161, 161, 161);
 }
 
 .disabledButtonBorder {
