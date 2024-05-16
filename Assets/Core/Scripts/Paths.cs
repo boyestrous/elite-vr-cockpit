@@ -88,6 +88,7 @@ namespace EVRC.Core
             string returnBindingsPath = "";
 
             // Seed the path list if empty
+            controlBindingsPaths.Add(Path.Combine(CustomBindingsFolder, StartPresetFileName + ".4.1.binds"));
             controlBindingsPaths.Add(Path.Combine(CustomBindingsFolder, StartPresetFileName + ".4.0.binds"));
             controlBindingsPaths.Add(Path.Combine(CustomBindingsFolder, StartPresetFileName + ".3.0.binds"));
             controlBindingsPaths.Add(Path.Combine(CustomBindingsFolder, StartPresetFileName + ".2.0.binds"));
