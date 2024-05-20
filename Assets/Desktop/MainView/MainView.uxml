@@ -1,4 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="HomeView" src="project://database/Assets/Desktop/HomeView/HomeView.uxml?fileID=9197481963319205126&amp;guid=5245dfb82be1135489b8f441f7378196&amp;type=3#HomeView" />
     <ui:Template name="BindingsContainer" src="project://database/Assets/Desktop/BindingsView/BindingsContainer.uxml?fileID=9197481963319205126&amp;guid=7ba09a0769ebdd644993aa6f4058ed45&amp;type=3#BindingsContainer" />
     <ui:Template name="TwoColumnContentTemplate" src="project://database/Assets/Desktop/ControlButtonView/ControlButtonViewContent.uxml?fileID=9197481963319205126&amp;guid=273395de9dfbc964fb9cb8b19b6635d1&amp;type=3#ControlButtonViewContent" />
     <ui:Template name="DebugContainer" src="project://database/Assets/Desktop/DebugView/DebugContainer.uxml?fileID=9197481963319205126&amp;guid=cffbabeaa26fceb438ae4c9da353ef18&amp;type=3#DebugContainer" />
@@ -70,9 +71,7 @@
             <ui:VisualElement name="tabContent" style="flex-grow: 0; flex-basis: auto; min-height: 600px; margin-left: 0; margin-right: 0; margin-bottom: 0; align-items: stretch; background-color: rgb(147, 147, 147); margin-top: 0; padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px; min-width: 484px;">
                 <ui:VisualElement name="HomeContent" class="currentlySelectedTab">
                     <ui:Label text="EVRC" name="HomeLabel" style="background-color: rgba(255, 255, 255, 0); color: rgb(0, 0, 0); padding-left: 0; padding-right: 0;" />
-                    <ui:VisualElement name="HomeContainer" class="contentContainer">
-                        <ui:Label text="Placeholder Text for Homepage" display-tooltip-when-elided="true" />
-                    </ui:VisualElement>
+                    <ui:Instance template="HomeView" name="HomeView" class="contentContainer" />
                 </ui:VisualElement>
                 <ui:VisualElement name="BindingsContent" class="unselectedContent">
                     <ui:Label text="Bindings Content" name="BindingsLabel" style="background-color: rgba(255, 255, 255, 0); color: rgb(0, 0, 0); padding-left: 0; padding-right: 0;" />

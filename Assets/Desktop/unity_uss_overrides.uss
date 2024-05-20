@@ -2,3 +2,23 @@
     min-width: 70px;
     width: 75px;
 }
+
+.buttonLinkText {
+    background-color: rgba(188, 188, 188, 0);
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    color: rgb(0, 80, 255);
+    -unity-text-align: middle-left;
+    margin-left: 2px;
+    margin-top: 4px;
+    padding-left: 1px;
+    padding-right: 2px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.buttonLinkText:hover {
+    color: rgb(85, 26, 139);
+}
