@@ -3,8 +3,13 @@
     <ui:VisualElement name="TitleArea" style="min-height: 60px; max-height: 100px; height: 15%;">
         <ui:Label text="Placeholder Bindings List Title" display-tooltip-when-elided="true" name="bindings-list-label" style="-unity-font-style: bold; font-size: 16px; min-width: 250px;" />
         <ui:VisualElement style="flex-direction: row;">
-            <ui:Label text="Reading from bindings file:" display-tooltip-when-elided="true" name="bindings-list-description" style="white-space: normal; -unity-text-align: middle-left;" />
-            <ui:Label text="Placeholder.X.0.Binds" display-tooltip-when-elided="true" name="binding-filename-value" style="-unity-text-align: middle-left; background-color: rgba(200, 200, 200, 255); padding-left: 4px; padding-right: 4px; border-top-left-radius: 2px; border-bottom-left-radius: 2px; border-top-right-radius: 2px; border-bottom-right-radius: 2px; border-left-color: rgba(115, 115, 115, 255); border-right-color: rgba(115, 115, 115, 255); border-top-color: rgba(115, 115, 115, 255); border-bottom-color: rgba(115, 115, 115, 255); border-left-width: 2px; border-right-width: 2px; border-top-width: 2px; border-bottom-width: 2px;" />
+            <ui:VisualElement style="flex-direction: row;">
+                <ui:Label text="Reading from bindings file:" display-tooltip-when-elided="true" name="bindings-list-description" style="white-space: normal; -unity-text-align: middle-left;" />
+                <ui:Label text="Placeholder.X.0.Binds" display-tooltip-when-elided="true" name="binding-filename-value" style="-unity-text-align: middle-left; background-color: rgb(200, 200, 200); padding-left: 4px; padding-right: 4px; border-top-left-radius: 2px; border-bottom-left-radius: 2px; border-top-right-radius: 2px; border-bottom-right-radius: 2px; border-left-color: rgb(115, 115, 115); border-right-color: rgb(115, 115, 115); border-top-color: rgb(115, 115, 115); border-bottom-color: rgb(115, 115, 115); border-left-width: 2px; border-right-width: 2px; border-top-width: 2px; border-bottom-width: 2px;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="recommended-bindings" style="flex-direction: row; display: flex;">
+                <ui:Button text="Use Default?" display-tooltip-when-elided="true" name="replace-bindings-button" style="background-color: rgba(255, 237, 162, 255);" />
+            </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:VisualElement name="ListArea" style="min-height: 350px; height: 85%; margin-top: 5px; padding-right: 5px;">

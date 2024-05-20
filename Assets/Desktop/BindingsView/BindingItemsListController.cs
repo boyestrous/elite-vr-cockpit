@@ -16,11 +16,13 @@ using UnityEngine.UIElements;
 
 namespace EVRC.Desktop
 {
+    [RequireComponent(typeof(RecommendedBindingsModal))]
     public class BindingItemsListController : PreCheck
     {
         [Header("Templates and Scene Refs")]
         // UXML template for list entries
         [SerializeField] UIDocument parentUIDocument;
+        [SerializeField] RecommendedBindingsModal recommendedBindingsModal;
         [SerializeField] VisualTreeAsset m_BindingEntryTemplate;
         [SerializeField] ControlBindingsState bindings;
 
@@ -59,6 +61,9 @@ namespace EVRC.Desktop
         public override void OnEnable()
         {
             base.OnEnable();
+
+            recommendedBindingsModal = GetComponent<RecommendedBindingsModal>();
+
 
             // filter starts as off
             vJoyOnly = false;
@@ -451,6 +456,7 @@ namespace EVRC.Desktop
             if (bindings != null)
             {
                 bindingsFilenameElement.text = bindings.bindingsFileName != null ? bindings.bindingsFileName : "-- Not Yet Set --";
+                recommendedBindingsModal.ShouldShowButton(bindings.bindingsFileName);
             }
         }
 

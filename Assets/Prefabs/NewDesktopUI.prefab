@@ -547,6 +547,7 @@ GameObject:
   - component: {fileID: 7559442749638383542}
   - component: {fileID: 4726670226658153969}
   - component: {fileID: 4453171941430188555}
+  - component: {fileID: 4702260006377328484}
   m_Layer: 6
   m_Name: BindingItemsList
   m_TagString: Untagged
@@ -583,6 +584,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   preLaunchController: {fileID: 4453171941430188555}
   parentUIDocument: {fileID: 6465645074838448022}
+  recommendedBindingsModal: {fileID: 0}
   m_BindingEntryTemplate: {fileID: 9197481963319205126, guid: a4e5a72a43cd33d4ca76cd2283c05644,
     type: 3}
   bindings: {fileID: 11400000, guid: 1de2906d06cd6f745bab03c953c45a3a, type: 2}
@@ -609,6 +611,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tabname: bindings
+--- !u!114 &4702260006377328484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7707757889235039289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07f9770cc46fa4046a4a1ea688ff6db3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentUIDocument: {fileID: 6465645074838448022}
+  m_FixBindingModalTemplate: {fileID: 9197481963319205126, guid: 7592ce9359656064ea18b570cbea6fb1,
+    type: 3}
+  bindings: {fileID: 11400000, guid: 1de2906d06cd6f745bab03c953c45a3a, type: 2}
 --- !u!1001 &650565485984119541
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement style="padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px; width: 400px; height: 200px; background-color: rgb(142, 142, 142); border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; border-top-left-radius: 1px; border-bottom-left-radius: 1px; border-top-right-radius: 1px; border-bottom-right-radius: 1px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);">
+        <ui:Label text="Would you like to use the recommended EVRC Bindings?" display-tooltip-when-elided="true" style="white-space: normal; -unity-font-style: bold;" />
+        <ui:Label text="This will NOT overwrite your current bindings. This will copy a new bindings file and set the game to read the new file instead." display-tooltip-when-elided="true" style="white-space: normal;" />
+        <ui:VisualElement style="flex-direction: row; justify-content: space-between; width: 100%; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;">
+            <ui:Button text="Yes" display-tooltip-when-elided="true" name="ok-button" style="width: 100px;" />
+            <ui:Button text="Cancel" display-tooltip-when-elided="true" name="cancel-button" style="width: 100px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

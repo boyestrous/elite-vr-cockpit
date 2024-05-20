@@ -14,6 +14,8 @@ namespace EVRC.Core
         public bool ready = false;
         public string bindingsFilePath;
         public string bindingsFileName;
+        public string startPreset;
+        public string startPresetFileName;
 
         
         public override string GetStatusText()

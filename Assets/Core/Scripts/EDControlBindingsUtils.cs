@@ -208,6 +208,26 @@ namespace EVRC.Core
             }
         }
 
+        public static void UpdateStartPreset(string newPresetName)
+        {
+            string content;
+            string startPresetFileName = Path.GetFileName(Paths.StartPresetPath);
+            if (startPresetFileName == "StartPreset.4.start")
+            {
+                // Create an array of four identical lines
+                content = string.Join("\n", new string[] { newPresetName, newPresetName, newPresetName, newPresetName });
+
+                // Write the lines to the file
+            }
+            else if (startPresetFileName == "StartPreset.start") {
+                content = newPresetName;
+            }
+            else
+            {
+                content = Paths.BindingNameFromStartPreset;
+            }
+            File.WriteAllText(Paths.StartPresetPath, content);
+        }
 
         public static string EDControlFriendlyName(EDControlButton button)
         {
