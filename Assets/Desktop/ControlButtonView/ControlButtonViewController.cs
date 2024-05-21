@@ -15,6 +15,7 @@ namespace EVRC.Desktop
         [SerializeField] UIDocument parentUIDocument;
         [SerializeField] VisualTreeAsset controlButtonEntryTemplate;
         public SavedGameState savedState;
+        [SerializeField] GameEvent overlayStateLoadedEvent;
 
         [Tooltip("Name of the visual element that will hold the list of controlButtons")]
         public string targetParentName = "ControlButtonsState";
@@ -38,6 +39,7 @@ namespace EVRC.Desktop
             if (savedState.controlButtons != null)
             {
                 DisplayControlButtons(savedState.controlButtons);
+                overlayStateLoadedEvent.Raise();
             }
         }
 

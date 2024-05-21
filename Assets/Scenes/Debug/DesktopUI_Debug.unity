@@ -135,11 +135,6 @@ PrefabInstance:
       propertyPath: uiDocument
       value: 
       objectReference: {fileID: 508984842}
-    - target: {fileID: 3339672887010423997, guid: 13dfd2ff77290bb4faf75012641f360d,
-        type: 3}
-      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3457673712947369564, guid: 13dfd2ff77290bb4faf75012641f360d,
         type: 3}
       propertyPath: uiDocument

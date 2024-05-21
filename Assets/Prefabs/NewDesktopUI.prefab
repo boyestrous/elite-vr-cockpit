@@ -206,7 +206,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
 --- !u!1 &1885352924072067237
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,6 +317,8 @@ GameObject:
   - component: {fileID: 7801773867867527582}
   - component: {fileID: 7101438878122661753}
   - component: {fileID: 268777256}
+  - component: {fileID: 8859447503791462621}
+  - component: {fileID: 6278015330906870882}
   m_Layer: 6
   m_Name: ControlButtons
   m_TagString: Untagged
@@ -355,6 +357,8 @@ MonoBehaviour:
   controlButtonEntryTemplate: {fileID: 9197481963319205126, guid: 833a4429788708142a5ae40fed71f03f,
     type: 3}
   savedState: {fileID: 11400000, guid: 6f013364a8a2fd4448e6e72d02d181c3, type: 2}
+  overlayStateLoadedEvent: {fileID: 11400000, guid: 38556d8a03de49a4f9d81702416a3157,
+    type: 2}
   targetParentName: control-list-container
   controlButtonCatalog: {fileID: 11400000, guid: 83d2b71115eca78419410b43b99628b2,
     type: 2}
@@ -397,6 +401,49 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: EVRC.Desktop.ControlButtonViewController, EVRC.Desktop
         m_MethodName: AddControlButton
         m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &8859447503791462621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4769661530639456945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4da24b3f5a37654b8ab709064c7a2db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentUIDocument: {fileID: 6465645074838448022}
+  buttonLabelSetting: {fileID: 11400000, guid: 35fee506411b17045b36e4918cf6f71a, type: 2}
+  savedState: {fileID: 11400000, guid: 6f013364a8a2fd4448e6e72d02d181c3, type: 2}
+--- !u!114 &6278015330906870882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4769661530639456945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1ef366d1adba714aa9442631db4e0b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Source: {fileID: 11400000, guid: 38556d8a03de49a4f9d81702416a3157, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8859447503791462621}
+        m_TargetAssemblyTypeName: EVRC.Desktop.ControlButtonSettings, EVRC.Desktop
+        m_MethodName: OnOverlayStateLoaded
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

@@ -1,4 +1,4 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <ui:Template name="AddControlButtonForm" src="project://database/Assets/Desktop/ControlButtonView/AddControlButtonForm.uxml?fileID=9197481963319205126&amp;guid=9140ca18f8f714c4a9c01bfe8ca5faca&amp;type=3#AddControlButtonForm" />
     <ui:GroupBox name="SettingsMain" class="contentMainArea" style="flex-direction: row;">
         <ui:VisualElement name="LeftColumn" style="min-width: 50%; min-height: 100%; max-width: 50%; max-height: 100%; flex-direction: column;">
@@ -11,8 +11,14 @@
                 <ui:Toggle label="Toggle" name="ButtonLabelToggle" text="Display Button Labels" binding-path="value" tooltip="labels underneath the holographic buttons" style="color: rgb(0, 0, 0); flex-direction: row-reverse;" />
             </ui:GroupBox>
             <ui:GroupBox name="ControlButtons">
-                <ui:Label text="Holographic Buttons" display-tooltip-when-elided="true" name="ControlButtonHeader" style="color: rgb(0, 0, 0);" />
-                <ui:Label text="You may use any combination of physical controls with the Overlay. Enable or disable items here to meet your preferences. Leave everything enabled to use the VR Overlay for everything." display-tooltip-when-elided="true" name="ControlButtonsDescription" class="paragraphText" style="padding-bottom: 10px; white-space: normal;" />
+                <ui:Label text="Holographic Controls and Settings" display-tooltip-when-elided="true" name="ControlButtonHeader" style="color: rgb(0, 0, 0); font-size: 18px;" />
+                <ui:VisualElement name="Settings">
+                    <ui:Label text="Settings" display-tooltip-when-elided="true" style="-unity-font-style: bold;" />
+                    <ui:Label text="The following settings control various holographic elements in VR." display-tooltip-when-elided="true" name="ControlButtonsDescription" class="paragraphText" style="padding-bottom: 10px; white-space: normal; font-size: 12px;" />
+                    <ui:VisualElement>
+                        <ui:Toggle name="toggle-labels" text="Enable Holographic Button Labels" value="false" tooltip="When Checked - a text label will appear underneath each holographic button" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
                 <ui:VisualElement name="AddControlButton">
                     <ui:Instance template="AddControlButtonForm" name="AddControlButtonForm" />
                 </ui:VisualElement>
