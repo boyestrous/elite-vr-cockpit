@@ -210,6 +210,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: NewDesktopUI
       objectReference: {fileID: 0}
+    - target: {fileID: 7101438878122661753, guid: 13dfd2ff77290bb4faf75012641f360d,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7101438878122661753, guid: 13dfd2ff77290bb4faf75012641f360d,
+        type: 3}
+      propertyPath: addButtonModalTemplate
+      value: 
+      objectReference: {fileID: 9197481963319205126, guid: 9140ca18f8f714c4a9c01bfe8ca5faca,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13dfd2ff77290bb4faf75012641f360d, type: 3}
 --- !u!114 &508984842 stripped

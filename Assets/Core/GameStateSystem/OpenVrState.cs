@@ -9,7 +9,9 @@ namespace EVRC.Core
     public class OpenVrState : GameState<bool>
     {
         public bool running = false;
-
+        public string hmdSystemName;
+        public string hmdSystemModel;
+        public string hmdSystemType;
 
         public override string GetStatusText()
         {

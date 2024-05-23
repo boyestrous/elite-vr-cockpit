@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using EVRC.Core;
 using EVRC.Core.Actions;
 using EVRC.Core.Overlay;
@@ -21,19 +23,28 @@ namespace EVRC.Desktop
         public string targetParentName = "ControlButtonsState";
         public ControlButtonAssetCatalog controlButtonCatalog;
         public GameEvent controlButtonRemovedEvent;
+        public AddControlButtonForm addControlButtonForm;
 
         private VisualElement root; // the root of the whole UI
         private Dictionary<(string, string), ControlButtonList> controlButtonLists;
-        
+
+        private Button openAddButtonModalElement;
+
+
         // the anchor object that all of the lists will go inside of
         private ScrollView controlListContainer;
         
 
         public void OnEnable()
         {
+            addControlButtonForm = GetComponent<AddControlButtonForm>();
+
             root = parentUIDocument.rootVisualElement;
             controlButtonLists = new Dictionary<(string, string), ControlButtonList>();
             controlListContainer = root.Q<ScrollView>("control-list-container");
+            
+            openAddButtonModalElement = root.Q<Button>("open-addButtonModal-button");
+            openAddButtonModalElement.clicked += LaunchModal;
 
             savedState.Load();
             if (savedState.controlButtons != null)
@@ -78,5 +89,21 @@ namespace EVRC.Desktop
             
         }
 
+        void LaunchModal()
+        {
+            // Get the VisualElement representing the ListView
+            VisualElement listViewElement = controlListContainer.hierarchy.parent;
+
+            // Now you can use the RectTransform listViewRectTransform as needed
+            // For example, you can get its position, size, etc.
+            Vector2 listViewPosition = listViewElement.contentRect.position;
+            Vector2 listViewSize = listViewElement.contentRect.size;
+
+            // Calculate the center position of the ListView
+            Vector2 listViewCenter = new Vector2(listViewPosition.x + (listViewSize.x / 2f),
+                                                 listViewPosition.y + (listViewSize.y / 2f));
+
+            addControlButtonForm.LaunchModal(listViewCenter);
+        }
     }
 }

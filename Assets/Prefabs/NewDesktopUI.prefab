@@ -252,8 +252,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f0e47f17e9060048b76cb0ab20df472, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  preLaunchController: {fileID: 0}
-  openVrState: {fileID: 0}
+  preLaunchController: {fileID: 4453171941430188555}
+  openVrState: {fileID: 11400000, guid: 25d4adda955fdac47a3eb997224de168, type: 2}
   hmdModel: 
   currentURLs: []
   ApplicationName: application.generated.unity.elitevrcockpit.exe
@@ -364,6 +364,7 @@ MonoBehaviour:
     type: 2}
   controlButtonRemovedEvent: {fileID: 11400000, guid: 8af64cdc3761eb042922a6e60eaaa09c,
     type: 2}
+  addControlButtonForm: {fileID: 0}
 --- !u!114 &7101438878122661753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -381,6 +382,7 @@ MonoBehaviour:
   parentUIDocument: {fileID: 6465645074838448022}
   catalog: {fileID: 11400000, guid: 83d2b71115eca78419410b43b99628b2, type: 2}
   savedGameState: {fileID: 11400000, guid: 6f013364a8a2fd4448e6e72d02d181c3, type: 2}
+  addButtonModalTemplate: {fileID: 0}
 --- !u!114 &268777256
 MonoBehaviour:
   m_ObjectHideFlags: 0

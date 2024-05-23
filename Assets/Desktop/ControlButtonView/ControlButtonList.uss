@@ -20,9 +20,14 @@ VisualElement {
 }
 
 .warningMessage {
-    background-color: rgba(255, 246, 136, 255);
+    background-color: rgb(255, 246, 136);
 }
 
 .errorMessage {
     background-color: rgb(255, 152, 136);
+}
+
+.button {
+    width: 40%;
+    max-width: 150px;
 }
