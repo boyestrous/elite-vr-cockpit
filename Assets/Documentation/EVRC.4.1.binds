@@ -691,12 +691,16 @@
 		<Deadzone Value="0.00000000" />
 	</CamTranslateYAxis>
 	<CamTranslateForward>
-		<Primary Device="{NoDevice}" Key="" />
-		<Secondary Device="Keyboard" Key="Key_W" />
+		<Primary Device="Keyboard" Key="Key_W">
+			<Modifier Device="Keyboard" Key="Key_LeftAlt" />
+		</Primary>
+		<Secondary Device="{NoDevice}" Key="" />
 	</CamTranslateForward>
 	<CamTranslateBackward>
-		<Primary Device="vJoy" DeviceIndex="0" Key="Joy_POV3Down" />
-		<Secondary Device="Keyboard" Key="Key_S" />
+		<Primary Device="Keyboard" Key="Key_S">
+			<Modifier Device="Keyboard" Key="Key_LeftAlt" />
+		</Primary>
+		<Secondary Device="{NoDevice}" Key="" />
 	</CamTranslateBackward>
 	<CamTranslateXAxis>
 		<Binding Device="vJoy" DeviceIndex="1" Key="Joy_XAxis" />
@@ -704,11 +708,11 @@
 		<Deadzone Value="0.00000000" />
 	</CamTranslateXAxis>
 	<CamTranslateLeft>
-    <Primary Device="Keyboard" Key="Key_J" />
+		<Primary Device="Keyboard" Key="Key_J" />
 		<Secondary Device="vJoy" DeviceIndex="0" Key="Joy_POV3Left" />
 	</CamTranslateLeft>
 	<CamTranslateRight>
-    <Primary Device="Keyboard" Key="Key_L" />
+		<Primary Device="Keyboard" Key="Key_L" />
 		<Secondary Device="vJoy" DeviceIndex="0" Key="Joy_POV3Right" />
 	</CamTranslateRight>
 	<CamTranslateZAxis>
@@ -960,11 +964,11 @@
 	</FocusRightPanel_Buggy>
 	<GalaxyMapOpen_Buggy>
 		<Primary Device="{NoDevice}" Key="" />
-		<Secondary Device="{NoDevice}" Key="" />
+		<Secondary Device="Keyboard" Key="Key_5" />
 	</GalaxyMapOpen_Buggy>
 	<SystemMapOpen_Buggy>
 		<Primary Device="{NoDevice}" Key="" />
-		<Secondary Device="{NoDevice}" Key="" />
+		<Secondary Device="Keyboard" Key="Key_6" />
 	</SystemMapOpen_Buggy>
 	<OpenCodexGoToDiscovery_Buggy>
 		<Primary Device="Keyboard" Key="Key_O" />
@@ -1345,11 +1349,11 @@
 	</ExplorationFSSCameraPitch>
 	<ExplorationFSSCameraPitchIncreaseButton>
 		<Primary Device="{NoDevice}" Key="" />
-		<Secondary Device="{NoDevice}" Key="" />
+		<Secondary Device="Keyboard" Key="Key_K" />
 	</ExplorationFSSCameraPitchIncreaseButton>
 	<ExplorationFSSCameraPitchDecreaseButton>
 		<Primary Device="{NoDevice}" Key="" />
-		<Secondary Device="{NoDevice}" Key="" />
+		<Secondary Device="Keyboard" Key="Key_Numpad_0" />
 	</ExplorationFSSCameraPitchDecreaseButton>
 	<ExplorationFSSCameraYaw>
 		<Binding Device="vJoy" DeviceIndex="1" Key="Joy_RXAxis" />
