@@ -23,14 +23,7 @@ namespace EVRC.Core
 
         private void OnEnable()
         {
-            _ = DelayAndExecute(Reload, 1);
-        }
-
-        //Slight delay is required to make this load correctly. Otherwise, the desktop UI tries to populate stuff to fast
-        private async Task DelayAndExecute(Action methodToExecute, int delayInSeconds)
-        {
-            await Task.Delay(delayInSeconds * 1000);
-            methodToExecute();
+            _ = CoreUtils.DelayAndExecute(Reload, 1);
         }
 
         public void Reload()
