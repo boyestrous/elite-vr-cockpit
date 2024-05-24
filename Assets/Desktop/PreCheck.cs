@@ -1,17 +1,23 @@
+using EVRC.Core;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace EVRC.Desktop
 {
-    [RequireComponent(typeof(PreLaunchController))]
-    public class PreCheck : MonoBehaviour
+    [RequireComponent(typeof(PreCheck))]
+    public abstract class PreCheck : MonoBehaviour
     {
-        public PreLaunchController preLaunchController;
+        [Description("The uss name of the tab that will display the error style")]
+        public string tabName;
+        public bool hasErrors;
+        public delegate void NotifyPreCheckManager();
 
-        public virtual void OnEnable()
+        public NotifyPreCheckManager updatePreCheckState;
+
+        public virtual void OnPreCheckStateChanged()
         {
-            preLaunchController = gameObject.GetComponentInParent<PreLaunchController>();
+            updatePreCheckState.Invoke();
         }
     }
 }

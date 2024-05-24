@@ -55,13 +55,11 @@ namespace EVRC.Desktop
         ListView bindingsListView;
         BindingItem selectedItem;
 
-        private List<SavedControlButton> controlButtons;
-       
+        private List<SavedControlButton> controlButtons;       
 
-        public override void OnEnable()
+        public void OnEnable()
         {
-            base.OnEnable();
-
+            hasErrors = true;
             recommendedBindingsModal = GetComponent<RecommendedBindingsModal>();
 
 
@@ -140,6 +138,8 @@ namespace EVRC.Desktop
             allErrorBindings.Clear();
             allErrorBindings.AddRange(missingHolographicBindings);
             allErrorBindings.AddRange(missingRequiredBindings);
+
+            hasErrors = allErrorBindings.Count > 0;
 
             FilterList();
         }    
@@ -359,10 +359,6 @@ namespace EVRC.Desktop
             }
 
             RebuildListView(filteredBindings);
-
-            bool readyToLaunch = allErrorBindings.Count > 0 ? true : false;
-            preLaunchController.SetReady(readyToLaunch);
-
         }
 
         private void RebuildListView(List<BindingItem> items)
@@ -375,6 +371,8 @@ namespace EVRC.Desktop
 
             // Repopulate ListView with new items
             PopulateListView(items);
+
+            OnPreCheckStateChanged();
         }
 
         void LaunchFixBindingModal(string bindingName)
@@ -507,6 +505,5 @@ namespace EVRC.Desktop
 
             bindingsListView.Rebuild();
         }
-
     }
 }

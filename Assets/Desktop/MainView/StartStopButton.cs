@@ -14,6 +14,7 @@ namespace EVRC.Desktop
         private Button button;
         private IMGUIContainer icon;
         private bool running = false;
+        private bool preLaunchErrors = true;
 
         [Header("GUI Settings")]
         public string startButtonText;
@@ -35,35 +36,57 @@ namespace EVRC.Desktop
 
         }
 
-        private void OnButtonClick()
+        public void SetPreLaunchStatus(bool hasErrors)
         {
+            preLaunchErrors = hasErrors;
+            SetButtonStyle();
 
+        }
+
+        private void OnButtonClick() 
+        { 
+            SetButtonStyle(); 
             if (running)
             {
-                ApplyStoppedStyle();
-
                 // Send stopped event
                 StopOpenVREvent.Raise();
                 running = false;
             } 
             else
             {
-                ApplyRunningStyle();
-
                 StartOpenVREvent.Raise();
                 running = true;
             }
+        }
+
+        private void SetButtonStyle()
+        {
+
+            if (preLaunchErrors)
+            {
+                DisableStartButton();
+            } 
+            else if (running)
+            {
+                ApplyRunningStyle();
+            } 
+            else
+            {
+                EnableStartButton();
+                ApplyStoppedStyle();
+            }
+
             
         }
 
-        public void DisableStartButton()
+        private void DisableStartButton()
         {
             if (button == null) { return; }
             button.SetEnabled(false);
             ApplyDisabledStyle();
         }
 
-        public void EnableStartButton()
+        private void EnableStartButton()
         {
             if (button == null) { return; }
             button.SetEnabled(true);

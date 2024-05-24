@@ -217,7 +217,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8322096876445233120}
   - component: {fileID: 3203118652949787583}
-  - component: {fileID: 1542380883444307470}
   m_Layer: 6
   m_Name: SteamView
   m_TagString: Untagged
@@ -252,25 +251,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f0e47f17e9060048b76cb0ab20df472, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  preLaunchController: {fileID: 4453171941430188555}
+  tabName: steam
+  hasErrors: 0
   openVrState: {fileID: 11400000, guid: 25d4adda955fdac47a3eb997224de168, type: 2}
   hmdModel: 
   currentURLs: []
   ApplicationName: application.generated.unity.elitevrcockpit.exe
   parentUIDocument: {fileID: 6465645074838448022}
---- !u!114 &1542380883444307470
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1885352924072067237}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c014f14f3726b2b4288c26ecd2a15e6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tabname: steamvr
 --- !u!1 &1895929214567527768
 GameObject:
   m_ObjectHideFlags: 0
@@ -466,6 +453,7 @@ GameObject:
   - component: {fileID: 6465645074838448022}
   - component: {fileID: 6465645074838448021}
   - component: {fileID: 7491602119711795409}
+  - component: {fileID: 3334328095437784012}
   m_Layer: 6
   m_Name: NewDesktopUI
   m_TagString: Untagged
@@ -540,6 +528,24 @@ MonoBehaviour:
   openVrState: {fileID: 11400000, guid: 25d4adda955fdac47a3eb997224de168, type: 2}
   startButtonText: Start OpenVR
   stopButtonText: Stop OpenVR
+--- !u!114 &3334328095437784012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6465645074838448027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6249d0c9eeddd84fbe263a71eaa114f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  preChecks: []
+  errorIconTexture: {fileID: 2800000, guid: 0ce3f8efc40a73145834dcd72d8a7c03, type: 3}
+  errorIconColor: {r: 1, g: 0.37465727, b: 0, a: 1}
+  startStopButton: {fileID: 0}
+  parentUIDocument: {fileID: 0}
+  tabsWithErrors: []
 --- !u!1 &7332220839452202027
 GameObject:
   m_ObjectHideFlags: 0
@@ -595,7 +601,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7559442749638383542}
   - component: {fileID: 4726670226658153969}
-  - component: {fileID: 4453171941430188555}
   - component: {fileID: 4702260006377328484}
   m_Layer: 6
   m_Name: BindingItemsList
@@ -631,7 +636,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af4867fe2e8fd214faf6baa5fddd6add, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  preLaunchController: {fileID: 4453171941430188555}
+  tabName: bindings
+  hasErrors: 0
   parentUIDocument: {fileID: 6465645074838448022}
   recommendedBindingsModal: {fileID: 0}
   m_BindingEntryTemplate: {fileID: 9197481963319205126, guid: a4e5a72a43cd33d4ca76cd2283c05644,
@@ -647,19 +653,6 @@ MonoBehaviour:
   vJoyOnly: 0
   validOnly: 0
   errorsOnly: 0
---- !u!114 &4453171941430188555
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7707757889235039289}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c014f14f3726b2b4288c26ecd2a15e6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tabname: bindings
 --- !u!114 &4702260006377328484
 MonoBehaviour:
   m_ObjectHideFlags: 0

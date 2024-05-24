@@ -31,10 +31,10 @@ namespace EVRC.Desktop
         TextInputBaseField<string> alternatePathElement;
 
 
-        public override void OnEnable()
+        public void OnEnable()
         {
-            base.OnEnable();
-            
+            hasErrors = false;
+          
             VisualElement root = parentUIDocument.rootVisualElement;
 
             deviceValueElement = root.Q<Label>("vr-device-value");
