@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace EVRC.Core
@@ -18,6 +19,22 @@ namespace EVRC.Core
             public string Key;
             public string DeviceIndex;
             public HashSet<KeyModifier> Modifiers;
+            public string unityEditorString
+            {
+                get { return GetKeyBindingString(); }
+            }
+
+            // Method to return a string representation of the KeyBinding
+            public string GetKeyBindingString()
+            {
+                if (Modifiers == null || Modifiers.Count == 0)
+                {
+                    return Key;
+                }
+
+                var modifiersString = string.Join(", ", Modifiers.Select(m => m.Key));
+                return $"{Key} + {modifiersString}";
+            }
 
             public bool IsValid
             {

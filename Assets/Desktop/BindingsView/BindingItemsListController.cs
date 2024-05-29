@@ -1,16 +1,10 @@
 using EVRC.Core;
 using EVRC.Core.Actions;
 using EVRC.Core.Overlay;
-using EVRC.DesktopUI;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
-using Unity.Plastic.Antlr3.Runtime;
-using UnityEditor.Search;
-using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -23,6 +17,9 @@ namespace EVRC.Desktop
         // UXML template for list entries
         [SerializeField] UIDocument parentUIDocument;
         [SerializeField] RecommendedBindingsModal recommendedBindingsModal;
+        private AvailableBindings availableBindingsController;
+        public List<ControlButtonBinding.KeyBinding> availableKeyBindings;
+        private Dictionary<string, ControlButtonBinding.KeyBinding> availableKeyBindingsMap;
         [SerializeField] VisualTreeAsset m_BindingEntryTemplate;
         [SerializeField] ControlBindingsState bindings;
 
@@ -51,7 +48,7 @@ namespace EVRC.Desktop
         private List<EDControlButton> allErrorBindings; // combination of binds with all types of errors
         //public bool bindingsHaveErrors;
 
-        private List<string> availableSingleKeyBindings;
+        //private List<string> availableSingleKeyBindings;
         ListView bindingsListView;
         BindingItem selectedItem;
 
@@ -61,7 +58,7 @@ namespace EVRC.Desktop
         {
             hasErrors = true;
             recommendedBindingsModal = GetComponent<RecommendedBindingsModal>();
-
+            availableBindingsController = GetComponent<AvailableBindings>();
 
             // filter starts as off
             vJoyOnly = false;
@@ -223,74 +220,74 @@ namespace EVRC.Desktop
             return BindingItemState.Good;
         }
 
-        private void FindAvailableKeyCombos()
-        {
-            // Get all available key strings that could be used 
-            List<string> allKeyStrings = KeyboardInterface.GetAllKeycodeStrings();
+        //private void FindAvailableKeyCombos()
+        //{
+        //    // Get all available key strings that could be used 
+        //    List<string> allKeyStrings = KeyboardInterface.GetAllKeycodeStrings();
 
-            // These key strings are not great for consistent implementation. Avoid auto-assigning them.
-            List<string> ignoreKeyStrings = new List<string> {
-                "Key_Escape",
-                "Key_LeftShift",
-                "Key_LeftControl",
-                "Key_LeftAlt",
-                "Key_RightShift",
-                "Key_RightControl",
-                "Key_RightAlt",
-                "Key_Backspace",
-                "Key_Tab",
-                "Key_Enter",
-                "Key_CapsLock",
-                "Key_Space",
-                "Key_PageUp",
-                "Key_PageDown",
-                "Key_End",
-                "Key_Home",
-                "Key_LeftArrow",
-                "Key_UpArrow",
-                "Key_RightArrow",
-                "Key_DownArrow",
-                "Key_Insert",
-                "Key_Delete",
-            };
+        //    // These key strings are not great for consistent implementation. Avoid auto-assigning them.
+        //    List<string> ignoreKeyStrings = new List<string> {
+        //        "Key_Escape",
+        //        "Key_LeftShift",
+        //        "Key_LeftControl",
+        //        "Key_LeftAlt",
+        //        "Key_RightShift",
+        //        "Key_RightControl",
+        //        "Key_RightAlt",
+        //        "Key_Backspace",
+        //        "Key_Tab",
+        //        "Key_Enter",
+        //        "Key_CapsLock",
+        //        "Key_Space",
+        //        "Key_PageUp",
+        //        "Key_PageDown",
+        //        "Key_End",
+        //        "Key_Home",
+        //        "Key_LeftArrow",
+        //        "Key_UpArrow",
+        //        "Key_RightArrow",
+        //        "Key_DownArrow",
+        //        "Key_Insert",
+        //        "Key_Delete",
+        //    };
 
-            // Filter out the ignored strings
-            allKeyStrings = allKeyStrings.Where(item => !ignoreKeyStrings.Contains(item)).ToList();
+        //    // Filter out the ignored strings
+        //    allKeyStrings = allKeyStrings.Where(item => !ignoreKeyStrings.Contains(item)).ToList();
 
-            // Initialize a list to store strings without matching key bindings
-            List<string> availableKeyCombos = new List<string>();
+        //    // Initialize a list to store strings without matching key bindings
+        //    List<string> availableKeyCombos = new List<string>();
 
-            // Check each key string for matching key bindings
-            foreach (string keyString in allKeyStrings)
-            {
-                // Check if any key binding (Primary or Secondary) matches the key string
-                bool hasMatchingKey = bindings.buttonBindings.Values
-                    .Any(binding => binding.Primary.Key == keyString || binding.Secondary.Key == keyString);
+        //    // Check each key string for matching key bindings
+        //    foreach (string keyString in allKeyStrings)
+        //    {
+        //        // Check if any key binding (Primary or Secondary) matches the key string
+        //        bool hasMatchingKey = bindings.buttonBindings.Values
+        //            .Any(binding => binding.Primary.Key == keyString || binding.Secondary.Key == keyString);
 
-                // If there are no matching key bindings for the current key string, add it to the list
-                if (!hasMatchingKey)
-                {
-                    availableKeyCombos.Add(keyString);
-                }
-            }
+        //        // If there are no matching key bindings for the current key string, add it to the list
+        //        if (!hasMatchingKey)
+        //        {
+        //            availableKeyCombos.Add(keyString);
+        //        }
+        //    }
 
-            if (availableKeyCombos.Count > 0)
-            {
-                // Found strings without matching key bindings
-                Debug.Log($"There are {availableKeyCombos.Count} available keys that could be used for the missing bindings.");
-                //foreach (string keyCombo in availableKeyCombos)
-                //{
-                //    Debug.Log($" >>>> {keyCombo}");
-                //}
-            }
-            else
-            {
-                // No key strings found without matching key bindings
-                Debug.LogWarning("BindingItemsListController: No key_combos were found to be available without an existing binding. You will be unable to fix the missing bindings.");
+        //    if (availableKeyCombos.Count > 0)
+        //    {
+        //        // Found strings without matching key bindings
+        //        Debug.Log($"There are {availableKeyCombos.Count} available keys that could be used for the missing bindings.");
+        //        //foreach (string keyCombo in availableKeyCombos)
+        //        //{
+        //        //    Debug.Log($" >>>> {keyCombo}");
+        //        //}
+        //    }
+        //    else
+        //    {
+        //        // No key strings found without matching key bindings
+        //        Debug.LogWarning("BindingItemsListController: No key_combos were found to be available without an existing binding. You will be unable to fix the missing bindings.");
 
-            }
-            availableSingleKeyBindings = availableKeyCombos;
-        }
+        //    }
+        //    availableSingleKeyBindings = availableKeyCombos;
+        //}
 
         public void FilterList()
         { 
@@ -355,7 +352,8 @@ namespace EVRC.Desktop
 
             if (allErrorBindings.Count > 0)
             {
-                FindAvailableKeyCombos();
+                if (availableBindingsController.bindings == null && bindings != null) availableBindingsController.bindings = bindings;
+                availableKeyBindings = availableBindingsController.FindUnusedKeyBindings();
             }
 
             RebuildListView(filteredBindings);
@@ -383,14 +381,25 @@ namespace EVRC.Desktop
             Button cancelButton = modalUI.Q<Button>("cancel-button");
             Button xButton = modalUI.Q<Button>("x-button");
             Label bindingLabel = modalUI.Q<Label>("control-binding-name");
-            DropdownField availableKeys = modalUI.Q<DropdownField>("available-keys-dropdown");
+            DropdownField availableKeysDropdown = modalUI.Q<DropdownField>("available-keys-dropdown");
 
             okButton.clicked += SubmitFixBinding;
             cancelButton.clicked += CloseFixBindingModal;
             xButton.clicked += CloseFixBindingModal;
             bindingLabel.text = bindingName;
-            availableKeys.choices = availableSingleKeyBindings;
-            availableKeys.RegisterCallback<ChangeEvent<string>>(OnBindingFixDropdownSelectionChanged);
+
+
+            // Convert the ControlButtonBinding to a dictionary so it can be displayed in the dropdown
+            availableKeyBindingsMap = new Dictionary<string, ControlButtonBinding.KeyBinding>();
+
+            foreach (var binding in availableKeyBindings)
+            {
+                availableKeyBindingsMap[binding.unityEditorString] = binding;
+            }
+
+            availableKeysDropdown.choices = availableKeyBindingsMap.Keys.ToList<string>();
+            //availableKeysDropdown.RegisterCallback<ChangeEvent<string>>(OnBindingFixDropdownSelectionChanged);
+            availableKeysDropdown.RegisterValueChangedCallback(OnDropdownValueChanged);
 
             // Get the VisualElement representing the ListView
             VisualElement listViewElement = bindingsListView.hierarchy.parent;
@@ -418,12 +427,34 @@ namespace EVRC.Desktop
             var dropdownField = modalUI.Q<DropdownField>("available-keys-dropdown");
             var newValue = dropdownField.value;
 
-            Debug.Log($"Updating binding for {controlName} to {newValue}");
+            if (availableKeyBindingsMap.TryGetValue(newValue, out ControlButtonBinding.KeyBinding selectedBinding))
+            {
+                //Submit(selectedBinding);
+                Debug.Log($"Updating binding for {controlName} to {newValue}");
+                EDControlBindingsUtils.UpdateBindingXml(bindings.bindingsFilePath, controlName.text, selectedBinding);
+                RemoveFromErrorLists((EDControlButton)Enum.Parse(typeof(EDControlButton), controlName.text));
+                CloseFixBindingModal();
+            }
+            else
+            {
+                Debug.LogError("Selected binding not found in the dictionary.");
+            }
+        }
 
-            EDControlBindingsUtils.UpdateBindingXml(bindings.bindingsFilePath, controlName.text, newValue);
-            RemoveFromErrorLists((EDControlButton)Enum.Parse(typeof(EDControlButton), controlName.text));
+        void OnDropdownValueChanged(ChangeEvent<string> evt)
+        {
+            Button okButton = modalUI.Q<Button>("ok-button");
 
-            CloseFixBindingModal();
+            if (evt.newValue != null)
+            {
+                okButton.SetEnabled(true);
+                okButton.RemoveFromClassList("disabledBtn");
+            }
+            else
+            {
+                okButton.SetEnabled(false);
+                okButton.AddToClassList("disabledBtn");
+            }
         }
 
         void OnBindingFixDropdownSelectionChanged(ChangeEvent<string> evt)

@@ -51,7 +51,11 @@ namespace EVRC.Desktop
                 string concatenatedURLs = string.Join("\n", currentURLs);
                 concatenatedURLs = "Multiple Current Bindings found \n" + concatenatedURLs;
                 steamBindingVersionElement.text = concatenatedURLs;
-            } else {
+            } else if (currentURLs.Count == 0) {
+                Debug.Log("No CurrentURL Found for SteamVR");
+            } 
+            else
+            {
                 steamBindingVersionElement.text = currentURLs[0];
             }
             

@@ -6,6 +6,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using UnityEngine;
+using static EVRC.Core.ControlButtonBinding;
 
 namespace EVRC.Core
 {
@@ -68,6 +69,85 @@ namespace EVRC.Core
                                     .FirstOrDefault(attr => attr.Name.LocalName.ToLowerInvariant() == localName);
 
             return attribute?.Value;  // Return the attribute value if found, otherwise return null
+        }
+
+        public static void UpdateBindingXml(string filePath, string tagName, ControlButtonBinding.KeyBinding keyBinding)
+        {
+            // Save a copy, just in case
+            SaveCopyWithTimestamp(filePath);
+
+            // Load the XML document
+            XDocument doc = XDocument.Load(filePath);
+
+            // Find the matching node
+            XElement node = doc.Descendants(tagName).FirstOrDefault();
+            if (node == null)
+            {
+                Console.WriteLine($"Node with tagName {tagName} not found.");
+                return;
+            }
+
+            // Determine which node to replace based on the existing structure
+            XElement primaryNode = node.Element("Primary");
+            XElement secondaryNode = node.Element("Secondary");
+
+            if (secondaryNode == null || string.IsNullOrEmpty(secondaryNode.Value))
+            {
+                // If Secondary node is empty or doesn't exist, replace it
+                ReplaceOrAddElement(node, "Secondary", keyBinding);
+            }
+            else if (primaryNode == null || string.IsNullOrEmpty(primaryNode.Value))
+            {
+                // If Primary node is empty, replace it
+                ReplaceOrAddElement(node, "Primary", keyBinding);
+            }
+            else
+            {
+                // Both Primary and Secondary nodes are not empty, replace Secondary
+                ReplaceOrAddElement(node, "Secondary", keyBinding);
+            }
+
+            // Save the modified XML
+            doc.Save(filePath);
+        }
+        private static void ReplaceOrAddElement(XElement parent, string elementName, ControlButtonBinding.KeyBinding keyBinding)
+        {
+            XElement element = parent.Element(elementName);
+            if (element != null)
+            {
+                element.ReplaceWith(CreateKeyBindingElement(keyBinding, elementName));
+            }
+            else
+            {
+                parent.Add(CreateKeyBindingElement(keyBinding, elementName));
+            }
+        }
+
+        private static XElement CreateKeyBindingElement(ControlButtonBinding.KeyBinding keyBinding, string tagName)
+        {
+            // Create the XML representation of the KeyBinding
+            XElement keyBindingElement = new XElement(tagName,
+                new XAttribute("Device", keyBinding.Device),
+                new XAttribute("Key", keyBinding.Key)
+            );
+
+            //Keyboards don't get DeviceIndexes
+            if (keyBindingElement.Attribute("Device").Value != "Keyboard")
+            {
+                keyBindingElement.Add(new XAttribute("DeviceIndex", keyBinding.DeviceIndex));
+            }
+
+            // Add Modifiers if present
+            foreach (var modifier in keyBinding.Modifiers)
+            {
+                XElement modifierElement = new XElement("Modifier",
+                    new XAttribute("Device", modifier.Device),
+                    new XAttribute("Key", modifier.Key)
+                );
+                keyBindingElement.Add(modifierElement);
+            }
+
+            return keyBindingElement;
         }
 
         public static void UpdateBindingXml(string filePath, string tagName, string newKey)
