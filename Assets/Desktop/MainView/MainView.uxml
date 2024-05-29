@@ -52,7 +52,7 @@
                     </ui:Label>
                 </ui:VisualElement>
                 <ui:VisualElement name="SteamVRTabContainer" class="tabContainer">
-                    <ui:Label name="SteamvrTab" text="VR Settings" class="tab">
+                    <ui:Label name="SteamvrTab" text="VR Settings (Coming Soon)" class="tab coming-soon-label">
                         <ui:IMGUIContainer name="steamvr-error-icon" class="disabledIcon" style="-unity-background-image-tint-color: rgb(226, 174, 20); background-image: url(&apos;project://database/Assets/Textures/Icons/Warning.png?fileID=2800000&amp;guid=0ce3f8efc40a73145834dcd72d8a7c03&amp;type=3#Warning&apos;); display: none;" />
                     </ui:Label>
                 </ui:VisualElement>
