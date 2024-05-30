@@ -587,21 +587,21 @@ namespace EVRC.Core.Actions
 
         public void ResetAll()
         {
-            iReport.AxisY = 0;
-            iReport.AxisX = 0;
-            iReport.AxisZRot = 0;
-            iReport.AxisXRot = 0;
-            iReport.AxisYRot = 0;
-            iReport.Slider = 0;
-            iReport.AxisZ = 0;
-            iReport.Dial = 0;
-            iReport2.AxisX = 0;
-            iReport2.AxisY = 0;
-            iReport2.AxisZ = 0;
-            iReport2.AxisXRot = 0;
-            iReport2.AxisYRot = 0;
-            iReport2.AxisZRot = 0;
-            iReport2.Dial = 0;
+            //iReport.AxisY = 0;
+            //iReport.AxisX = 0;
+            //iReport.AxisZRot = 0;
+            //iReport.AxisXRot = 0;
+            //iReport.AxisYRot = 0;
+            //iReport.Slider = 0;
+            //iReport.AxisZ = 0;
+            //iReport.Dial = 0;
+            //iReport2.AxisX = 0;
+            //iReport2.AxisY = 0;
+            //iReport2.AxisZ = 0;
+            //iReport2.AxisXRot = 0;
+            //iReport2.AxisYRot = 0;
+            //iReport2.AxisZRot = 0;
+            //iReport2.Dial = 0;
         }
     }
 }
