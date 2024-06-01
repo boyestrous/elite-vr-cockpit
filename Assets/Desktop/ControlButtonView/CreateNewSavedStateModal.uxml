@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Desktop/evrc_styles.uss?fileID=7433441132597879392&amp;guid=ffee2a42999db844e843710513f0aafc&amp;type=3#evrc_styles" />
+    <ui:VisualElement class="defaultModalContainer" style="height: 300px;">
+        <ui:Label text="A SavedState file keeps track of the positions and configurations of all of your holographic elements in your cockpit." display-tooltip-when-elided="true" style="white-space: normal;" />
+        <ui:Label text="Each file has configurations for the Main Ship, SRV, and fighter. You may create additional files for new ships, but you will need to switch the current SavedState manually (for now)." display-tooltip-when-elided="true" style="white-space: normal;" />
+        <ui:TextField picking-mode="Ignore" label="Type a Descriptive Name" value="SampleName.json" name="filename-input" />
+        <ui:Label text="placeholder message " display-tooltip-when-elided="true" name="modal-message" style="-unity-font-style: italic; display: flex; color: rgba(202, 52, 52, 255);" />
+        <ui:VisualElement name="ButtonContainer" style="flex-direction: row; justify-content: space-around; width: 100%; margin-bottom: 5px; margin-top: 5px; position: absolute; bottom: 5px;">
+            <ui:Button text="OK" display-tooltip-when-elided="true" name="submit-button" class="modalButton" />
+            <ui:Button text="Cancel" display-tooltip-when-elided="true" name="cancel-button" enable-rich-text="true" class="modalButton" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

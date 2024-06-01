@@ -100,13 +100,13 @@ namespace EVRC.Core
             {
                 string[] splitPreset = startPreset.Split(new string[] { "\n" }, StringSplitOptions.None);
                 startPreset = splitPreset[0];
-            } 
+            }
 
             return startPreset;
         }
 
         public static string DesktopUIDocumentsPath
-            => Path.Combine(Application.dataPath,"Desktop");
+            => Path.Combine(Application.dataPath, "Desktop");
 
         public static string StatusFilePath
             => Path.Combine(SaveDataPath, "Status.json");
@@ -114,13 +114,26 @@ namespace EVRC.Core
         public static string OverlayStatePath
             => CockpitStatePath();
 
+        public static string OverlayStateTemplatePath = Path.Combine(Application.dataPath, "Documentation", "SavedState_Template.json");
+        public static int currentOverlayFileVersion = 5;
+
+        private static string OverlayStateFileNameWithoutExtension = "SavedState";
+        public static string OverlayStateFileName => CockpitStateFileName();
+
+        private static string CockpitStateFileName()
+        {
+            string filename = OverlayStateFileNameWithoutExtension + ".json";
+            #if UNITY_EDITOR
+                filename = OverlayStateFileNameWithoutExtension + "_Editor.json";
+            #endif
+
+            return filename;
+        }
+
         public static string CockpitStatePath()
         {
-            string overlayStateFilePath = Path.Combine(Application.persistentDataPath, "SavedState.json");
+            string overlayStateFilePath = Path.Combine(Application.persistentDataPath, OverlayStateFileName);
 
-            #if UNITY_EDITOR
-                overlayStateFilePath = Path.Combine(Application.persistentDataPath, "SavedState_Editor.json");
-            #endif
 
             return overlayStateFilePath;
         }

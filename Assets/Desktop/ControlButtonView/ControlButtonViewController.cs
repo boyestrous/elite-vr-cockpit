@@ -17,23 +17,19 @@ namespace EVRC.Desktop
         [SerializeField] UIDocument parentUIDocument;
         [SerializeField] VisualTreeAsset controlButtonEntryTemplate;
         public SavedGameState savedState;
-        [SerializeField] GameEvent overlayStateLoadedEvent;
-
-        [Tooltip("Name of the visual element that will hold the list of controlButtons")]
-        public string targetParentName = "ControlButtonsState";
         public ControlButtonAssetCatalog controlButtonCatalog;
         public GameEvent controlButtonRemovedEvent;
-        public AddControlButtonForm addControlButtonForm;
+        private AddControlButtonForm addControlButtonForm;
+        
 
         private VisualElement root; // the root of the whole UI
         private Dictionary<(string, string), ControlButtonList> controlButtonLists;
 
         private Button openAddButtonModalElement;
 
-
-        // the anchor object that all of the lists will go inside of
+        // the Scrollview that will hold all of the mini ListViews of controlButtons
         private ScrollView controlListContainer;
-        
+
 
         public void OnEnable()
         {
@@ -43,19 +39,24 @@ namespace EVRC.Desktop
             controlButtonLists = new Dictionary<(string, string), ControlButtonList>();
             controlListContainer = root.Q<ScrollView>("control-list-container");
             
-            openAddButtonModalElement = root.Q<Button>("open-addButtonModal-button");
-            openAddButtonModalElement.clicked += LaunchModal;
 
-            savedState.Load();
-            if (savedState.controlButtons != null)
-            {
-                DisplayControlButtons(savedState.controlButtons);
-                overlayStateLoadedEvent.Raise();
-            }
+            openAddButtonModalElement = root.Q<Button>("open-addButtonModal-button");
+            openAddButtonModalElement.clicked += LaunchModal;          
         }
 
-        public void DisplayControlButtons(List<SavedControlButton> controlButtons)
+
+        // Invoked from GameEvent
+        public void PopulateHolographicButtonsListView()
         {
+            if (root == null) { OnEnable(); }
+
+            //Reset the List of Lists and the containing scrollview
+            controlButtonLists = new Dictionary<(string, string), ControlButtonList>();
+            controlListContainer.Clear();
+            controlListContainer.scrollOffset = Vector2.zero; // Reset scroll position to the top-left corner
+
+            List<SavedControlButton> controlButtons = savedState.controlButtons;
+
             foreach (SavedControlButton item in controlButtons)
             {
                 AddControlButton(item);
@@ -85,8 +86,6 @@ namespace EVRC.Desktop
 
             // Add to source list
             controlButtonLists[cat].Add(addedControlButton);
-
-            
         }
 
         void LaunchModal()

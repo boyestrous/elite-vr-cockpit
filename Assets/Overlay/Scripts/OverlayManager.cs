@@ -12,8 +12,6 @@ namespace EVRC.Core
     /// </summary>
     public class OverlayManager : MonoBehaviour
     {
-        public static int currentFileVersion = 5;
-
         public GameEvent overlayStateLoaded;
 
         private StaticLocationsManager staticLocationsManager;
@@ -48,7 +46,7 @@ namespace EVRC.Core
 
             // Get Current State and save to file
             SavedStateFile currentState = new SavedStateFile();
-            currentState.version = currentFileVersion;
+            currentState.version = Paths.currentOverlayFileVersion;
             currentState.staticLocations = staticLocationsManager.GetCurrentStates();
             currentState.controlButtons = controlButtonManager.GetCurrentStates();
             OverlayFileUtils.WriteToFile(currentState);

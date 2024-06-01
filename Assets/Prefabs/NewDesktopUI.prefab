@@ -304,6 +304,8 @@ GameObject:
   - component: {fileID: 7801773867867527582}
   - component: {fileID: 7101438878122661753}
   - component: {fileID: 268777256}
+  - component: {fileID: 3423843137621750281}
+  - component: {fileID: 114996553333904926}
   - component: {fileID: 8859447503791462621}
   - component: {fileID: 6278015330906870882}
   m_Layer: 6
@@ -344,9 +346,6 @@ MonoBehaviour:
   controlButtonEntryTemplate: {fileID: 9197481963319205126, guid: 833a4429788708142a5ae40fed71f03f,
     type: 3}
   savedState: {fileID: 11400000, guid: 6f013364a8a2fd4448e6e72d02d181c3, type: 2}
-  overlayStateLoadedEvent: {fileID: 11400000, guid: 38556d8a03de49a4f9d81702416a3157,
-    type: 2}
-  targetParentName: control-list-container
   controlButtonCatalog: {fileID: 11400000, guid: 83d2b71115eca78419410b43b99628b2,
     type: 2}
   controlButtonRemovedEvent: {fileID: 11400000, guid: 8af64cdc3761eb042922a6e60eaaa09c,
@@ -369,7 +368,8 @@ MonoBehaviour:
   parentUIDocument: {fileID: 6465645074838448022}
   catalog: {fileID: 11400000, guid: 83d2b71115eca78419410b43b99628b2, type: 2}
   savedGameState: {fileID: 11400000, guid: 6f013364a8a2fd4448e6e72d02d181c3, type: 2}
-  addButtonModalTemplate: {fileID: 0}
+  addButtonModalTemplate: {fileID: 9197481963319205126, guid: 9140ca18f8f714c4a9c01bfe8ca5faca,
+    type: 3}
 --- !u!114 &268777256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -398,6 +398,36 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3423843137621750281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4769661530639456945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 116c28abcea24534d9635e7e20434751, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentUIDocument: {fileID: 6465645074838448022}
+  savedState: {fileID: 11400000, guid: 6f013364a8a2fd4448e6e72d02d181c3, type: 2}
+  selectedSavedStateFile: 
+--- !u!114 &114996553333904926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4769661530639456945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e31e1e5907021743a03af4e6e4b6086, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentUIDocument: {fileID: 6465645074838448022}
+  modalTemplate: {fileID: 9197481963319205126, guid: 80861e114ef68e7439dbb306c783d2c0,
+    type: 3}
 --- !u!114 &8859447503791462621
 MonoBehaviour:
   m_ObjectHideFlags: 0

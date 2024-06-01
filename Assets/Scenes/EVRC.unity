@@ -6195,6 +6195,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8e29202a4b6f1b4e8827a86ba7cb2c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1706966585 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7801773867867527582, guid: 13dfd2ff77290bb4faf75012641f360d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1749688776}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 176839a1abd11224cad8d39527ce262c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1732409249
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6363,6 +6375,41 @@ PrefabInstance:
       propertyPath: uiDocument
       value: 
       objectReference: {fileID: 1749688777}
+    - target: {fileID: 6278015330906870882, guid: 13dfd2ff77290bb4faf75012641f360d,
+        type: 3}
+      propertyPath: Response.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6278015330906870882, guid: 13dfd2ff77290bb4faf75012641f360d,
+        type: 3}
+      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6278015330906870882, guid: 13dfd2ff77290bb4faf75012641f360d,
+        type: 3}
+      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1706966585}
+    - target: {fileID: 6278015330906870882, guid: 13dfd2ff77290bb4faf75012641f360d,
+        type: 3}
+      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6278015330906870882, guid: 13dfd2ff77290bb4faf75012641f360d,
+        type: 3}
+      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PopulateHolographicButtonsListView
+      objectReference: {fileID: 0}
+    - target: {fileID: 6278015330906870882, guid: 13dfd2ff77290bb4faf75012641f360d,
+        type: 3}
+      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: EVRC.Desktop.ControlButtonViewController, EVRC.Desktop
+      objectReference: {fileID: 0}
+    - target: {fileID: 6278015330906870882, guid: 13dfd2ff77290bb4faf75012641f360d,
+        type: 3}
+      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6465645074838448020, guid: 13dfd2ff77290bb4faf75012641f360d,
         type: 3}
       propertyPath: m_RootOrder

@@ -1,0 +1,23 @@
+.defaultModalContainer {
+    width: 400px;
+    height: 250px;
+    border-left-color: rgba(0, 0, 0, 255);
+    border-right-color: rgba(0, 0, 0, 255);
+    border-top-color: rgba(0, 0, 0, 255);
+    border-bottom-color: rgba(0, 0, 0, 255);
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    background-color: rgba(212, 212, 212, 255);
+}
+
+.modalButtonContainer {
+    flex-direction: ;
+}
+
+.modalButton {
+    width: 25%;
+    min-width: 100px;
+    max-width: 200px;
+}

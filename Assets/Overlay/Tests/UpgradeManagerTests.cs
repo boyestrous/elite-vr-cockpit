@@ -41,7 +41,7 @@ public class UpgradeManagerTests
 
         #region --------------Assert-----------------------
         Assert.NotNull(returnedState);
-        Assert.AreEqual(OverlayManager.currentFileVersion, returnedState.version);
+        Assert.AreEqual(Paths.currentOverlayFileVersion, returnedState.version);
 
         //Not Null
         Assert.NotNull(returnedState.controlButtons);

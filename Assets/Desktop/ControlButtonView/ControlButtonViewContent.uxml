@@ -1,19 +1,15 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/Desktop/unity_uss_overrides.uss?fileID=7433441132597879392&amp;guid=00c71a919149def4b8a4b4161d9f034a&amp;type=3#unity_uss_overrides" />
     <ui:GroupBox name="SettingsMain" class="contentMainArea" style="flex-direction: row; width: 100%; height: 100%; min-width: 464px; min-height: 550px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;">
         <ui:VisualElement name="LeftColumn" style="flex-direction: column; width: 45%; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-right-width: 1px; min-width: 160px;">
-            <ui:GroupBox name="OverlayControls" style="display: none;">
-                <ui:Label text="Toggleable Settings" display-tooltip-when-elided="true" name="OverlayHeader" style="color: rgb(0, 0, 0);" />
-                <ui:Label text="You may use any combination of physical controls with the Overlay. Enable or disable items here to meet your preferences. Leave everything enabled to use the VR Overlay for everything." display-tooltip-when-elided="true" name="OverlayControlsDescription" class="paragraphText" style="padding-bottom: 10px;" />
-                <ui:Toggle label="Toggle" name="JoystickToggle" text="Use Joysticks" binding-path="value" style="color: rgb(0, 0, 0); flex-direction: row-reverse;" />
-                <ui:Toggle label="Toggle" name="ThrottleToggle" text="Use Throttles" binding-path="value" style="color: rgb(0, 0, 0); flex-direction: row-reverse;" />
-                <ui:Toggle label="Toggle" name="PowerPanelToggle" text="Use Power Panels" binding-path="value" tooltip="holographic panel for pip management" style="color: rgb(0, 0, 0); flex-direction: row-reverse;" />
-                <ui:Toggle label="Toggle" name="ButtonLabelToggle" text="Display Button Labels" binding-path="value" tooltip="labels underneath the holographic buttons" style="color: rgb(0, 0, 0); flex-direction: row-reverse;" />
-            </ui:GroupBox>
-            <ui:GroupBox name="ControlButtons">
+            <ui:GroupBox name="ControlButtons" style="height: 100%;">
                 <ui:Label text="Holographic Controls and Settings" display-tooltip-when-elided="true" name="ControlButtonHeader" style="color: rgb(0, 0, 0); font-size: 18px; white-space: normal; -unity-font-style: bold;" />
                 <ui:VisualElement name="ControlsDetails">
                     <ui:Label text="ControlButtons" display-tooltip-when-elided="true" style="-unity-font-style: bold;" />
-                    <ui:Label text="Holographic &quot;Control Buttons&quot; can be placed inside your VR cockpit to give you control over your ship without having to bind controls to your (limited) VR Controllers.&#10;&#10;The list to the right shows your currently configured holographic buttons and the respective context in which those buttons will appear. " display-tooltip-when-elided="true" name="ControlButtonsDescription" class="paragraphText" style="padding-bottom: 10px; white-space: normal; font-size: 12px;" />
+                    <ui:Label text="Holographic &quot;Control Buttons&quot; can be placed inside your VR cockpit to give you control over your ship without having to bind controls to your (limited) VR Controllers.&#10;&#10;The list to the right shows your currently configured holographic buttons and the respective context in which those buttons will appear." display-tooltip-when-elided="true" name="ControlButtonsDescription" class="paragraphText" style="padding-bottom: 10px; white-space: normal; font-size: 12px;" />
+                    <ui:VisualElement name="CurrentFile" style="flex-direction: row; margin-bottom: 5px;">
+                        <ui:DropdownField label="Save File:" index="-1" choices="System.Collections.Generic.List`1[System.String]" name="current-savedstate-file" style="width: 98%; font-size: 12px;" />
+                    </ui:VisualElement>
                 </ui:VisualElement>
                 <ui:VisualElement name="Settings" style="border-top-width: 1px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);">
                     <ui:Label text="Settings" display-tooltip-when-elided="true" style="-unity-font-style: bold;" />
@@ -25,10 +21,10 @@
             </ui:GroupBox>
         </ui:VisualElement>
         <ui:VisualElement name="RightColumn" style="width: 55%; min-width: 300px;">
-            <ui:VisualElement name="Controls" style="height: 100%; margin-left: 2px; margin-right: 2px; margin-top: 2px; margin-bottom: 2px; border-left-color: rgba(0, 0, 0, 255); border-right-color: rgba(0, 0, 0, 255); border-top-color: rgba(0, 0, 0, 255); border-bottom-color: rgba(0, 0, 0, 255);">
-                <ui:VisualElement name="ControlsHeader" style="width: 100%; flex-direction: row; min-height: 30px; padding-left: 3px; padding-right: 3px; padding-top: 3px; padding-bottom: 3px; border-left-color: rgba(0, 0, 0, 255); border-right-color: rgba(0, 0, 0, 255); border-top-color: rgba(0, 0, 0, 255); border-bottom-color: rgba(0, 0, 0, 255); border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 1px;">
-                    <ui:Label text="Control Buttons in Scene" display-tooltip-when-elided="true" name="ControlButtonsHeading" class="contentHeader" style="-unity-font: url(&apos;project://database/Assets/TextMesh%20Pro/Fonts/LiberationSans.ttf?fileID=12800000&amp;guid=e3265ab4bf004d28a9537516768c1c75&amp;type=3#LiberationSans&apos;); color: rgb(0, 0, 0); font-size: 16px;" />
-                    <ui:Button text="Add Button" display-tooltip-when-elided="true" name="open-addButtonModal-button" style="padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px;" />
+            <ui:VisualElement name="Controls" style="height: 100%; margin-left: 2px; margin-right: 2px; margin-top: 2px; margin-bottom: 2px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);">
+                <ui:VisualElement name="ControlsHeader" style="width: 100%; flex-direction: row; min-height: 30px; padding-left: 3px; padding-right: 3px; padding-top: 3px; padding-bottom: 3px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 1px;">
+                    <ui:Label text="Holo Buttons in Scene" display-tooltip-when-elided="true" name="ControlButtonsHeading" class="contentHeader" style="-unity-font: url(&apos;project://database/Assets/TextMesh%20Pro/Fonts/LiberationSans.ttf?fileID=12800000&amp;guid=e3265ab4bf004d28a9537516768c1c75&amp;type=3#LiberationSans&apos;); color: rgb(0, 0, 0); font-size: 14px; -unity-text-align: middle-left;" />
+                    <ui:Button text="Add Holo Button" display-tooltip-when-elided="true" name="open-addButtonModal-button" style="padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px;" />
                 </ui:VisualElement>
                 <ui:ScrollView name="control-list-container" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="AlwaysVisible" />
             </ui:VisualElement>
