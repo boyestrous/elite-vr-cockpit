@@ -19,8 +19,8 @@ namespace EVRC.Desktop
         public SavedGameState savedState;
         public ControlButtonAssetCatalog controlButtonCatalog;
         public GameEvent controlButtonRemovedEvent;
-        private AddControlButtonForm addControlButtonForm;
-        
+        private AddControlButtonModal addControlButtonModal;
+        private bool firstRun = true;
 
         private VisualElement root; // the root of the whole UI
         private Dictionary<(string, string), ControlButtonList> controlButtonLists;
@@ -30,25 +30,30 @@ namespace EVRC.Desktop
         // the Scrollview that will hold all of the mini ListViews of controlButtons
         private ScrollView controlListContainer;
 
-
-        public void OnEnable()
+        private void FirstRun()
         {
-            addControlButtonForm = GetComponent<AddControlButtonForm>();
+            addControlButtonModal = GetComponent<AddControlButtonModal>();
 
             root = parentUIDocument.rootVisualElement;
             controlButtonLists = new Dictionary<(string, string), ControlButtonList>();
             controlListContainer = root.Q<ScrollView>("control-list-container");
-            
+
 
             openAddButtonModalElement = root.Q<Button>("open-addButtonModal-button");
-            openAddButtonModalElement.clicked += LaunchModal;          
+            openAddButtonModalElement.clicked += LaunchModal;
+
+            firstRun = false;
         }
 
+        public void OnEnable()
+        {
+            if (firstRun) FirstRun();
+        }
 
         // Invoked from GameEvent
         public void PopulateHolographicButtonsListView()
         {
-            if (root == null) { OnEnable(); }
+            if (firstRun) FirstRun();
 
             //Reset the List of Lists and the containing scrollview
             controlButtonLists = new Dictionary<(string, string), ControlButtonList>();
@@ -102,7 +107,7 @@ namespace EVRC.Desktop
             Vector2 listViewCenter = new Vector2(listViewPosition.x + (listViewSize.x / 2f),
                                                  listViewPosition.y + (listViewSize.y / 2f));
 
-            addControlButtonForm.LaunchModal(listViewCenter);
+            addControlButtonModal.LaunchModal(listViewCenter);
         }
     }
 }

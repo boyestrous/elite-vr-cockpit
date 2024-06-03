@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3914959317253130693}
   - component: {fileID: 2792544302326749862}
   m_Layer: 6
-  m_Name: LogView
+  m_Name: DebugTab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -115,7 +115,7 @@ GameObject:
   - component: {fileID: 4630692459872260786}
   - component: {fileID: 3339672887010423997}
   m_Layer: 6
-  m_Name: BindingsView
+  m_Name: BindingsTab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -218,7 +218,7 @@ GameObject:
   - component: {fileID: 8322096876445233120}
   - component: {fileID: 3203118652949787583}
   m_Layer: 6
-  m_Name: SteamView
+  m_Name: VR Tab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -309,7 +309,7 @@ GameObject:
   - component: {fileID: 8859447503791462621}
   - component: {fileID: 6278015330906870882}
   m_Layer: 6
-  m_Name: ControlButtons
+  m_Name: HolographicTab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -350,7 +350,6 @@ MonoBehaviour:
     type: 2}
   controlButtonRemovedEvent: {fileID: 11400000, guid: 8af64cdc3761eb042922a6e60eaaa09c,
     type: 2}
-  addControlButtonForm: {fileID: 0}
 --- !u!114 &7101438878122661753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -481,7 +480,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6465645074838448020}
   - component: {fileID: 6465645074838448022}
-  - component: {fileID: 6465645074838448021}
+  - component: {fileID: 6029431416816041201}
   - component: {fileID: 7491602119711795409}
   - component: {fileID: 3334328095437784012}
   m_Layer: 6
@@ -529,7 +528,7 @@ MonoBehaviour:
   sourceAsset: {fileID: 9197481963319205126, guid: 15595b2215fdee842ac6655c673283a1,
     type: 3}
   m_SortingOrder: 1
---- !u!114 &6465645074838448021
+--- !u!114 &6029431416816041201
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -538,7 +537,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6465645074838448027}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12a9897b97ce0334b93d30581adb7ce5, type: 3}
+  m_Script: {fileID: 11500000, guid: c00083213889ea5488ce45e3639a8f70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &7491602119711795409
@@ -587,7 +586,7 @@ GameObject:
   - component: {fileID: 2949295880637833969}
   - component: {fileID: 6383792737260308991}
   m_Layer: 6
-  m_Name: HomeView
+  m_Name: HomeTab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -632,6 +631,7 @@ GameObject:
   - component: {fileID: 7559442749638383542}
   - component: {fileID: 4726670226658153969}
   - component: {fileID: 4702260006377328484}
+  - component: {fileID: 2079154047034965911}
   m_Layer: 6
   m_Name: BindingItemsList
   m_TagString: Untagged
@@ -699,6 +699,20 @@ MonoBehaviour:
   m_FixBindingModalTemplate: {fileID: 9197481963319205126, guid: 7592ce9359656064ea18b570cbea6fb1,
     type: 3}
   bindings: {fileID: 11400000, guid: 1de2906d06cd6f745bab03c953c45a3a, type: 2}
+--- !u!114 &2079154047034965911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7707757889235039289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: add6173bbb570f14e96ba8322287f0a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bindings: {fileID: 11400000, guid: 1de2906d06cd6f745bab03c953c45a3a, type: 2}
+  availableKeyBindings: []
 --- !u!1001 &650565485984119541
 PrefabInstance:
   m_ObjectHideFlags: 0

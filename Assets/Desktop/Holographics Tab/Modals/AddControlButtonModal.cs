@@ -11,14 +11,13 @@ using UnityEngine.UIElements;
 namespace EVRC.Desktop
 {
 
-    public class AddControlButtonForm : MonoBehaviour
+    public class AddControlButtonModal : MonoBehaviour
     {
 
         public ControlButtonAddedEvent controlButtonAddedEvent;
         [SerializeField] UIDocument parentUIDocument;
         public ControlButtonAssetCatalog catalog;
         public SavedGameState savedGameState;
-        private VisualElement root; // the root of the whole UI
         private Toggle advancedModeToggle;
         private DropdownField statusFlagDropdown;
         private DropdownField guiFocusDropdown;
@@ -40,40 +39,40 @@ namespace EVRC.Desktop
 
         VisualElement modalUI;
 
-        public void Awake()
-        {
-            //Populate the status Flag dropdown
-            statusFlagList = new List<string>();
-            statusFlagList.Add("--Any Flag--");
-            statusFlagList.AddRange(Enum.GetNames(typeof(EDStatusFlags)).ToList());
-            statusFlagList.AddRange(Enum.GetNames(typeof(EDStatusFlags2)).ToList());
+        //public void Awake()
+        //{
+        //    //Populate the status Flag dropdown
+        //    statusFlagList = new List<string>();
+        //    statusFlagList.Add("--Any Flag--");
+        //    statusFlagList.AddRange(Enum.GetNames(typeof(EDStatusFlags)).ToList());
+        //    statusFlagList.AddRange(Enum.GetNames(typeof(EDStatusFlags2)).ToList());
 
-            //Populate the GuiFocus dropdown
-            guiFocusList = new List<string>();
-            guiFocusList.AddRange(Enum.GetNames(typeof(EDGuiFocus)).ToList());
+        //    //Populate the GuiFocus dropdown
+        //    guiFocusList = new List<string>();
+        //    guiFocusList.AddRange(Enum.GetNames(typeof(EDGuiFocus)).ToList());
 
-            // Move "PanelOrNoFocus" to the first position
-            int panelOrNoFocusIndex = guiFocusList.IndexOf(EDGuiFocus.PanelOrNoFocus.ToString());
-            guiFocusList.RemoveAt(panelOrNoFocusIndex);
-            guiFocusList.Insert(0, EDGuiFocus.PanelOrNoFocus.ToString());
-        }
+        //    // Move "PanelOrNoFocus" to the first position
+        //    int panelOrNoFocusIndex = guiFocusList.IndexOf(EDGuiFocus.PanelOrNoFocus.ToString());
+        //    guiFocusList.RemoveAt(panelOrNoFocusIndex);
+        //    guiFocusList.Insert(0, EDGuiFocus.PanelOrNoFocus.ToString());
+        //}
 
-        // Function to find the parent element with the specific name
-        public VisualElement FindParentByName(VisualElement element, string name)
-        {
-            VisualElement currentElement = element;
+        //// Function to find the parent element with the specific name
+        //public VisualElement FindParentByName(VisualElement element, string name)
+        //{
+        //    VisualElement currentElement = element;
 
-            while (currentElement != null)
-            {
-                if (currentElement.name == name)
-                {
-                    return currentElement;
-                }
-                currentElement = currentElement.parent;
-            }
+        //    while (currentElement != null)
+        //    {
+        //        if (currentElement.name == name)
+        //        {
+        //            return currentElement;
+        //        }
+        //        currentElement = currentElement.parent;
+        //    }
 
-            return null;
-        }
+        //    return null;
+        //}
 
         public void LaunchModal(Vector2 position)
         {
@@ -94,6 +93,7 @@ namespace EVRC.Desktop
 
 
             modalUI = addButtonModalTemplate.Instantiate();
+
             advancedModeToggle = modalUI.Q<Toggle>("advanceModeToggle");
             statusFlagDropdown = modalUI.Q<DropdownField>("statusFlag-dropdown");
             guiFocusDropdown = modalUI.Q<DropdownField>("guiFocus-dropdown");

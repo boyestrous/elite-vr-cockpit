@@ -1,11 +1,13 @@
+using EVRC.Core.Actions;
 using System.Linq;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace EVRC.Desktop
 {
     // This script defines the tab selection logic.
 
-    public class MainViewTabController
+    public class TabController : MonoBehaviour
     {
         /* Define member variables*/
         private const string tabClassName = "tab";
@@ -17,11 +19,16 @@ namespace EVRC.Desktop
         // Define the suffix of the tab content name
         private const string contentNameSuffix = "Content";
 
-        private readonly VisualElement root;
+        private VisualElement root;
+        private UIDocument parentUIDocument;
 
-        public MainViewTabController(VisualElement root)
+        private void OnEnable()
         {
-            this.root = root;
+            parentUIDocument = GetComponent<UIDocument>();
+            root = parentUIDocument.rootVisualElement;
+
+            // Setup Tab Controls
+            RegisterTabCallbacks();
         }
 
         public void RegisterTabCallbacks()

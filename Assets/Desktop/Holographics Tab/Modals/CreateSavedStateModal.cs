@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 namespace EVRC.Desktop
 {
-    public class CreateNewSavedStateModal : Modal
+    public class CreateSavedStateModal : Modal
     {
         private string userFileName;
         private Label modalMessageElement;

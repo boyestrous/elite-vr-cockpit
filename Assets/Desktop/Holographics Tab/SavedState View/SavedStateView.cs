@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 
 namespace EVRC.Desktop
 {
-    [RequireComponent(typeof(CreateNewSavedStateModal))]
+    [RequireComponent(typeof(CreateSavedStateModal))]
     public class SavedStateView : MonoBehaviour
     {
         [SerializeField] UIDocument parentUIDocument;
@@ -19,14 +19,14 @@ namespace EVRC.Desktop
         [Header("These can be private after initial testing")]
         [SerializeField] string selectedSavedStateFile;
         private string addNewSavedStateString = "-- Create New --";
-        CreateNewSavedStateModal createNewSavedStateModal;
+        CreateSavedStateModal createNewSavedStateModal;
 
         public void OnEnable()
         {
             root = parentUIDocument.rootVisualElement;
             savedStateFileDropdown = root.Q<DropdownField>("current-savedstate-file");
 
-            createNewSavedStateModal = GetComponent<CreateNewSavedStateModal>();
+            createNewSavedStateModal = GetComponent<CreateSavedStateModal>();
 
             // Default, if not selected already
             string lastUsedFile = UserPreferences.GetLastUsedJsonFile();

@@ -13,7 +13,7 @@
 }
 
 .modalButtonContainer {
-    flex-direction: ;
+    flex-direction: row;
 }
 
 .modalButton {

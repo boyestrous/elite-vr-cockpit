@@ -20,7 +20,7 @@ namespace EVRC.Desktop
         private List<string> allKeyStrings;
 
         // These key strings are not great for consistent implementation, they are typically modifiers or special keys.
-        private static List<string> ignoreKeyStrings = new List<string> {
+        internal static List<string> ignoreKeyStrings = new List<string> {
                 "Key_Escape",
                 "Key_LeftShift",
                 "Key_LeftControl",
