@@ -115,6 +115,7 @@ namespace EVRC.Core
             => CockpitStatePath();
 
         public static string OverlayStateTemplatePath = Path.Combine(Application.dataPath, "Documentation", "SavedState_Template.json");
+
         public static int currentOverlayFileVersion = 5;
 
         private static string OverlayStateFileNameWithoutExtension = "SavedState";
@@ -137,6 +138,8 @@ namespace EVRC.Core
 
             return overlayStateFilePath;
         }
+
+        public static string BindingsTemplatePath = Path.Combine(Application.dataPath, "Documentation", "EVRC.4.1.binds");
 
         public static string ControlBindingsPath
             => GetFirstValidControlBindingsPath();

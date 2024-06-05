@@ -74,7 +74,6 @@ namespace EVRC.Desktop
 
         private void Submit()
         {
-            string sourceFilePath = "Documentation";
             string sourceFileName = "EVRC.4.1.binds";
 
             string destinationFile = Path.Combine(Paths.CustomBindingsFolder, sourceFileName);
@@ -84,7 +83,7 @@ namespace EVRC.Desktop
                 EDControlBindingsUtils.SaveCopyWithTimestamp(destinationFile);
             }
 
-            File.Copy(Path.Combine(Application.dataPath, sourceFilePath, sourceFileName), destinationFile, overwrite: true);
+            File.Copy(Paths.BindingsTemplatePath, destinationFile, overwrite: true);
             Debug.Log($"Copied {sourceFileName} to Bindings folder: {Paths.CustomBindingsFolder}");
 
 
