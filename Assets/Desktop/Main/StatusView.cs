@@ -12,25 +12,24 @@ namespace EVRC.Desktop
 
         // Private fields
         private Label _statusLabel;
-        [SerializeField] private UIDocument uiDocument;
+        [SerializeField] internal UIDocument uiDocument;
 
         private void OnValidate()
         {
             uiDocument = GetComponentInParent<UIDocument>();
+            EnsureUIDocument();
         }
 
-        private void OnEnablePreChecks()
+        private void EnsureUIDocument()
         {
             if (uiDocument == null)
             {
-                Debug.LogWarning("UIDocument not found in parent hierarchy.");
+                Debug.LogWarning("Unable to find UIDocument in parent hierarchy.");
             }
         }
 
         private void OnEnable()
         {
-            OnEnablePreChecks();
-
             VisualElement root = uiDocument.rootVisualElement;
 
             // Bind Status Values

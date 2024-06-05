@@ -58,6 +58,7 @@ public class StatusUpdateTests
     {
         GameObject gameObject = new GameObject("Test");
         StatusView statusView = gameObject.AddComponent<StatusView>();
+        statusView.enabled = true;
 
         LogAssert.Expect(LogType.Warning, new System.Text.RegularExpressions.Regex(".*UIDocument.*"));
     }
