@@ -11,10 +11,8 @@ namespace EVRC.Desktop
     {
         public ControlBindingsState bindings;
 
-        public List<string> availableKeyBindings;
-
-        public List<ControlButtonBinding.KeyBinding> unusedKeyBindings;
-        HashSet<(string Key, HashSet<string> Modifiers)> usedKeyBindings;
+        internal List<ControlButtonBinding.KeyBinding> unusedKeyBindings; // unused and availalble-to-be-bound
+        internal HashSet<(string Key, HashSet<string> Modifiers)> activeKeyBindings; // currently bound
 
         // All valid strings from the KeyboardInterface
         private List<string> allKeyStrings;
@@ -38,8 +36,7 @@ namespace EVRC.Desktop
 
         public List<ControlButtonBinding.KeyBinding> FindUnusedKeyBindings()
         {
-            availableKeyBindings = new List<string>();
-            usedKeyBindings = new HashSet<(string Key, HashSet<string> Modifiers)>();
+            activeKeyBindings = new HashSet<(string Key, HashSet<string> Modifiers)>();
             unusedKeyBindings = new List<ControlButtonBinding.KeyBinding>();
 
             // Get all available key strings that could be used 
@@ -62,10 +59,10 @@ namespace EVRC.Desktop
             foreach (var binding in bindValues)
             {
                 var primaryModifiers = new HashSet<string>(binding.Primary.Modifiers.Select(m => m.Key));
-                usedKeyBindings.Add((binding.Primary.Key, primaryModifiers));
+                activeKeyBindings.Add((binding.Primary.Key, primaryModifiers));
 
                 var secondaryModifiers = new HashSet<string>(binding.Secondary.Modifiers.Select(m => m.Key));
-                usedKeyBindings.Add((binding.Secondary.Key, secondaryModifiers));
+                activeKeyBindings.Add((binding.Secondary.Key, secondaryModifiers));
             }
 
             // Generate all possible combinations of keys and modifiers
@@ -76,7 +73,7 @@ namespace EVRC.Desktop
                 var emptyModifiersSet = new HashSet<ControlButtonBinding.KeyModifier>();
                 var emptyModifiersKeys = new HashSet<string>();
 
-                if (!usedKeyBindings.Contains((key, emptyModifiersKeys)))
+                if (!activeKeyBindings.Contains((key, emptyModifiersKeys)))
                 {
                     var keyBindingWithoutModifiers = new ControlButtonBinding.KeyBinding
                     {
@@ -105,14 +102,13 @@ namespace EVRC.Desktop
 
                     var modifiersKeys = new HashSet<string>(modifiersSet.Select(m => m.Key));
 
-                    if (!usedKeyBindings.Contains((key, modifiersKeys)))
+                    if (!activeKeyBindings.Contains((key, modifiersKeys)))
                     {
                         unusedKeyBindings.Add(keyBinding);
                     }
                 }
             }
 
-            unusedKeyBindings.ForEach(x => availableKeyBindings.Add(x.unityEditorString));
             return unusedKeyBindings;
         }
     }
