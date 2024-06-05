@@ -94,16 +94,16 @@ namespace EVRC.Core.Overlay
         {
             string filePath = Path.Combine(pathFolder, fileName);
 
+            if (filePath != null && File.Exists(filePath))
+            {
+                return Load(filePath);
+            }
+
             // If the filename is the default file AND it doesn't exist, use the template
             if (fileName == Paths.OverlayStateFileName && !File.Exists(filePath))
             {
                 Debug.LogWarning("Default File not found, will use a copy of the template file instead");
                 CopyTemplateFile(Path.Combine(pathFolder, fileName));
-            }
-
-            if (filePath != null && File.Exists(filePath))
-            {
-                return Load(filePath);
             }
 
             Debug.LogWarning($"Could not find the provided path: {filePath}.");
@@ -114,6 +114,7 @@ namespace EVRC.Core.Overlay
                 return LoadFromFile(); // load from default name and location
             } else
             {
+                // Look for the default file name in the provided folder
                 return LoadFromFile(Paths.OverlayStateFileName, pathFolder); 
             }
         }

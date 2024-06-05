@@ -4,6 +4,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Management.Instrumentation;
 using System.Reflection;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -102,53 +103,25 @@ public class OverlayFileUtilsTests
     }
 
     [Test]
-    public void LoadFromFile_Loads_Default_IfRequestedIsMissing()
+    public void LoadFromFile_LoadsDefaultFromRequestedPath_IfRequestedIsMissing()
     {
-        bool usedRandomFile = false;
-        SavedStateFile randomDefaultFile;
+        // make a file with the default name in the temporary cache folder
+        SavedStateFile defaultFile = GenerateRandomSavedStateFile();
+        OverlayFileUtils.WriteToFile(defaultFile, Application.temporaryCachePath, Paths.OverlayStateFileName);
+        FileAssert.Exists(Path.Combine(Application.temporaryCachePath, Paths.OverlayStateFileName),"temp Default file wasn't properly created");
 
-        // if there isn't a default file available, then we need to generate one
-        if (!File.Exists(Paths.OverlayStatePath))
-        {
-            usedRandomFile = true;
-            // Make and place a file called SavedState.json in the temporaryCachePath
-            randomDefaultFile = GenerateRandomSavedStateFile(); //Randomize the content so we don't accidentally hardcode a passing test
+        // try to load a file we know isn't there
+        string requestedFile = "blahblah.json";
+        SavedStateFile loadedFile = OverlayFileUtils.LoadFromFile(requestedFile, Application.temporaryCachePath);
 
-            // Write it to a file and make sure it's there
-            OverlayFileUtils.WriteToFile(randomDefaultFile, Paths.OverlayStateFileName);
-            Assert.IsTrue(File.Exists(Paths.OverlayStatePath));
-
-            // Request loading of a filename that's not there
-            SavedStateFile loadedFile = OverlayFileUtils.LoadFromFile("blahblah.json", Application.temporaryCachePath);
-
-            // Assert that LoadFromFile uses the default file that was already in the folder
-            Assert.AreEqual(randomDefaultFile.version, loadedFile.version);
-            CollectionAssert.AreEqual(randomDefaultFile.controlButtons, loadedFile.controlButtons);
-            CollectionAssert.AreEqual(randomDefaultFile.staticLocations, loadedFile.staticLocations);
-            CollectionAssert.AreEqual(randomDefaultFile.booleanSettings, loadedFile.booleanSettings);
-
-
-            // We created a random file for this test (in the actual application directory), remove it
-            File.Delete(Paths.OverlayStatePath);
-            Assert.IsFalse(File.Exists(Paths.OverlayStatePath)); // And then make sure it's gone!
-        }
-        else
-        {
-            // Request loading of a filename that's not there
-            SavedStateFile loadedFile = OverlayFileUtils.LoadFromFile("blahblah.json", Application.temporaryCachePath);
-            SavedStateFile actualDefaultFile = OverlayFileUtils.LoadFromFile(); // this overload just uses the default
-
-
-            // Assert that LoadFromFile uses the default file that was already in the folder
-            Assert.AreEqual(actualDefaultFile.version, loadedFile.version);
-            CollectionAssert.AreEqual(actualDefaultFile.controlButtons, loadedFile.controlButtons);
-            CollectionAssert.AreEqual(actualDefaultFile.staticLocations, loadedFile.staticLocations);
-            CollectionAssert.AreEqual(actualDefaultFile.booleanSettings, loadedFile.booleanSettings);
-        }
+        Assert.AreEqual(defaultFile.version, loadedFile.version);
+        CollectionAssert.AreEqual(defaultFile.controlButtons, loadedFile.controlButtons);
+        CollectionAssert.AreEqual(defaultFile.staticLocations, loadedFile.staticLocations);
+        CollectionAssert.AreEqual(defaultFile.booleanSettings, loadedFile.booleanSettings);
     }
 
     [Test]
-    public void LoadFromFile_UsesTemplate_IfDefaultMissing()
+    public void LoadFromFile_LoadsTemplate_IfDefaultMissing()
     {
         string targetPath = Path.Combine(Application.temporaryCachePath, Paths.OverlayStateFileName);
 
