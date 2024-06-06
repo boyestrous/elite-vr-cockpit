@@ -40,14 +40,28 @@ public class StatusUpdateTests
         GameObject childObject = new GameObject("Child");
         childObject.transform.SetParent(gameObject.transform);
         StatusView statusView = childObject.AddComponent<StatusView>();
+        statusView.uiDocument = uIDocument;
+
+        // Set the statusLabel element
+        Label statusLabel = new Label();
+        statusView._statusLabel = statusLabel;
+        visualElement.Add(statusLabel);
+
+        // This could be any derived version of GameState. Just needs an override of the GetStatusText method (which is abstract in GameStateBase).
+        EliteDangerousState gameState = ScriptableObject.CreateInstance<EliteDangerousState>();
+        statusView.gameState = gameState;
+
         return gameObject;
     }
 
-
     [Test]
-    public void TestStatusViewComponent()
+    public void StatusViewComponent_BuildsCorrectly()
     {
-        CorrectlyBuildStatusView();
+        // Basically, can we enable it without errors
+
+        GameObject gameObject = CorrectlyBuildStatusView();
+        StatusView statusView = gameObject.GetComponentInChildren<StatusView>();
+        statusView.OnEnable();
 
         // No Warning Messages
         LogAssert.NoUnexpectedReceived();
@@ -56,9 +70,13 @@ public class StatusUpdateTests
     [Test]
     public void TestStatusViewUIDocumentInParentWarning()
     {
-        GameObject gameObject = new GameObject("Test");
-        StatusView statusView = gameObject.AddComponent<StatusView>();
-        statusView.enabled = true;
+        // First build it correctly
+        GameObject gameObject = CorrectlyBuildStatusView();
+        StatusView statusView = gameObject.GetComponentInChildren<StatusView>();
+
+        // Then null the uiDocument, which should throw an error
+        statusView.uiDocument = null;
+        statusView.OnEnable();
 
         LogAssert.Expect(LogType.Warning, new System.Text.RegularExpressions.Regex(".*UIDocument.*"));
     }

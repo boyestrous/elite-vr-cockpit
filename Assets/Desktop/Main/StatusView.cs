@@ -1,4 +1,5 @@
 using EVRC.Core;
+using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -11,39 +12,34 @@ namespace EVRC.Desktop
         [HideInInspector] public string statusUxmlLabelName; //Custom inspector lets you choose these fields from a dropdown
 
         // Private fields
-        private Label _statusLabel;
+        internal Label _statusLabel;
         [SerializeField] internal UIDocument uiDocument;
 
-        private void OnValidate()
+        internal void OnEnable()
         {
-            uiDocument = GetComponentInParent<UIDocument>();
-            EnsureUIDocument();
-        }
-
-        private void EnsureUIDocument()
-        {
-            if (uiDocument == null)
+            try
             {
-                Debug.LogWarning("Unable to find UIDocument in parent hierarchy.");
+                VisualElement root = uiDocument.rootVisualElement;
+            
+                // Bind Status Values
+                _statusLabel = root.Query<Label>(statusUxmlLabelName).First();
             }
+            catch (Exception e)
+            {
+                Debug.LogWarning($"Unable to find UIDocument in parent hierarchy. {e}");
+            }
+
+            VerifyAfterEnable();
         }
 
-        private void OnEnable()
-        {
-            VisualElement root = uiDocument.rootVisualElement;
-
-            // Bind Status Values
-            _statusLabel = root.Query<Label>(statusUxmlLabelName).First();
-
-            OnEnablePostChecks();
-        }
-
-        private void OnEnablePostChecks()
+        private void VerifyAfterEnable()
         {
             if (_statusLabel == null )
             {
                 UnityEngine.Debug.LogError("Status Label not found in UI Document. Check the provided 'status Uxml label name' in the inspector");
             }
+
+            
 
             Refresh();
 
