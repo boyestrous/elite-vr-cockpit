@@ -4,11 +4,13 @@ using EVRC.Overlay.Tests;
 using NUnit.Framework;
 using System.Linq;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 
 
-public class ControlButtonPlacement
+public class ControlButtonPlacementTests
 {
     GameObject anchorParentGameObject;
     CockpitModeAnchor cockpitModeAnchor;
@@ -19,6 +21,11 @@ public class ControlButtonPlacement
     [SetUp]
     public void SetUp()
     {
+        // Create a new empty scene
+        var newScene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+        // Set the newly created scene as the active scene
+        SceneManager.SetActiveScene(newScene);
+
         // use this unless there's a reason to test a different position/rotation
         testOverlayTransform = new OverlayTransform()
         {
