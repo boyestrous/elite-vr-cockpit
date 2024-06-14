@@ -9,8 +9,6 @@ namespace EVRC.Desktop
 {
     public class AvailableBindings : MonoBehaviour
     {
-        public ControlBindingsState bindings;
-
         internal List<ControlButtonBinding.KeyBinding> unusedKeyBindings; // unused and availalble-to-be-bound
         internal HashSet<(string Key, HashSet<string> Modifiers)> activeKeyBindings; // currently bound
 
@@ -34,7 +32,7 @@ namespace EVRC.Desktop
                 "Key_Space"
             };
 
-        public List<ControlButtonBinding.KeyBinding> FindUnusedKeyBindings()
+        public List<ControlButtonBinding.KeyBinding> FindUnusedKeyBindings(Dictionary<EDControlButton, ControlButtonBinding> buttonBindings)
         {
             activeKeyBindings = new HashSet<(string Key, HashSet<string> Modifiers)>();
             unusedKeyBindings = new List<ControlButtonBinding.KeyBinding>();
@@ -52,7 +50,7 @@ namespace EVRC.Desktop
                 "Key_LeftAlt",
             };
 
-            var bindValues = bindings.buttonBindings.Values;
+            var bindValues = buttonBindings.Values;
 
 
             // Collect all used key bindings

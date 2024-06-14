@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEditor;
+using Codice.Utils;
 
 namespace EVRC.Core
 {
@@ -86,6 +87,10 @@ namespace EVRC.Core
         }
 
         public static string SteamVRConfigPath = @"C:\Program Files (x86)\Steam\config\steamvr.vrsettings";
+
+        public static string ExportedLogFolderPath = Path.Combine(Application.persistentDataPath, "Exported Logs");
+
+        public static string ExportedLogFileName = Path.Combine(ExportedLogFolderPath, "ExportedLogs_"+ DateTime.Now.ToString("yyyyMMdd_HHmmss")+".log");
 
         public static string BindingNameFromStartPreset
             => GetBindingNameFromStartPresetFile();

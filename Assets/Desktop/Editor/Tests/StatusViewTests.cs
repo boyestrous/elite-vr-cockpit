@@ -6,7 +6,7 @@ using System.Reflection;
 using EVRC.Core;
 using UnityEngine.TestTools;
 
-public class StatusUpdateTests
+public class StatusViewTests
 {
     private VisualElement visualElement;
     private Label label;

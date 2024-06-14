@@ -7,7 +7,8 @@ namespace EVRC.Desktop
         Good,
         MissingRecommended,
         MissingHolographic,
-        MissingRequired
+        MissingRequired,
+        ExclusiveError
     }
 
     [Serializable]

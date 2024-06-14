@@ -18,6 +18,7 @@ namespace EVRC.Desktop
         [SerializeField] UIDocument parentUIDocument;
         [SerializeField] RecommendedBindingsModal recommendedBindingsModal;
         private AvailableBindings availableBindingsController;
+        private ExclusiveBindings exclusiveBindingsController;
         public List<ControlButtonBinding.KeyBinding> availableKeyBindings;
         private Dictionary<string, ControlButtonBinding.KeyBinding> availableKeyBindingsMap;
         [SerializeField] VisualTreeAsset m_BindingEntryTemplate;
@@ -45,6 +46,8 @@ namespace EVRC.Desktop
         Dictionary<EDControlButton, ControlButtonBinding> filteredButtonBindings;
         private List<EDControlButton> missingRequiredBindings; //no binding, and default required
         private List<EDControlButton> missingHolographicBindings; //no binding, but has a holo button
+        private List<EDControlButton> invalidExclusiveBindings; // exclusive controls that share a binding
+        private List<(EDControlButton, EDControlButton, ControlButtonBinding.KeyBinding)> invalidExclusiveBindingsDetails; // exclusive controls share a binding
         private List<EDControlButton> allErrorBindings; // combination of binds with all types of errors
         //public bool bindingsHaveErrors;
 
@@ -59,6 +62,8 @@ namespace EVRC.Desktop
             hasErrors = true;
             recommendedBindingsModal = GetComponent<RecommendedBindingsModal>();
             availableBindingsController = GetComponent<AvailableBindings>();
+            exclusiveBindingsController = GetComponent<ExclusiveBindings>();
+
 
             // filter starts as off
             vJoyOnly = false;
@@ -127,6 +132,8 @@ namespace EVRC.Desktop
         {
             missingHolographicBindings.Remove(eDControlButton);
             missingRequiredBindings.Remove(eDControlButton);
+            invalidExclusiveBindings.Remove(eDControlButton);
+            invalidExclusiveBindingsDetails.RemoveAll(tuple => tuple.Item1.Equals(eDControlButton) || tuple.Item2.Equals(eDControlButton));
             UpdateErrorBindings();
         }
 
@@ -135,6 +142,7 @@ namespace EVRC.Desktop
             allErrorBindings.Clear();
             allErrorBindings.AddRange(missingHolographicBindings);
             allErrorBindings.AddRange(missingRequiredBindings);
+            allErrorBindings.AddRange(invalidExclusiveBindings);
 
             hasErrors = allErrorBindings.Count > 0;
 
@@ -160,6 +168,13 @@ namespace EVRC.Desktop
                 .ToList(); // Convert to List<EDControlButton>
 
             missingRequiredBindings = reqMissing;
+
+            invalidExclusiveBindingsDetails = exclusiveBindingsController.FindExclusiveBindingProblems(bindings.buttonBindings);
+            // Flip the list of tuples into a unique list of EDControlButton
+            invalidExclusiveBindings = invalidExclusiveBindingsDetails
+                .SelectMany(tuple => new[] { tuple.Item1, tuple.Item2 })
+                .Distinct()
+                .ToList();
 
             UpdateErrorBindings();
         }
@@ -217,77 +232,14 @@ namespace EVRC.Desktop
                 return BindingItemState.MissingRequired;
             }
 
+            if (invalidExclusiveBindings.Contains(controlButton))
+            {
+                return BindingItemState.ExclusiveError;
+            }
+
             return BindingItemState.Good;
         }
 
-        //private void FindAvailableKeyCombos()
-        //{
-        //    // Get all available key strings that could be used 
-        //    List<string> allKeyStrings = KeyboardInterface.GetAllKeycodeStrings();
-
-        //    // These key strings are not great for consistent implementation. Avoid auto-assigning them.
-        //    List<string> ignoreKeyStrings = new List<string> {
-        //        "Key_Escape",
-        //        "Key_LeftShift",
-        //        "Key_LeftControl",
-        //        "Key_LeftAlt",
-        //        "Key_RightShift",
-        //        "Key_RightControl",
-        //        "Key_RightAlt",
-        //        "Key_Backspace",
-        //        "Key_Tab",
-        //        "Key_Enter",
-        //        "Key_CapsLock",
-        //        "Key_Space",
-        //        "Key_PageUp",
-        //        "Key_PageDown",
-        //        "Key_End",
-        //        "Key_Home",
-        //        "Key_LeftArrow",
-        //        "Key_UpArrow",
-        //        "Key_RightArrow",
-        //        "Key_DownArrow",
-        //        "Key_Insert",
-        //        "Key_Delete",
-        //    };
-
-        //    // Filter out the ignored strings
-        //    allKeyStrings = allKeyStrings.Where(item => !ignoreKeyStrings.Contains(item)).ToList();
-
-        //    // Initialize a list to store strings without matching key bindings
-        //    List<string> availableKeyCombos = new List<string>();
-
-        //    // Check each key string for matching key bindings
-        //    foreach (string keyString in allKeyStrings)
-        //    {
-        //        // Check if any key binding (Primary or Secondary) matches the key string
-        //        bool hasMatchingKey = bindings.buttonBindings.Values
-        //            .Any(binding => binding.Primary.Key == keyString || binding.Secondary.Key == keyString);
-
-        //        // If there are no matching key bindings for the current key string, add it to the list
-        //        if (!hasMatchingKey)
-        //        {
-        //            availableKeyCombos.Add(keyString);
-        //        }
-        //    }
-
-        //    if (availableKeyCombos.Count > 0)
-        //    {
-        //        // Found strings without matching key bindings
-        //        Debug.Log($"There are {availableKeyCombos.Count} available keys that could be used for the missing bindings.");
-        //        //foreach (string keyCombo in availableKeyCombos)
-        //        //{
-        //        //    Debug.Log($" >>>> {keyCombo}");
-        //        //}
-        //    }
-        //    else
-        //    {
-        //        // No key strings found without matching key bindings
-        //        Debug.LogWarning("BindingItemsListController: No key_combos were found to be available without an existing binding. You will be unable to fix the missing bindings.");
-
-        //    }
-        //    availableSingleKeyBindings = availableKeyCombos;
-        //}
 
         public void FilterList()
         { 
@@ -352,8 +304,7 @@ namespace EVRC.Desktop
 
             if (allErrorBindings.Count > 0)
             {
-                if (availableBindingsController.bindings == null && bindings != null) availableBindingsController.bindings = bindings;
-                availableKeyBindings = availableBindingsController.FindUnusedKeyBindings();
+                availableKeyBindings = availableBindingsController.FindUnusedKeyBindings(bindings.buttonBindings);
             }
 
             RebuildListView(filteredBindings);
@@ -426,6 +377,10 @@ namespace EVRC.Desktop
             var controlName = modalUI.Q<Label>("control-binding-name");            
             var dropdownField = modalUI.Q<DropdownField>("available-keys-dropdown");
             var newValue = dropdownField.value;
+
+            EDControlButton currentControlName = (EDControlButton)Enum.Parse(typeof(EDControlButton), controlName.text);
+            ControlButtonBinding currentKeyBindingValue = bindings.buttonBindings[currentControlName];
+            
 
             if (availableKeyBindingsMap.TryGetValue(newValue, out ControlButtonBinding.KeyBinding selectedBinding))
             {

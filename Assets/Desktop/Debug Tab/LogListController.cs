@@ -1,5 +1,7 @@
+using EVRC.Core;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -19,7 +21,7 @@ namespace EVRC.Desktop
 
         [Header("Templates and Scene Refs")]
         // UXML template for list entries
-        [SerializeField] VisualTreeAsset m_ListEntryTemplate;
+        [SerializeField] internal VisualTreeAsset m_ListEntryTemplate;
         [SerializeField] UIDocument parentUIDocument;
 
         [Header("Configuration")]
@@ -29,10 +31,11 @@ namespace EVRC.Desktop
         public int maxLines = 100;
 
         // UI element references
-        ListView m_LogList;
+        internal ListView m_LogList;
+        internal Button exportButtonElement;
 
         // Logs object
-        private List<LogItem> m_AllLogs;
+        internal List<LogItem> m_AllLogs;
 
         public void OnEnable()
         {
@@ -42,19 +45,22 @@ namespace EVRC.Desktop
 
             // Store a reference to the log list element
             m_LogList = root.Q<ListView>("log-list");
+            exportButtonElement = root.Q<Button>("export-button");
+
+            exportButtonElement.clicked += ExportAllLogs;
 
             SetListBindingMethods();
 
             // listen for new logs
             Application.logMessageReceived += OnLogMessage;
-        }
+        }        
 
         private void OnDisable()
         {
             Application.logMessageReceived -= OnLogMessage;
         }
 
-        private void OnLogMessage(string text, string stackTrace, LogType type)
+        internal void OnLogMessage(string text, string stackTrace, LogType type)
         {
             var style = type == LogType.Log ? infoStyle
                 : type == LogType.Warning ? warningStyle
@@ -64,20 +70,22 @@ namespace EVRC.Desktop
             {
                 message = text,
                 color = style.color,
-                icon = style.icon
+                icon = style.icon,
+                logType = type
             };
 
-            // limit the list size
-            if (m_AllLogs.Count >= maxLines)
-            {
-                m_AllLogs.RemoveAt(0);
-            }
-
             m_AllLogs.Add(logItem);
+
+            // Limit the number of items displayed in the ListView to maxLines
+            int startIndex = Math.Max(0, m_AllLogs.Count - maxLines);
+            List<LogItem> logsToDisplay = m_AllLogs.GetRange(startIndex, Math.Min(maxLines, m_AllLogs.Count));
+
+            m_LogList.itemsSource = logsToDisplay;
             m_LogList.RefreshItems();
+
         }
 
-        void SetListBindingMethods()
+        internal void SetListBindingMethods()
         {
             //Set up a make item function for a list entry
             m_LogList.makeItem = () =>
@@ -109,6 +117,45 @@ namespace EVRC.Desktop
 
             // Set the actual item's source list/array
             m_LogList.itemsSource = m_AllLogs;
+        }
+
+        /// <summary>
+        /// Export all logs to the default path
+        /// </summary>
+        private void ExportAllLogs()
+        {
+            string filePath = Paths.ExportedLogFileName;
+            ExportAllLogs(filePath);
+        }
+
+
+        /// <summary>
+        /// Overload allowing you to specify the export destination (mostly for testing)
+        /// </summary>
+        /// <param name="filePath"></param>
+        internal void ExportAllLogs(string filePath)
+        {
+            // Ensure the directory exists
+            string directoryPath = Path.GetDirectoryName(filePath);
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
+
+            using (StreamWriter writer = new StreamWriter(filePath))
+            {
+                writer.WriteLine("--------------------------------------------------------------");
+                // Date in format readable without confusion about european vs american month/date
+                // 12 Hour Time with timezone 
+                writer.WriteLine($"Log Exported on: {DateTime.Today.ToString("MMMM dd, yyyy")} at {DateTime.Now.ToString("hh:mm:ss tt (K)")}");
+                writer.WriteLine("--------------------------------------------------------------");
+
+                foreach (var log in m_AllLogs)
+                {
+                    writer.WriteLine($"{log.logType}: {log.message}");
+                }
+            }
+            Debug.Log($"All logs have been exported to {filePath}");
         }
 
     }

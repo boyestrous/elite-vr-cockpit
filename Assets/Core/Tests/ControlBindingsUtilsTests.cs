@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Xml.Linq;
 using EVRC.Core;
 using NUnit.Framework;
@@ -185,6 +184,41 @@ public class ControlBindingsUtilsTests
 
     #endregion
 
+    [Test]
+    public void UpdateBindingXml_DoesntOverwrite_VJoyBindings()
+    {
+        
+        Assert.IsTrue(false);
+    }
 
-    // GetAttributeValue Tests
+
+    [Test]
+    public void UpdateBindingXml_OverwritesMatching_WhenProvided()
+    {
+        // Copy the template file to the cache folder
+        string filepath = Path.Combine(Application.temporaryCachePath, "temp.binds");
+        File.Copy(Paths.BindingsTemplatePath, filepath,true);
+
+        // Read the file
+        Dictionary<EDControlButton, ControlButtonBinding> firstRead = EDControlBindingsUtils.ParseFile(filepath);
+
+        // pick a control and get the primary binding
+        EDControlButton targetControl = EDControlButton.CamTranslateForward;
+        firstRead.TryGetValue(targetControl, out var originalControlButtonBinding);
+        var originalPrimaryBinding = originalControlButtonBinding.Primary;
+
+        // Assign a new KeyBinding to replace the original value
+        var newBinding = TestUtils.CreateKeyBinding("Key_J", new List<string>());
+        Assert.AreNotEqual(originalPrimaryBinding, newBinding); // make sure we don't accidentally make it already the same
+
+        // Act
+        EDControlBindingsUtils.UpdateBindingXml(filepath, targetControl.ToString(), newBinding, originalPrimaryBinding);
+
+
+        // Assert
+        var fileAfterUpdate = EDControlBindingsUtils.ParseFile(filepath);
+        fileAfterUpdate.TryGetValue(targetControl, out var updatedControlButtonBinding);
+        var updatedPrimaryBinding = updatedControlButtonBinding.Primary;
+        Assert.AreEqual(newBinding, updatedPrimaryBinding);
+    }
 }

@@ -9,7 +9,10 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class DebugPanelTests : MonoBehaviour
+/// <summary>
+/// Tests for the debug panel component that displays the current StatusFlags, Active Process, Directory, Etc.
+/// </summary>
+public class EliteStatusViewTests
 {
     public GameObject parentObject;
     public EliteStatusViewController statusViewController;

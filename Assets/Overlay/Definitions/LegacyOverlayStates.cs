@@ -470,7 +470,7 @@ namespace EVRC.Core.Overlay
             }
         },
         {
-            ""type"": ""ToggleBuggyTurret"",
+            ""type"": ""ToggleBuggyTurretButton"",
             ""loc"": {
                 ""pos"": {
                     ""x"": 0.20629365742206574,

@@ -6,9 +6,8 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-
-public class AvailableBindingsTests 
-{ 
+public class AvailableBindingsTests
+{
 
     // Test with a mini, hardcoded ControlBindingsState
     [Test]
@@ -18,19 +17,19 @@ public class AvailableBindingsTests
 
         #region ---- Create some hardcoded keybindings ----
         // just a single key, no modifiers
-        ControlButtonBinding.KeyBinding singleKeyBindingOne = CreateKeyBinding("Key_A", new List<string>());
-        ControlButtonBinding.KeyBinding singleKeyBindingTwo = CreateKeyBinding("Key_B", new List<string>());
-        ControlButtonBinding.KeyBinding singleKeyBindingThree = CreateKeyBinding("Key_Z", new List<string>());
+        ControlButtonBinding.KeyBinding singleKeyBindingOne = TestUtils.CreateKeyBinding("Key_A", new List<string>());
+        ControlButtonBinding.KeyBinding singleKeyBindingTwo = TestUtils.CreateKeyBinding("Key_B", new List<string>());
+        ControlButtonBinding.KeyBinding singleKeyBindingThree = TestUtils.CreateKeyBinding("Key_Z", new List<string>());
 
         // one modifier (intentionally using the same single key)
-        ControlButtonBinding.KeyBinding bindingWithModifierOne = CreateKeyBinding("Key_A", new List<string>() { "Key_LeftShift" });
-        
+        ControlButtonBinding.KeyBinding bindingWithModifierOne = TestUtils.CreateKeyBinding("Key_A", new List<string>() { "Key_LeftShift" });
+
         // one modifier with different key than singlekey
-        ControlButtonBinding.KeyBinding bindingWithModifierTwo = CreateKeyBinding("Key_F", new List<string>() { "Key_LeftAlt" });
+        ControlButtonBinding.KeyBinding bindingWithModifierTwo = TestUtils.CreateKeyBinding("Key_F", new List<string>() { "Key_LeftAlt" });
 
         // Blank or Empty binding (we still need to create blank entries for unused Keybindings or else the FindUnusedKeyBindings method will fail)
         // In reality, when reading from a file, we will never encounter a situation where the <Secondary> XML tag is missing. It's there with blank properties, which is what the binding below simulates...
-        ControlButtonBinding.KeyBinding blankKeyBinding = CreateKeyBinding("", new List<string>(),"");
+        ControlButtonBinding.KeyBinding blankKeyBinding = TestUtils.CreateKeyBinding("", new List<string>(), "");
 
 
         // Create some bindings
@@ -53,10 +52,9 @@ public class AvailableBindingsTests
         // Arrange
         GameObject go = new GameObject("TestGameObject");
         AvailableBindings availableBindings = go.AddComponent<AvailableBindings>();
-        availableBindings.bindings = state;
 
         // Act
-        List<ControlButtonBinding.KeyBinding> unused = availableBindings.FindUnusedKeyBindings();
+        List<ControlButtonBinding.KeyBinding> unused = availableBindings.FindUnusedKeyBindings(state.buttonBindings);
         Assert.IsNotNull(unused);
 
         // Add a keybinding to the unused list to make sure the assertions would fail if there was a match
@@ -72,25 +70,6 @@ public class AvailableBindingsTests
         Assert.IsFalse(unused.Any(u => u.Equals(bindingWithModifierOne)));
         Assert.IsFalse(unused.Any(u => u.Equals(bindingWithModifierTwo)));
         #endregion
-    }
-
-    private ControlButtonBinding.KeyBinding CreateKeyBinding(string key, List<string> modifiers, string device = "Keyboard") 
-    {
-        ControlButtonBinding.KeyBinding binding = new ControlButtonBinding.KeyBinding();
-        binding.Key = key;
-        binding.Device = device;
-        binding.Modifiers = new HashSet<ControlButtonBinding.KeyModifier>();
-
-        for (int i = 0; i < modifiers.Count; i++)
-        {
-            ControlButtonBinding.KeyModifier tempModifier = new ControlButtonBinding.KeyModifier();
-            tempModifier.Key = modifiers.ElementAt(i);
-            tempModifier.Device = device;
-
-            binding.Modifiers.Add(tempModifier);
-        }
-
-        return binding;
     }
 
     [Test]
@@ -110,10 +89,9 @@ public class AvailableBindingsTests
 
         GameObject go = new GameObject("TestGameObject2");
         AvailableBindings availableBindings = go.AddComponent<AvailableBindings>();
-        availableBindings.bindings = stateFromTemplate;
 
         // Act
-        List<ControlButtonBinding.KeyBinding> unused = availableBindings.FindUnusedKeyBindings();
+        List<ControlButtonBinding.KeyBinding> unused = availableBindings.FindUnusedKeyBindings(stateFromTemplate.buttonBindings);
         Assert.IsNotNull(unused);
 
         #region --- Assert Region ---
@@ -127,7 +105,7 @@ public class AvailableBindingsTests
             .ToList(); // Convert to a list
 
         // Check each one
-        foreach(var b in validKeyboardBindings)
+        foreach (var b in validKeyboardBindings)
         {
             Assert.IsFalse(unused.Any(u => u.Equals(b)));
         }

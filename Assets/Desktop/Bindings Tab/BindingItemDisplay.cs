@@ -63,6 +63,14 @@ namespace EVRC.Desktop
                 m_errorMessage.style.display = DisplayStyle.Flex;
                 m_errorMessage.text = "This binding is required for EVRC functions. Try to set it to something memorable...";
             }
+
+            if (bindingItem.state == BindingItemState.ExclusiveError)
+            {
+                m_rowContainer.AddToClassList("errorRow");
+                m_autoFixButton.style.display = DisplayStyle.Flex;
+                m_errorMessage.style.display = DisplayStyle.Flex;
+                m_errorMessage.text = "Overlapping binding. This control must be unique and it currently shares a binding with another control.";
+            }
         }
     }
 }

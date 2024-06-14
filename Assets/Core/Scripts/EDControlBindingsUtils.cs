@@ -110,6 +110,57 @@ namespace EVRC.Core
             // Save the modified XML
             doc.Save(filePath);
         }
+
+        /// <summary>
+        /// Allows you to replace a specific binding, based on the old value
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="tagName"></param>
+        /// <param name="newKeyBinding"></param>
+        /// <param name="oldKeyBinding"></param>
+        public static void UpdateBindingXml(string filePath, string tagName, ControlButtonBinding.KeyBinding newKeyBinding, ControlButtonBinding.KeyBinding oldKeyBinding)
+        {
+            // Save a copy, just in case
+            SaveCopyWithTimestamp(filePath);
+
+            // Load the XML document
+            XDocument doc = XDocument.Load(filePath);
+
+            // Find the matching node
+            XElement node = doc.Descendants(tagName).FirstOrDefault();
+            if (node == null)
+            {
+                Console.WriteLine($"Node with tagName {tagName} not found.");
+                return;
+            }
+
+            // Determine which node to replace based on the existing structure
+            XElement primaryNode = node.Element("Primary");
+            XElement secondaryNode = node.Element("Secondary");
+
+            var tempPrimaryXElement = CreateKeyBindingElement(oldKeyBinding, "Primary");
+            var tempSecondaryXElement = CreateKeyBindingElement(oldKeyBinding, "Secondary");
+
+            if (XNode.DeepEquals(secondaryNode, tempSecondaryXElement))
+            {
+                // If Secondary node is empty or doesn't exist, replace it
+                ReplaceOrAddElement(node, "Secondary", newKeyBinding);
+            }
+            else if (XNode.DeepEquals(primaryNode,tempPrimaryXElement))
+            {
+                // If Primary node is empty or doesn't exist, replace it
+                ReplaceOrAddElement(node, "Primary", newKeyBinding);
+            }
+            else
+            {
+                Debug.LogWarning($"Could not overwrite {tagName}. Value from prior binding: {oldKeyBinding.Key} was not found");
+            }
+
+            // Save the modified XML
+            doc.Save(filePath);
+        }
+
+
         private static void ReplaceOrAddElement(XElement parent, string elementName, ControlButtonBinding.KeyBinding keyBinding)
         {
             XElement element = parent.Element(elementName);

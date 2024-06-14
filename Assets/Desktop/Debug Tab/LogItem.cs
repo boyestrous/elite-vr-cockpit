@@ -9,5 +9,6 @@ namespace EVRC.Desktop
         public string message;
         public Sprite icon;
         public Color color;
+        public LogType logType;
     }
 }
