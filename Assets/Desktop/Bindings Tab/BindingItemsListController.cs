@@ -57,7 +57,10 @@ namespace EVRC.Desktop
 
         //private List<string> availableSingleKeyBindings;
         ListView bindingsListView;
+        VisualElement listViewContainer;
+        VisualElement errorMessageContainer;
         BindingItem selectedItem;
+
 
         private List<SavedControlButton> controlButtons;       
 
@@ -81,13 +84,15 @@ namespace EVRC.Desktop
 
             VisualElement root = parentUIDocument.rootVisualElement;
 
-            // Store a reference to the log list element
+            // Store references to the visual elements
             bindingsListView = root.Q<ListView>("required-bindings-list");
             bindingsFilenameElement = root.Q<Label>("binding-filename-value");
             vJoyToggleElement = root.Q<Toggle>("vjoy-toggle");
             validToggleElement = root.Q<Toggle>("valid-toggle");
             errorsToggleElement = root.Q<Toggle>("errors-toggle");
             reloadButtonElement = root.Q<Button>("reload-button");
+            listViewContainer = root.Q<VisualElement>("ListArea");
+            errorMessageContainer = root.Q<VisualElement>("NoBindingsView");
 
 
             vJoyToggleElement.RegisterValueChangedCallback(OnVJoyToggleChange);
@@ -425,8 +430,32 @@ namespace EVRC.Desktop
         {
             if (bindings != null)
             {
-                bindingsFilenameElement.text = bindings.bindingsFileName != null ? bindings.bindingsFileName : "-- Not Yet Set --";
+                if (!string.IsNullOrEmpty(bindings.bindingsFileName))
+                {
+                    bindingsFilenameElement.text = bindings.bindingsFileName;
+                    ShouldShowMissingBindingsFileMessage(false);
+                } else
+                {
+                    bindingsFilenameElement.text = "-- Not Found --";
+                    ShouldShowMissingBindingsFileMessage(true);
+                }
+
                 recommendedBindingsModal.ShouldShowButton(bindings.bindingsFileName);
+
+                
+            }
+        }
+
+        private void ShouldShowMissingBindingsFileMessage(bool show)
+        {
+            if (show)
+            {
+                listViewContainer.style.display = DisplayStyle.None;
+                errorMessageContainer.style.display = DisplayStyle.Flex;
+            } else
+            {
+                errorMessageContainer.style.display = DisplayStyle.None;
+                listViewContainer.style.display = DisplayStyle.Flex;
             }
         }
 

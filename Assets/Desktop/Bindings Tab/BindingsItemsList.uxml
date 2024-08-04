@@ -1,18 +1,18 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/Desktop/unity_uss_overrides.uss?fileID=7433441132597879392&amp;guid=00c71a919149def4b8a4b4161d9f034a&amp;type=3#unity_uss_overrides" />
     <ui:VisualElement name="TitleArea" style="min-height: 60px; max-height: 100px; height: 15%;">
-        <ui:Label text="Placeholder Bindings List Title" display-tooltip-when-elided="true" name="bindings-list-label" style="-unity-font-style: bold; font-size: 16px; min-width: 250px;" />
+        <ui:Label text="Your Current Bindings" display-tooltip-when-elided="true" name="bindings-list-label" style="-unity-font-style: bold; font-size: 16px; min-width: 250px;" />
         <ui:VisualElement style="flex-direction: row;">
             <ui:VisualElement style="flex-direction: row;">
                 <ui:Label text="Reading from bindings file:" display-tooltip-when-elided="true" name="bindings-list-description" style="white-space: normal; -unity-text-align: middle-left;" />
                 <ui:Label text="Placeholder.X.0.Binds" display-tooltip-when-elided="true" name="binding-filename-value" style="-unity-text-align: middle-left; background-color: rgb(200, 200, 200); padding-left: 4px; padding-right: 4px; border-top-left-radius: 2px; border-bottom-left-radius: 2px; border-top-right-radius: 2px; border-bottom-right-radius: 2px; border-left-color: rgb(115, 115, 115); border-right-color: rgb(115, 115, 115); border-top-color: rgb(115, 115, 115); border-bottom-color: rgb(115, 115, 115); border-left-width: 2px; border-right-width: 2px; border-top-width: 2px; border-bottom-width: 2px;" />
             </ui:VisualElement>
             <ui:VisualElement name="recommended-bindings" style="flex-direction: row; display: flex;">
-                <ui:Button text="Use Default?" display-tooltip-when-elided="true" name="replace-bindings-button" style="background-color: rgba(255, 237, 162, 255);" />
+                <ui:Button text="Use Default?" display-tooltip-when-elided="true" name="replace-bindings-button" style="background-color: rgb(255, 237, 162); display: none;" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:VisualElement name="ListArea" style="min-height: 350px; height: 85%; margin-top: 5px; padding-right: 5px;">
+    <ui:VisualElement name="ListArea" style="min-height: 350px; height: 85%; margin-top: 5px; padding-right: 5px; display: flex;">
         <ui:VisualElement name="FilterArea" style="margin-bottom: 10px; flex-direction: row; min-height: 25px; height: 10%; border-bottom-width: 1px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);">
             <ui:Toggle label="vJoy Only" tooltip="Show only controls that have a vJoy binding" name="vjoy-toggle" style="justify-content: flex-start; flex-direction: row-reverse; border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); width: 20%; font-size: 12px; align-items: center; -unity-text-align: middle-left; min-width: 115px; height: 30px; max-width: 125px;" />
             <ui:Toggle label="Valid Only" tooltip="Show only controls that have a binding configured. Empty controls are excluded." name="valid-toggle" style="justify-content: flex-start; flex-direction: row-reverse; border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); width: 20%; font-size: 12px; align-items: center; -unity-text-align: middle-left; min-width: 115px; height: 30px; max-width: 125px;" />
@@ -22,5 +22,8 @@
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:ListView focusable="true" name="required-bindings-list" show-alternating-row-backgrounds="ContentOnly" reorderable="true" header-title="Placeholder List Header Title" show-bound-collection-size="false" style="min-height: 300px; min-width: 250px; padding-top: 15px; width: 100%; height: 90%;" />
+    </ui:VisualElement>
+    <ui:VisualElement name="NoBindingsView" style="margin-top: 30px; display: none;">
+        <ui:Label text="No bindings were found. You may need to launch the game for the first time to generate the base bindings." display-tooltip-when-elided="true" name="message" style="font-size: 20px; -unity-font-style: bold; white-space: normal; -unity-text-align: upper-center;" />
     </ui:VisualElement>
 </ui:UXML>

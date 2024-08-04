@@ -214,7 +214,7 @@ public class ControlBindingsUtilsTests
         Assert.AreEqual(newBinding, updatedPrimaryBinding); // Primary is changed to the new binding
 
         // Set a new binding and specify the secondary one (vjoy) -> should fail
-        // Set a new binding on a control with a missing primary bindingv
+        // Set a new binding on a control with a missing primary binding
         // Set a new binding on a conrol with a missing secondary binding
     }
 

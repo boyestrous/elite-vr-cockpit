@@ -36,6 +36,7 @@ namespace EVRC.Desktop
         public void ShouldShowButton(string bindingsName)
         {
             if (bindings == null) return;
+            if (string.IsNullOrEmpty(bindingsName)) return;
             if (Paths.StartPresetPath == null) return;
             if (recommendedBindingsArea == null) return;
 
