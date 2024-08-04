@@ -18,6 +18,7 @@ public class LogListControllerTests : BaseTestClass
     List<LogItem> logItems;
     LogListController logListController;
     VisualTreeAsset listItemAsset;
+    LogState logState;
 
     //Scene newScene;
     //GameObject gameObject;
@@ -33,12 +34,14 @@ public class LogListControllerTests : BaseTestClass
 
         gameObject = new GameObject("TestObject");
         logListController = gameObject.AddComponent<LogListController>();
+        logState = ScriptableObject.CreateInstance<LogState>();
         listItemAsset = ScriptableObject.CreateInstance<VisualTreeAsset>();
         
         listView = new ListView();
         logItems = new List<LogItem>();
+        logListController.logState = logState;
 
-        logListController.m_AllLogs = logItems;
+        logState.allLogs = logItems;
         logListController.m_LogList = listView;
         logListController.m_ListEntryTemplate = listItemAsset;
         logListController.SetListBindingMethods();
@@ -50,12 +53,12 @@ public class LogListControllerTests : BaseTestClass
     public void ApplicationLogs_AddedTo_LogListSource() 
     {
         // Starts empty
-        Assert.AreEqual(0, logListController.m_AllLogs.Count, "The Log List was NOT Empty at the beginning");
+        Assert.AreEqual(0, logState.allLogs.Count, "The Log List was NOT Empty at the beginning");
 
         Debug.Log("Test Log");
 
         // Ensure the underlying list has one log
-        Assert.AreEqual(1, logListController.m_AllLogs.Count, "Log list did not update as expected.");
+        Assert.AreEqual(1, logState.allLogs.Count, "Log list did not update as expected.");
 
         // Ensure the ListView's itemsSource has one item
         Assert.AreEqual(1, listView.itemsSource.Count, "ListView itemsSource did not update as expected.");
@@ -84,7 +87,7 @@ public class LogListControllerTests : BaseTestClass
 
         string exportPath = Path.Combine(Application.temporaryCachePath, "export_test.log");
 
-        logListController.ExportAllLogs(exportPath);
+        logState.ExportAllLogs(exportPath);
 
         // Ensure the file was created
         FileAssert.Exists(exportPath);
@@ -109,7 +112,7 @@ public class LogListControllerTests : BaseTestClass
         string exportPath = Paths.ExportedLogFileName;
 
         // Set the maxLines to 10. This is normally for managing performance in the ListView, but we need to ensure that the lines that are dropped from the ListView are still exported to the file.
-        logListController.maxLines = 10;
+        logState.maxLines = 10;
 
         string firstMessage = "First Log Message";
         Debug.Log(firstMessage);
@@ -127,7 +130,7 @@ public class LogListControllerTests : BaseTestClass
         lastMessage = "Log: " + lastMessage;
 
         // Act
-        logListController.ExportAllLogs(exportPath);
+        logState.ExportAllLogs(exportPath);
 
         // Assert
         FileAssert.Exists(exportPath);

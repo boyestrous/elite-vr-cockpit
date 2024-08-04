@@ -2,6 +2,7 @@ using EVRC.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -12,42 +13,29 @@ namespace EVRC.Desktop
      */
     public class LogListController: MonoBehaviour
     {
-        [Serializable]
-        public struct LogTypeStyle
-        {
-            public Color color;
-            public Sprite icon;
-        }
 
         [Header("Templates and Scene Refs")]
         // UXML template for list entries
         [SerializeField] internal VisualTreeAsset m_ListEntryTemplate;
         [SerializeField] UIDocument parentUIDocument;
-
-        [Header("Configuration")]
-        public LogTypeStyle infoStyle;
-        public LogTypeStyle warningStyle;
-        public LogTypeStyle errorStyle;
-        public int maxLines = 100;
+        [SerializeField] internal LogState logState;
 
         // UI element references
         internal ListView m_LogList;
         internal Button exportButtonElement;
 
-        // Logs object
-        internal List<LogItem> m_AllLogs;
-
         public void OnEnable()
         {
-            m_AllLogs = new List<LogItem>();
-
             VisualElement root = parentUIDocument.rootVisualElement;
 
             // Store a reference to the log list element
             m_LogList = root.Q<ListView>("log-list");
             exportButtonElement = root.Q<Button>("export-button");
 
-            exportButtonElement.clicked += ExportAllLogs;
+            // Reset the current logs to empty
+            logState.RemoveAll();
+
+            exportButtonElement.clicked += logState.ExportAllLogs;
 
             SetListBindingMethods();
 
@@ -62,9 +50,9 @@ namespace EVRC.Desktop
 
         internal void OnLogMessage(string text, string stackTrace, LogType type)
         {
-            var style = type == LogType.Log ? infoStyle
-                : type == LogType.Warning ? warningStyle
-                : errorStyle;
+            var style = type == LogType.Log ? logState.infoStyle
+                : type == LogType.Warning ? logState.warningStyle
+                : logState.errorStyle;
 
             LogItem logItem = new LogItem()
             {
@@ -74,11 +62,7 @@ namespace EVRC.Desktop
                 logType = type
             };
 
-            m_AllLogs.Add(logItem);
-
-            // Limit the number of items displayed in the ListView to maxLines
-            int startIndex = Math.Max(0, m_AllLogs.Count - maxLines);
-            List<LogItem> logsToDisplay = m_AllLogs.GetRange(startIndex, Math.Min(maxLines, m_AllLogs.Count));
+            List<LogItem> logsToDisplay = logState.Add(logItem);
 
             m_LogList.itemsSource = logsToDisplay;
             m_LogList.RefreshItems();
@@ -109,54 +93,14 @@ namespace EVRC.Desktop
             // Set up bind function for a specific list entry
             m_LogList.bindItem = (item, index) =>
             {
-                (item.userData as LogEntryDisplay).SetLogData(m_AllLogs[index]);
+                (item.userData as LogEntryDisplay).SetLogData(logState.allLogs[index]);
             };
 
             // Set a fixed item height
             //m_LogList.fixedItemHeight = 45;
 
             // Set the actual item's source list/array
-            m_LogList.itemsSource = m_AllLogs;
+            m_LogList.itemsSource = logState.allLogs;
         }
-
-        /// <summary>
-        /// Export all logs to the default path
-        /// </summary>
-        private void ExportAllLogs()
-        {
-            string filePath = Paths.ExportedLogFileName;
-            ExportAllLogs(filePath);
-        }
-
-
-        /// <summary>
-        /// Overload allowing you to specify the export destination (mostly for testing)
-        /// </summary>
-        /// <param name="filePath"></param>
-        internal void ExportAllLogs(string filePath)
-        {
-            // Ensure the directory exists
-            string directoryPath = Path.GetDirectoryName(filePath);
-            if (!Directory.Exists(directoryPath))
-            {
-                Directory.CreateDirectory(directoryPath);
-            }
-
-            using (StreamWriter writer = new StreamWriter(filePath))
-            {
-                writer.WriteLine("--------------------------------------------------------------");
-                // Date in format readable without confusion about european vs american month/date
-                // 12 Hour Time with timezone 
-                writer.WriteLine($"Log Exported on: {DateTime.Today.ToString("MMMM dd, yyyy")} at {DateTime.Now.ToString("hh:mm:ss tt (K)")}");
-                writer.WriteLine("--------------------------------------------------------------");
-
-                foreach (var log in m_AllLogs)
-                {
-                    writer.WriteLine($"{log.logType}: {log.message}");
-                }
-            }
-            Debug.Log($"All logs have been exported to {filePath}");
-        }
-
     }
 }

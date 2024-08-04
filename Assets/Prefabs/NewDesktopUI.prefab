@@ -50,16 +50,7 @@ MonoBehaviour:
   m_ListEntryTemplate: {fileID: 9197481963319205126, guid: d30c8e5c5d3bb824dbe7a8c217c0cba0,
     type: 3}
   parentUIDocument: {fileID: 6465645074838448022}
-  infoStyle:
-    color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    icon: {fileID: 21300000, guid: c25ad00be07907d42b7111b765255bb1, type: 3}
-  warningStyle:
-    color: {r: 1, g: 0.6938923, b: 0, a: 1}
-    icon: {fileID: 21300000, guid: 0ce3f8efc40a73145834dcd72d8a7c03, type: 3}
-  errorStyle:
-    color: {r: 0.9433962, g: 0, b: 0, a: 1}
-    icon: {fileID: 21300000, guid: 365964070f343304da7d6b2875ae06a2, type: 3}
-  maxLines: 100
+  logState: {fileID: 11400000, guid: a2ce98a12b641fc41b29f993223986dc, type: 2}
 --- !u!114 &3914959317253130693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,6 +107,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentUIDocument: {fileID: 6465645074838448022}
+  eliteDangerousState: {fileID: 11400000, guid: de65acd1f8087ff4cb3c04f687b0f89f,
+    type: 2}
+  controlBindingsState: {fileID: 11400000, guid: 1de2906d06cd6f745bab03c953c45a3a,
+    type: 2}
+  vjoyState: {fileID: 11400000, guid: 6e76b948f29825342b2ade83571d5cb9, type: 2}
 --- !u!1 &1417640592640192690
 GameObject:
   m_ObjectHideFlags: 0

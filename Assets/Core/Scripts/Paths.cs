@@ -86,6 +86,7 @@ namespace EVRC.Core
             return returnStartPresetPath;
         }
 
+        public static string githubUrl = "https://github.com/boyestrous/elite-vr-cockpit/issues/new";
         public static string SteamVRConfigPath = @"C:\Program Files (x86)\Steam\config\steamvr.vrsettings";
 
         public static string ExportedLogFolderPath = Path.Combine(Application.persistentDataPath, "Exported Logs");

@@ -37,8 +37,8 @@
                         <ui:Label text="None" display-tooltip-when-elided="true" name="statusflags-value" class="statusItemValue" />
                     </ui:VisualElement>
                 </ui:VisualElement>
-                <ui:Button text="Submit an Issue to Github" display-tooltip-when-elided="true" name="submit-github-issue" style="margin-top: 10px;">
-                    <ui:VisualElement style="background-image: url(&apos;project://database/Packages/com.unity.collab-proxy/Editor/PlasticSCM/Assets/Images/d_iconbranch@2x.png?fileID=2800000&amp;guid=874d8401331ede14087e8d8d486ddda6&amp;type=3#d_iconbranch@2x&apos;); width: 32px; height: 32px; -unity-background-scale-mode: scale-to-fit; margin-left: 10px; -unity-background-image-tint-color: rgba(0, 0, 0, 255);" />
+                <ui:Button text="Submit an Issue to Github" display-tooltip-when-elided="true" name="submit-github-issue" style="margin-top: 10px; font-size: 13px;">
+                    <ui:VisualElement style="background-image: url(&apos;project://database/Packages/com.unity.collab-proxy/Editor/PlasticSCM/Assets/Images/d_iconbranch@2x.png?fileID=2800000&amp;guid=874d8401331ede14087e8d8d486ddda6&amp;type=3#d_iconbranch@2x&apos;); width: 32px; height: 32px; -unity-background-scale-mode: scale-to-fit; margin-left: 10px; -unity-background-image-tint-color: rgb(0, 0, 0);" />
                 </ui:Button>
             </ui:VisualElement>
         </ui:VisualElement>
