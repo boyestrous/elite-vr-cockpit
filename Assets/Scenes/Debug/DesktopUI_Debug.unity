@@ -150,6 +150,17 @@ PrefabInstance:
       propertyPath: uiDocument
       value: 
       objectReference: {fileID: 508984842}
+    - target: {fileID: 4726670226658153969, guid: 13dfd2ff77290bb4faf75012641f360d,
+        type: 3}
+      propertyPath: recommendedBindingsModal
+      value: 
+      objectReference: {fileID: 1687509421}
+    - target: {fileID: 4972279433456300615, guid: 13dfd2ff77290bb4faf75012641f360d,
+        type: 3}
+      propertyPath: requiredBindingsState
+      value: 
+      objectReference: {fileID: 11400000, guid: 7baa37a7f24b0c2478d0122fea0db811,
+        type: 2}
     - target: {fileID: 5625217958891209880, guid: 13dfd2ff77290bb4faf75012641f360d,
         type: 3}
       propertyPath: uiDocument
@@ -344,3 +355,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f91a9bf1a905184da5d5bcf5560442e, type: 3}
+--- !u!114 &1687509421 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4702260006377328484, guid: 13dfd2ff77290bb4faf75012641f360d,
+    type: 3}
+  m_PrefabInstance: {fileID: 508984841}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07f9770cc46fa4046a4a1ea688ff6db3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

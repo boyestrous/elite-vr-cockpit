@@ -1,6 +1,7 @@
 using EVRC.Core;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace EVRC.Desktop
@@ -17,13 +18,14 @@ namespace EVRC.Desktop
         public List<EDControlButton> listTwo;
     }
 
-
-    public class ExclusiveBindings : MonoBehaviour
+    public class ExclusiveBindings : BindingProblemFinderBase
     {
         [SerializeField] internal List<ExclusiveBindingSet> exclusiveBindingSets = new List<ExclusiveBindingSet>();
 
-        internal void OnEnable()
+        internal override void OnEnable()
         {
+            base.OnEnable();
+
             exclusiveBindingSets = new List<ExclusiveBindingSet>() 
             { 
                 // Map controls may not overlap with UI Controls
@@ -61,7 +63,7 @@ namespace EVRC.Desktop
             };
         }
 
-        public List<(EDControlButton, EDControlButton, ControlButtonBinding.KeyBinding)> FindExclusiveBindingProblems(Dictionary<EDControlButton, ControlButtonBinding> bindings)
+        public override void FindBindingProblems(Dictionary<EDControlButton, ControlButtonBinding> bindings)
         {
             List<(EDControlButton, EDControlButton, ControlButtonBinding.KeyBinding)> problems = new List<(EDControlButton, EDControlButton, ControlButtonBinding.KeyBinding)>();
 
@@ -95,9 +97,10 @@ namespace EVRC.Desktop
                 }
             }
 
-
-
-            return problems;
+            problemList = problems
+                .SelectMany(tuple => new[] { tuple.Item1, tuple.Item2 })
+                .Distinct()
+                .ToList();
         }
 
     }

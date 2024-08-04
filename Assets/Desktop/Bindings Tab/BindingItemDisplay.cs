@@ -13,7 +13,6 @@ namespace EVRC.Desktop
         Label m_errorMessage;
         VisualElement m_rowContainer;
         public Button m_autoFixButton;
-        public DropdownField m_chooseKeyDropdown;
 
         public void SetVisualElement(VisualElement visualElement)
         {
@@ -23,7 +22,6 @@ namespace EVRC.Desktop
             m_deviceIndex = visualElement.Q<Label>("index-value");
             m_errorMessage = visualElement.Q<Label>("error-message");
             m_autoFixButton = visualElement.Q<Button>("auto-fix-button");
-            m_chooseKeyDropdown = visualElement.Q<DropdownField>("choose-key-dropdown");
             m_rowContainer = visualElement;
         }
 

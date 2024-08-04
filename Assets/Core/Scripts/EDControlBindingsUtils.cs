@@ -91,20 +91,31 @@ namespace EVRC.Core
             XElement primaryNode = node.Element("Primary");
             XElement secondaryNode = node.Element("Secondary");
 
-            if (secondaryNode == null || string.IsNullOrEmpty(secondaryNode.Value))
+            if (secondaryNode == null || secondaryNode.Attribute("Device")?.Value == "{NoDevice}")
             {
                 // If Secondary node is empty or doesn't exist, replace it
                 ReplaceOrAddElement(node, "Secondary", keyBinding);
             }
-            else if (primaryNode == null || string.IsNullOrEmpty(primaryNode.Value))
+            else if (primaryNode == null || primaryNode.Attribute("Device")?.Value == "{NoDevice}")
             {
                 // If Primary node is empty, replace it
                 ReplaceOrAddElement(node, "Primary", keyBinding);
             }
             else
             {
-                // Both Primary and Secondary nodes are not empty, replace Secondary
-                ReplaceOrAddElement(node, "Secondary", keyBinding);
+                // Both nodes are not empty, replace the one that isn't a vJoy binding
+                if (secondaryNode.Attribute("Device")?.Value != "vJoy")
+                {
+                    ReplaceOrAddElement(node, "Secondary", keyBinding);
+                }
+                else if (primaryNode.Attribute("Device")?.Value != "vJoy")
+                {
+                    ReplaceOrAddElement(node, "Primary", keyBinding);
+                }
+                else
+                {
+                    Debug.LogError("Cannot change binding automatically, both are set to vJoy controls");
+                }
             }
 
             // Save the modified XML
@@ -182,9 +193,12 @@ namespace EVRC.Core
                 new XAttribute("Key", keyBinding.Key)
             );
 
+
+            var deviceIndexProperty = keyBinding.GetType().GetProperty("DeviceIndex");
             //Keyboards don't get DeviceIndexes
-            if (keyBindingElement.Attribute("Device").Value != "Keyboard")
+            if (keyBindingElement.Attribute("Device").Value != "Keyboard" && deviceIndexProperty != null)
             {
+                //keyBindingElement.Add(new XAttribute("DeviceIndex", keyBinding.DeviceIndex));
                 keyBindingElement.Add(new XAttribute("DeviceIndex", keyBinding.DeviceIndex));
             }
 

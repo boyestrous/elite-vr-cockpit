@@ -187,8 +187,35 @@ public class ControlBindingsUtilsTests
     [Test]
     public void UpdateBindingXml_DoesntOverwrite_VJoyBindings()
     {
-        
-        Assert.IsTrue(false);
+        // Copy the template file to the cache folder
+        string filepath = Path.Combine(Application.temporaryCachePath, "tempPreserveVjoy.binds");
+        File.Copy(Paths.BindingsTemplatePath, filepath, true);
+
+        // Read the file
+        Dictionary<EDControlButton, ControlButtonBinding> bindsFile = EDControlBindingsUtils.ParseFile(filepath);
+
+        // The template file (at the time of this writing) defines SelectTarget with a secondary binding that is a vJoy control and a primary control that is a keyboard binding
+        EDControlButton selectTarget = EDControlButton.SelectTarget;
+        bindsFile.TryGetValue(selectTarget, out var selectTargetControls);
+        var secondaryBinding = selectTargetControls.Secondary;
+        Assert.IsTrue(secondaryBinding.IsValidVJoyPress); // Double check that the binding is still a vjoy binding
+
+        // Assign a new KeyBinding to replace the original value
+        var newBinding = TestUtils.CreateKeyBinding("Key_J", new List<string>());
+
+        // Set a new binding without specifying the one to overwrite
+        EDControlBindingsUtils.UpdateBindingXml(filepath, selectTarget.ToString(), newBinding);
+
+        var fileAfterUpdate = EDControlBindingsUtils.ParseFile(filepath);
+        fileAfterUpdate.TryGetValue(selectTarget, out var updatedControlButtonBinding);
+        var updatedSecondaryBinding = updatedControlButtonBinding.Secondary;
+        var updatedPrimaryBinding = updatedControlButtonBinding.Primary;
+        Assert.AreEqual(secondaryBinding, updatedSecondaryBinding); // Secondary should remain unchanged
+        Assert.AreEqual(newBinding, updatedPrimaryBinding); // Primary is changed to the new binding
+
+        // Set a new binding and specify the secondary one (vjoy) -> should fail
+        // Set a new binding on a control with a missing primary bindingv
+        // Set a new binding on a conrol with a missing secondary binding
     }
 
 
@@ -220,5 +247,52 @@ public class ControlBindingsUtilsTests
         fileAfterUpdate.TryGetValue(targetControl, out var updatedControlButtonBinding);
         var updatedPrimaryBinding = updatedControlButtonBinding.Primary;
         Assert.AreEqual(newBinding, updatedPrimaryBinding);
+    }
+
+    [Test]
+    public void UpdateBindingXml_SetsSecondary_WhenBlankOldBinding()
+    {
+        // Copy the template file to the cache folder
+        string filepath = Path.Combine(Application.temporaryCachePath, "temp.binds");
+        File.Copy(Paths.BindingsTemplatePath, filepath, true);
+
+        // Read the file
+        Dictionary<EDControlButton, ControlButtonBinding> firstRead = EDControlBindingsUtils.ParseFile(filepath);
+
+        // This should be empty in the template file
+        EDControlButton targetControl = EDControlButton.YawToRollButton;
+        firstRead.TryGetValue(targetControl, out var originalControlButtonBinding);
+        var originalPrimaryBinding = originalControlButtonBinding.Primary;
+        var originalSecondaryBinding = originalControlButtonBinding.Secondary;
+        //Make sure they're both unbound before we start
+        Assert.AreEqual(originalPrimaryBinding, TestUtils.UnboundKeyBinding);
+        Assert.AreEqual(originalSecondaryBinding, TestUtils.UnboundKeyBinding);
+
+        var newBinding = TestUtils.CreateKeyBinding("Key_M", new List<string>());
+
+        // Act
+        EDControlBindingsUtils.UpdateBindingXml(filepath, targetControl.ToString(), newBinding, TestUtils.UnboundKeyBinding);
+
+        // Assert
+        var fileAfterUpdate = EDControlBindingsUtils.ParseFile(filepath);
+        fileAfterUpdate.TryGetValue(targetControl, out var updatedControlButtonBinding);
+        var updatedPrimaryBinding = updatedControlButtonBinding.Primary;
+        var updatedSecondaryBinding = updatedControlButtonBinding.Secondary;
+        Assert.AreEqual(updatedPrimaryBinding, TestUtils.UnboundKeyBinding); // Primary remains unbound
+        Assert.AreEqual(newBinding, updatedSecondaryBinding); // Secondary is updated with the new binding
+        Assert.AreNotEqual(originalSecondaryBinding, updatedSecondaryBinding); // Secondary is not the same as the original secondary (make sure we didn't screw up the test itself)
+    }
+
+    [TearDown]
+    public void TearDown()
+    {
+        // Get the temporary cache path
+        string cachePath = Application.temporaryCachePath;
+
+        // Delete all files and directories within the cache path
+        TestUtils.DeleteFilesAndDirectories(cachePath);
+
+        // Optional: Verify that the cache path is empty after cleanup
+        Assert.IsFalse(Directory.Exists(cachePath), "Temporary cache path is not empty after cleanup");
     }
 }

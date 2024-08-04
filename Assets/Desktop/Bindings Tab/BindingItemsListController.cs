@@ -10,27 +10,27 @@ using UnityEngine.UIElements;
 
 namespace EVRC.Desktop
 {
-    [RequireComponent(typeof(RecommendedBindingsModal))]
+    [RequireComponent(typeof(RecommendedBindingsModal)), RequireComponent(typeof(RequiredBindings))]
     public class BindingItemsListController : PreCheck
     {
         [Header("Templates and Scene Refs")]
         // UXML template for list entries
         [SerializeField] UIDocument parentUIDocument;
-        [SerializeField] RecommendedBindingsModal recommendedBindingsModal;
-        private AvailableBindings availableBindingsController;
-        private ExclusiveBindings exclusiveBindingsController;
-        public List<ControlButtonBinding.KeyBinding> availableKeyBindings;
-        private Dictionary<string, ControlButtonBinding.KeyBinding> availableKeyBindingsMap;
-        [SerializeField] VisualTreeAsset m_BindingEntryTemplate;
         [SerializeField] ControlBindingsState bindings;
 
-        [SerializeField] VisualTreeAsset m_FixBindingModalTemplate;
-        [SerializeField] RequiredBindingsState requiredBindings;
-        public SavedGameState savedGameState;
-        public ControlButtonAssetCatalog assetCatalog;
-        public GameEvent requestBindingsReloadEvent;
-        
-        // Filters and Toggles for the ListView
+        RecommendedBindingsModal recommendedBindingsModal;
+
+        // Components that identify lists of problematic bindings
+        private AvailableBindings availableBindingsController;
+        private ExclusiveBindings exclusiveBindingsController;
+        private RequiredBindings requiredBindingsController;
+
+
+        public List<ControlButtonBinding.KeyBinding> availableKeyBindings;
+        private Dictionary<string, ControlButtonBinding.KeyBinding> availableKeyBindingsMap;
+
+        [Header("ListView stuff")]
+        [SerializeField] VisualTreeAsset m_BindingEntryTemplate;
         [SerializeField] bool vJoyOnly; // filter for showing vJoy bindings only
         [SerializeField] bool validOnly; // filter for showing vJoy bindings only
         [SerializeField] bool errorsOnly; // filter for showing vJoy bindings only
@@ -40,16 +40,20 @@ namespace EVRC.Desktop
         Toggle errorsToggleElement;
         Button reloadButtonElement;
 
+
+        [SerializeField] VisualTreeAsset m_FixBindingModalTemplate;
+        public SavedGameState savedGameState;
+        public ControlButtonAssetCatalog assetCatalog;
+        public GameEvent requestBindingsReloadEvent;
+        
+        
+
         VisualElement modalUI; //fix bindings modal
 
         //Lists of problematic bindings
         Dictionary<EDControlButton, ControlButtonBinding> filteredButtonBindings;
-        private List<EDControlButton> missingRequiredBindings; //no binding, and default required
         private List<EDControlButton> missingHolographicBindings; //no binding, but has a holo button
-        private List<EDControlButton> invalidExclusiveBindings; // exclusive controls that share a binding
-        private List<(EDControlButton, EDControlButton, ControlButtonBinding.KeyBinding)> invalidExclusiveBindingsDetails; // exclusive controls share a binding
         private List<EDControlButton> allErrorBindings; // combination of binds with all types of errors
-        //public bool bindingsHaveErrors;
 
         //private List<string> availableSingleKeyBindings;
         ListView bindingsListView;
@@ -63,7 +67,7 @@ namespace EVRC.Desktop
             recommendedBindingsModal = GetComponent<RecommendedBindingsModal>();
             availableBindingsController = GetComponent<AvailableBindings>();
             exclusiveBindingsController = GetComponent<ExclusiveBindings>();
-
+            requiredBindingsController = GetComponent<RequiredBindings>();
 
             // filter starts as off
             vJoyOnly = false;
@@ -131,9 +135,8 @@ namespace EVRC.Desktop
         private void RemoveFromErrorLists(EDControlButton eDControlButton)
         {
             missingHolographicBindings.Remove(eDControlButton);
-            missingRequiredBindings.Remove(eDControlButton);
-            invalidExclusiveBindings.Remove(eDControlButton);
-            invalidExclusiveBindingsDetails.RemoveAll(tuple => tuple.Item1.Equals(eDControlButton) || tuple.Item2.Equals(eDControlButton));
+            requiredBindingsController.Remove(eDControlButton);
+            exclusiveBindingsController.Remove(eDControlButton);
             UpdateErrorBindings();
         }
 
@@ -141,8 +144,8 @@ namespace EVRC.Desktop
         {
             allErrorBindings.Clear();
             allErrorBindings.AddRange(missingHolographicBindings);
-            allErrorBindings.AddRange(missingRequiredBindings);
-            allErrorBindings.AddRange(invalidExclusiveBindings);
+            allErrorBindings.AddRange(requiredBindingsController.problemList);
+            allErrorBindings.AddRange(exclusiveBindingsController.problemList);
 
             hasErrors = allErrorBindings.Count > 0;
 
@@ -151,6 +154,9 @@ namespace EVRC.Desktop
 
         public void FindMissingBindings()
         {
+            requiredBindingsController.FindBindingProblems(bindings.buttonBindings);
+            exclusiveBindingsController.FindBindingProblems(bindings.buttonBindings);
+
 
             //Get a list of controlButtons that are configured by the player and have no active bindings
             List<EDControlButton> holoMissing = controlButtons
@@ -160,21 +166,6 @@ namespace EVRC.Desktop
                 .ToList();
 
             missingHolographicBindings = holoMissing;
-
-            List<EDControlButton> reqMissing = bindings.buttonBindings
-                .Where(kv => bindings.buttonBindings[kv.Key].HasKeyboardKeybinding == false && bindings.buttonBindings[kv.Key].HasVJoyKeybinding == false)
-                .Select(kv => kv.Key)
-                .Where(button => requiredBindings.requiredBindings.Contains(button))
-                .ToList(); // Convert to List<EDControlButton>
-
-            missingRequiredBindings = reqMissing;
-
-            invalidExclusiveBindingsDetails = exclusiveBindingsController.FindExclusiveBindingProblems(bindings.buttonBindings);
-            // Flip the list of tuples into a unique list of EDControlButton
-            invalidExclusiveBindings = invalidExclusiveBindingsDetails
-                .SelectMany(tuple => new[] { tuple.Item1, tuple.Item2 })
-                .Distinct()
-                .ToList();
 
             UpdateErrorBindings();
         }
@@ -227,18 +218,25 @@ namespace EVRC.Desktop
                 return BindingItemState.MissingHolographic;
             }
 
-            if (missingRequiredBindings.Contains(controlButton))
+            if (requiredBindingsController.problemList.Contains(controlButton))
             {
                 return BindingItemState.MissingRequired;
             }
 
-            if (invalidExclusiveBindings.Contains(controlButton))
+            if (exclusiveBindingsController.problemList.Contains(controlButton))
             {
                 return BindingItemState.ExclusiveError;
             }
 
             return BindingItemState.Good;
         }
+
+        private Dictionary<BindingItemState, string> bindingErrorModalMessages = new Dictionary<BindingItemState, string>() 
+        {
+            {BindingItemState.MissingRequired, "This binding is required for EVRC functions. You can choose an available binding from the list below and it will be set in the Secondary position." },
+            {BindingItemState.MissingHolographic, "You have a holographic button configured for this control, but there isn't a binding configured in the file. You can choose an available binding from the list below and it will be set in the Secondary position." },
+            {BindingItemState.ExclusiveError, "This binding is the same as another binding, which will cause conflicts with the EVRC overlay (even if Elite Dangerous doesn't care). You can choose an available binding from the list below and it will replace the conflicting binding." }
+        };
 
 
         public void FilterList()
@@ -327,18 +325,24 @@ namespace EVRC.Desktop
         void LaunchFixBindingModal(string bindingName)
         {
             modalUI = m_FixBindingModalTemplate.Instantiate();
+
             //availableSingleKeyBindings
             Button okButton = modalUI.Q<Button>("ok-button");
             Button cancelButton = modalUI.Q<Button>("cancel-button");
             Button xButton = modalUI.Q<Button>("x-button");
             Label bindingLabel = modalUI.Q<Label>("control-binding-name");
+            Label errorLongDescription = modalUI.Q<Label>("error-long-description");
             DropdownField availableKeysDropdown = modalUI.Q<DropdownField>("available-keys-dropdown");
 
             okButton.clicked += SubmitFixBinding;
             cancelButton.clicked += CloseFixBindingModal;
             xButton.clicked += CloseFixBindingModal;
             bindingLabel.text = bindingName;
-
+            
+            // Find the appropriate message to display on the modal
+            EDControlButton clickedBinding = (EDControlButton)Enum.Parse(typeof(EDControlButton), bindingLabel.text);
+            BindingItemState clickedBindingState = GetBindingItemState(clickedBinding);
+            errorLongDescription.text = bindingErrorModalMessages[clickedBindingState];
 
             // Convert the ControlButtonBinding to a dictionary so it can be displayed in the dropdown
             availableKeyBindingsMap = new Dictionary<string, ControlButtonBinding.KeyBinding>();
@@ -410,24 +414,6 @@ namespace EVRC.Desktop
                 okButton.SetEnabled(false);
                 okButton.AddToClassList("disabledBtn");
             }
-        }
-
-        void OnBindingFixDropdownSelectionChanged(ChangeEvent<string> evt)
-        {
-            Button okButton = modalUI.Q<Button>("ok-button");
-
-            if (evt.newValue != null)
-            {
-                okButton.SetEnabled(true);
-                okButton.RemoveFromClassList("disabledBtn");
-            }
-            else
-            {
-                okButton.SetEnabled(false);
-                okButton.AddToClassList("disabledBtn");
-            }
-
-            //Debug.Log($"dropdown changed: {evt.newValue}");
         }
 
         void CloseFixBindingModal()
