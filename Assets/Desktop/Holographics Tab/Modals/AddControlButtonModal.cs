@@ -13,74 +13,125 @@ namespace EVRC.Desktop
 
     public class AddControlButtonModal : Modal
     {
-        public ControlButtonAddedEvent controlButtonAddedEvent;
-        public ControlButtonAssetCatalog catalog;
-        public SavedGameState savedGameState;
+        [SerializeField] private ControlButtonAddedEvent controlButtonAddedEvent;
+        [SerializeField] private ControlButtonAssetCatalog catalog;
+        [SerializeField] private SavedGameState savedGameState;
+        [SerializeField] private bool advancedModeActive;
+       
+        private ControlButtonSpawnManager spawnManager;
+
+        //Basic Mode Form Elements - basic mode sets values to the invisible Advanced Mode
+        private VisualElement basicFormContainer;
+        private DropdownField basicDropdown;
         private Toggle advancedModeToggle;
+        private Label messageText;
+
+        // Advanced Mode Form Elements
+        private VisualElement advancedFormContainer;
         private DropdownField statusFlagDropdown;
         private DropdownField guiFocusDropdown;
         private DropdownField controlButtonDropdown;
-        private Label messageText;
-        private ControlButtonSpawnManager spawnManager;
-
-        private EDStatusFlags? selectedStatusFlag;
-        private EDStatusFlags2? selectedStatusFlag2;
-        private EDGuiFocus? selectedGuiFocus;
+        private EDStatusFlags selectedStatusFlag;
+        private EDStatusFlags2 selectedStatusFlag2;
+        private EDGuiFocus selectedGuiFocus;
+        private bool requiredGuiFocus; // whether or not to search for a required GuiFocus
         private ControlButtonAsset selectedControlButton;
 
-        List<string> statusFlagList;
+        // Lists that source the dropdown fields
         List<string> guiFocusList;
+        List<string> statusFlagList;
+        Dictionary<string,(EDStatusFlags, EDStatusFlags2, EDGuiFocus?)> basicOptionsList;
 
         public override void OnEnable()
         {
             base.OnEnable();
+
+            basicOptionsList = new Dictionary<string, (EDStatusFlags, EDStatusFlags2, EDGuiFocus?)>
+            {
+                { "Main Ship", (EDStatusFlags.InMainShip, EDStatusFlags2.None, null)},
+                { "SRV (Buggy)",(EDStatusFlags.InSRV, EDStatusFlags2.None, null)},
+                { "Fighter",(EDStatusFlags.InFighter, EDStatusFlags2.None, null)},
+                { "FSS Mode",(EDStatusFlags.InMainShip, EDStatusFlags2.None, EDGuiFocus.FSSMode)},
+                { "Galaxy Map",(EDStatusFlags.InMainShip, EDStatusFlags2.None, EDGuiFocus.GalaxyMap)},
+                { "Station Services",(EDStatusFlags.InMainShip, EDStatusFlags2.None, EDGuiFocus.StationServices)},
+            };
         }
 
         public override void LaunchModal()
         {
             base.LaunchModal();
 
-            //Populate the status Flag dropdown
-            statusFlagList = new List<string>();
-            statusFlagList.Add("--Any Flag--");
-            statusFlagList.AddRange(Enum.GetNames(typeof(EDStatusFlags)).ToList());
-            statusFlagList.AddRange(Enum.GetNames(typeof(EDStatusFlags2)).ToList());
+            PopulateBasicOptions();
+            PopulateAdvancedOptions();
 
-            //Populate the GuiFocus dropdown
-            guiFocusList = new List<string>();
-            guiFocusList.AddRange(Enum.GetNames(typeof(EDGuiFocus)).ToList());
+            selectedStatusFlag = EDStatusFlags.InMainShip;
+            selectedGuiFocus = EDGuiFocus.PanelOrNoFocus;
+            selectedStatusFlag2 = EDStatusFlags2.None;
+            requiredGuiFocus = false;
 
-            // Move "PanelOrNoFocus" to the first position
-            int panelOrNoFocusIndex = guiFocusList.IndexOf(EDGuiFocus.PanelOrNoFocus.ToString());
-            guiFocusList.RemoveAt(panelOrNoFocusIndex);
-            guiFocusList.Insert(0, EDGuiFocus.PanelOrNoFocus.ToString());
+            advancedModeToggle = modalUI.Q<Toggle>("advanced-mode-toggle");
 
-            advancedModeToggle = modalUI.Q<Toggle>("advanceModeToggle");
-            statusFlagDropdown = modalUI.Q<DropdownField>("statusFlag-dropdown");
-            guiFocusDropdown = modalUI.Q<DropdownField>("guiFocus-dropdown");
+            advancedFormContainer = modalUI.Q<VisualElement>("advanced-options");
+            basicFormContainer = modalUI.Q<VisualElement>("basic-options");
+            
             controlButtonDropdown = modalUI.Q<DropdownField>("control-button-dropdown");
             messageText = modalUI.Q<Label>("messageText");
-           
-            statusFlagDropdown.choices = statusFlagList;
-            statusFlagDropdown.index = 0;
-
-
-            // Set choices for the GuiFocus dropdown VisualElement
-            guiFocusDropdown.choices = guiFocusList;
-            guiFocusDropdown.index = 0;
-
-            controlButtonDropdown.choices = new List<string>(); //blank until a category is chosen
-            SetAvailableControlButtons();
 
             //Register the callbacks
             statusFlagDropdown.RegisterValueChangedCallback(OnStatusFlagChanged);
             guiFocusDropdown.RegisterValueChangedCallback(OnGuiFocusChanged);
             controlButtonDropdown.RegisterValueChangedCallback(OnButtonSelectionChanged);
+            advancedModeToggle.RegisterValueChangedCallback(OnAdvancedToggleChanged);
+            basicDropdown.RegisterValueChangedCallback(OnBasicDropdownChanged);
 
             // Initialize a Spawn manager instance
             spawnManager = new ControlButtonSpawnManager(savedGameState);
 
             parentUIDocument.rootVisualElement.Add(modalUI);
+        }
+
+        private void PopulateBasicOptions()
+        {
+            basicDropdown = modalUI.Q<DropdownField>("basic-dropdown");
+
+            basicDropdown.choices = basicOptionsList.Keys.ToList();
+            basicDropdown.index = 0;
+
+        }
+
+        private void PopulateAdvancedOptions()
+        {
+            statusFlagDropdown = modalUI.Q<DropdownField>("statusFlag-dropdown");
+            guiFocusDropdown = modalUI.Q<DropdownField>("guiFocus-dropdown");
+
+            //Create list for the Status Flag options
+            statusFlagList = new List<string>();
+            statusFlagList.AddRange(Enum.GetNames(typeof(EDStatusFlags)).ToList());
+            statusFlagList.AddRange(Enum.GetNames(typeof(EDStatusFlags2)).ToList());
+
+            //Create list for the GuiFocus options
+            guiFocusList = new List<string>();
+            guiFocusList.Add("--Any Focus--");
+            guiFocusList.AddRange(Enum.GetNames(typeof(EDGuiFocus)).ToList());
+
+            // Move "PanelOrNoFocus" to the first position - this is the most used option
+            int panelOrNoFocusIndex = guiFocusList.IndexOf(EDGuiFocus.PanelOrNoFocus.ToString());
+            guiFocusList.RemoveAt(panelOrNoFocusIndex);
+            guiFocusList.Insert(1, EDGuiFocus.PanelOrNoFocus.ToString());
+
+            // Set the choices for the actual Dropdown VisualElements
+            statusFlagDropdown.choices = statusFlagList;
+            statusFlagDropdown.index = statusFlagList.IndexOf(EDStatusFlags.InMainShip.ToString());
+
+            guiFocusDropdown.choices = guiFocusList;
+            guiFocusDropdown.index = 0;
+
+            
+            if (advancedModeActive)
+            {
+                //blank until a category is chosen when using Advanced Mode
+                controlButtonDropdown.choices = new List<string>(); 
+            }
         }
 
         private bool BothNullCheck()
@@ -101,34 +152,70 @@ namespace EVRC.Desktop
 
         private void SetAvailableControlButtons()
         {
-            if (BothNullCheck()) return;
-
             List<string> availableControlButtons = new List<string>();
-            // Filter the catalog
+
+            // Filter the catalog for matching Assets
             availableControlButtons.AddRange(
                 catalog.controlButtons
-                .Where(x => selectedStatusFlag.HasValue ? 
-                            x.statusFlagFilters.HasFlag(selectedStatusFlag): 
-                            x.statusFlagFilters != 0
-                            )
-                .Where(x => selectedStatusFlag2.HasValue ?
-                            x.statusFlag2Filters.HasFlag(selectedStatusFlag2) :
-                            x.statusFlag2Filters != 0
-                            )
-                .Where(y => selectedGuiFocus.HasValue ? y.guiFocusRequired.Contains(selectedGuiFocus.Value) : y.guiFocusRequired.Count() == 0)
+                .Where(x => x.statusFlagFilters.HasFlag(selectedStatusFlag))
+                .Where(x => x.statusFlag2Filters.HasFlag(selectedStatusFlag2))
+                .Where(y => requiredGuiFocus ? y.guiFocusRequired.Contains(selectedGuiFocus) : y.guiFocusRequired.Count() == 0)
                 .Select(x => x.name).ToList()
                 );
-
             controlButtonDropdown.choices = availableControlButtons;
+        }
+
+        private void OnBasicDropdownChanged(ChangeEvent<string> evt)
+        {
+            basicOptionsList.TryGetValue(evt.newValue, out var flagSettings);
+
+            selectedStatusFlag = flagSettings.Item1;
+            selectedStatusFlag2 = flagSettings.Item2;
+
+            if (flagSettings.Item3 == null)
+            {
+                requiredGuiFocus = false;
+            } else
+            {
+                requiredGuiFocus = true;
+                selectedGuiFocus = (EDGuiFocus)flagSettings.Item3;
+            }
+            
+            controlButtonDropdown.value = "";
+            selectedControlButton = null;
+
+            SetAvailableControlButtons();
+        }
+
+        private void OnAdvancedToggleChanged(ChangeEvent<bool> evt) 
+        {
+            Debug.Log($"Advanced mode toggled. New Value: {evt.newValue}");
+            advancedModeActive = evt.newValue;
+            
+            // If active
+            if (evt.newValue)
+            {
+                advancedFormContainer.style.display = DisplayStyle.Flex;
+                basicFormContainer.style.display = DisplayStyle.None;
+            }
+            else
+            {
+                advancedFormContainer.style.display = DisplayStyle.None;
+                basicFormContainer.style.display = DisplayStyle.Flex;
+            }
+            selectedStatusFlag = EDStatusFlags.InMainShip;
+            selectedGuiFocus = EDGuiFocus.PanelOrNoFocus;
+            requiredGuiFocus = false;
+            selectedStatusFlag2 = EDStatusFlags2.None;
+
         }
 
         public void OnStatusFlagChanged(ChangeEvent<string> evt)
         {
-            
             if (evt.newValue == "--Any Flag--")
             {
-                selectedStatusFlag = null;
-                selectedStatusFlag2 = null;
+                selectedStatusFlag = EDStatusFlags.InMainShip;
+                selectedStatusFlag2 = EDStatusFlags2.None;
             } else {
                 var parsedSelection = EnumUtils.ParseEnumsOrDefault<EDStatusFlags, EDStatusFlags2>(evt.newValue);
                 selectedStatusFlag = parsedSelection.Item2;
@@ -138,16 +225,26 @@ namespace EVRC.Desktop
             controlButtonDropdown.value = "";
             selectedControlButton = null;
 
+            if (BothNullCheck()) return;
             SetAvailableControlButtons();
         }
 
         public void OnGuiFocusChanged(ChangeEvent<string> evt)
         {
-            selectedGuiFocus = Enum.Parse<EDGuiFocus>(evt.newValue);
+            if (evt.newValue == "--Any Focus--")
+            {
+                requiredGuiFocus = false;
+            }
+            else
+            {
+                requiredGuiFocus = true;
+                selectedGuiFocus = Enum.Parse<EDGuiFocus>(evt.newValue);
+            }
 
             controlButtonDropdown.value = "";
             selectedControlButton = null;
 
+            if (BothNullCheck()) return;
             SetAvailableControlButtons();
         }
 
@@ -159,7 +256,8 @@ namespace EVRC.Desktop
         
         public override void Submit()
         {
-            if (selectedGuiFocus == null) selectedGuiFocus = EDGuiFocus.PanelOrNoFocus;
+            //if (selectedGuiFocus == null) selectedGuiFocus = EDGuiFocus.PanelOrNoFocus;
+
 
             if (selectedControlButton != null)
             {
