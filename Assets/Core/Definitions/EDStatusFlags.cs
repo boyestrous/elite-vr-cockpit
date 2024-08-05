@@ -41,7 +41,8 @@ namespace EVRC.Core
 
     [Flags]
     public enum EDStatusFlags2 : uint
-    {       
+    {
+        None = 0, // Represents no flags set
         OnFoot = 1 << 0,
         InTaxi = 1 << 1,
         InMulticrew = 1 << 2,
@@ -62,8 +63,5 @@ namespace EVRC.Core
         TelepresenceMulticrew = 1 << 17,
         PhysicalMulticrew = 1 << 18,
         FsdHyperdriveCharging = 1 << 19,
-
-        // Doesn't exist in the status file, this Flags2 field isn't always present, so we need a default value for "missing"
-        Undefined = 1 << 20,
     }
 }
