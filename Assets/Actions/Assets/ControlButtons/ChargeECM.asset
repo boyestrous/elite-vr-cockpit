@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: ChargeECM
   m_EditorClassIdentifier: Assembly-CSharp:EVRC:SimpleControlButtonAsset
   statusFlagFilters: 50331648
-  guiFocusRequired: 0c
+  statusFlag2Filters: 0
+  guiFocusRequired: 
   text: Charge ECM
   texture: {fileID: 2800000, guid: 8a24bff7d43462c47962f54c61f47f47, type: 3}
   control: 81
