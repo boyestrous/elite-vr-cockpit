@@ -373,13 +373,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b562736bad172534eb6dedc7d3f2c4cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentUIDocument: {fileID: 6465645074838448022}
+  modalContent: {fileID: 9197481963319205126, guid: 9140ca18f8f714c4a9c01bfe8ca5faca,
+    type: 3}
+  modalHeader: {fileID: 9197481963319205126, guid: cfa80f0743562c44dab5929a89f05552,
+    type: 3}
+  headerEnabled: 1
   controlButtonAddedEvent: {fileID: 11400000, guid: d13bd3f18fae7c54783c13f198b9a36b,
     type: 2}
-  parentUIDocument: {fileID: 6465645074838448022}
   catalog: {fileID: 11400000, guid: 83d2b71115eca78419410b43b99628b2, type: 2}
   savedGameState: {fileID: 11400000, guid: 6f013364a8a2fd4448e6e72d02d181c3, type: 2}
-  addButtonModalTemplate: {fileID: 9197481963319205126, guid: 9140ca18f8f714c4a9c01bfe8ca5faca,
-    type: 3}
 --- !u!114 &268777256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -436,8 +439,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentUIDocument: {fileID: 6465645074838448022}
-  modalTemplate: {fileID: 9197481963319205126, guid: 80861e114ef68e7439dbb306c783d2c0,
+  modalContent: {fileID: 9197481963319205126, guid: 80861e114ef68e7439dbb306c783d2c0,
     type: 3}
+  modalHeader: {fileID: 9197481963319205126, guid: cfa80f0743562c44dab5929a89f05552,
+    type: 3}
+  headerEnabled: 1
 --- !u!114 &8859447503791462621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -472,6 +478,18 @@ MonoBehaviour:
       - m_Target: {fileID: 8859447503791462621}
         m_TargetAssemblyTypeName: EVRC.Desktop.ControlButtonSettings, EVRC.Desktop
         m_MethodName: OnOverlayStateLoaded
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7801773867867527582}
+        m_TargetAssemblyTypeName: EVRC.Desktop.ControlButtonViewController, EVRC.Desktop
+        m_MethodName: PopulateHolographicButtonsListView
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

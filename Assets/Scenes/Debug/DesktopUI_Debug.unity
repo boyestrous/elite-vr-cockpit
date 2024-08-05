@@ -166,41 +166,6 @@ PrefabInstance:
       propertyPath: uiDocument
       value: 
       objectReference: {fileID: 508984842}
-    - target: {fileID: 6278015330906870882, guid: 13dfd2ff77290bb4faf75012641f360d,
-        type: 3}
-      propertyPath: Response.m_PersistentCalls.m_Calls.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6278015330906870882, guid: 13dfd2ff77290bb4faf75012641f360d,
-        type: 3}
-      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6278015330906870882, guid: 13dfd2ff77290bb4faf75012641f360d,
-        type: 3}
-      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 822979585}
-    - target: {fileID: 6278015330906870882, guid: 13dfd2ff77290bb4faf75012641f360d,
-        type: 3}
-      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6278015330906870882, guid: 13dfd2ff77290bb4faf75012641f360d,
-        type: 3}
-      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: PopulateHolographicButtonsListView
-      objectReference: {fileID: 0}
-    - target: {fileID: 6278015330906870882, guid: 13dfd2ff77290bb4faf75012641f360d,
-        type: 3}
-      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: EVRC.Desktop.ControlButtonViewController, EVRC.Desktop
-      objectReference: {fileID: 0}
-    - target: {fileID: 6278015330906870882, guid: 13dfd2ff77290bb4faf75012641f360d,
-        type: 3}
-      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 6465645074838448020, guid: 13dfd2ff77290bb4faf75012641f360d,
         type: 3}
       propertyPath: m_RootOrder
@@ -261,11 +226,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: NewDesktopUI
       objectReference: {fileID: 0}
-    - target: {fileID: 7101438878122661753, guid: 13dfd2ff77290bb4faf75012641f360d,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7584120879435125516, guid: 13dfd2ff77290bb4faf75012641f360d,
         type: 3}
       propertyPath: logState
@@ -285,18 +245,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &822979585 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7801773867867527582, guid: 13dfd2ff77290bb4faf75012641f360d,
-    type: 3}
-  m_PrefabInstance: {fileID: 508984841}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 176839a1abd11224cad8d39527ce262c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &989452346

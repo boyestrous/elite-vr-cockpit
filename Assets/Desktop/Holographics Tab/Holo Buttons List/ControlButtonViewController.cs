@@ -38,7 +38,7 @@ namespace EVRC.Desktop
 
 
             openAddButtonModalElement = root.Q<Button>("open-addButtonModal-button");
-            openAddButtonModalElement.clicked += LaunchModal;
+            openAddButtonModalElement.clicked += addControlButtonModal.LaunchModal;
 
             firstRun = false;
         }
@@ -91,21 +91,21 @@ namespace EVRC.Desktop
             controlButtonLists[cat].Add(addedControlButton);
         }
 
-        void LaunchModal()
-        {
-            // Get the VisualElement representing the ListView
-            VisualElement listViewElement = controlListContainer.hierarchy.parent;
+        //void LaunchModal()
+        //{
+        //    // Get the VisualElement representing the ListView
+        //    VisualElement listViewElement = controlListContainer.hierarchy.parent;
 
-            // Now you can use the RectTransform listViewRectTransform as needed
-            // For example, you can get its position, size, etc.
-            Vector2 listViewPosition = listViewElement.contentRect.position;
-            Vector2 listViewSize = listViewElement.contentRect.size;
+        //    // Now you can use the RectTransform listViewRectTransform as needed
+        //    // For example, you can get its position, size, etc.
+        //    Vector2 listViewPosition = listViewElement.contentRect.position;
+        //    Vector2 listViewSize = listViewElement.contentRect.size;
 
-            // Calculate the center position of the ListView
-            Vector2 listViewCenter = new Vector2(listViewPosition.x + (listViewSize.x / 2f),
-                                                 listViewPosition.y + (listViewSize.y / 2f));
+        //    // Calculate the center position of the ListView
+        //    Vector2 listViewCenter = new Vector2(listViewPosition.x + (listViewSize.x / 2f),
+        //                                         listViewPosition.y + (listViewSize.y / 2f));
 
-            addControlButtonModal.LaunchModal(listViewCenter);
-        }
+        //    addControlButtonModal.LaunchModal();
+        //}
     }
 }
