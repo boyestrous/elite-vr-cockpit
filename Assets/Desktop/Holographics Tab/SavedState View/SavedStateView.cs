@@ -1,6 +1,5 @@
 using EVRC.Core;
 using EVRC.Core.Overlay;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;

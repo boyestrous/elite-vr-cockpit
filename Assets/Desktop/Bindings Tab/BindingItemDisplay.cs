@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 
 namespace EVRC.Desktop
