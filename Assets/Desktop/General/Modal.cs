@@ -22,7 +22,7 @@ namespace EVRC.Desktop
         protected Button cancelButton;
 
         // Draggable Modal Stuff
-        [SerializeField] private bool isDragging;
+        private bool isDragging;
         private Vector2 originalMousePosition;
         private Vector2 originalElementPosition;
 
