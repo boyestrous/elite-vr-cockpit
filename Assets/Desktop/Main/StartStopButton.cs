@@ -45,7 +45,6 @@ namespace EVRC.Desktop
 
         private void OnButtonClick() 
         { 
-            SetButtonStyle(); 
             if (running)
             {
                 // Send stopped event
@@ -57,6 +56,7 @@ namespace EVRC.Desktop
                 StartOpenVREvent.Raise();
                 running = true;
             }
+            SetButtonStyle(); 
         }
 
         private void SetButtonStyle()
