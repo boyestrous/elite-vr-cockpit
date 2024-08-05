@@ -112,6 +112,7 @@ MonoBehaviour:
   controlBindingsState: {fileID: 11400000, guid: 1de2906d06cd6f745bab03c953c45a3a,
     type: 2}
   vjoyState: {fileID: 11400000, guid: 6e76b948f29825342b2ade83571d5cb9, type: 2}
+  logState: {fileID: 11400000, guid: a2ce98a12b641fc41b29f993223986dc, type: 2}
 --- !u!1 &1417640592640192690
 GameObject:
   m_ObjectHideFlags: 0
@@ -747,7 +748,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   problemList: 
-  requiredBindingsState: {fileID: 0}
+  requiredBindingsState: {fileID: 11400000, guid: 7baa37a7f24b0c2478d0122fea0db811,
+    type: 2}
 --- !u!1001 &650565485984119541
 PrefabInstance:
   m_ObjectHideFlags: 0
