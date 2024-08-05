@@ -1,9 +1,7 @@
 using EVRC.Core;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Security.Policy;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UIElements;
 
 namespace EVRC.Desktop
@@ -60,8 +58,8 @@ namespace EVRC.Desktop
             bodyText += logHistory + "\n";
 
             // URL encode the title and body
-            string encodedTitle = WWW.EscapeURL(defaultTitle + timestamp);
-            string encodedBody = WWW.EscapeURL(bodyText);
+            string encodedTitle = UnityWebRequest.EscapeURL(defaultTitle + timestamp);
+            string encodedBody = UnityWebRequest.EscapeURL(bodyText);
 
             string url = base_url + $"?title={encodedTitle}&body={encodedBody}";
 
