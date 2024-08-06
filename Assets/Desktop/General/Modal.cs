@@ -29,6 +29,9 @@ namespace EVRC.Desktop
         [Header("Additional Configuration")]
         [Description("UXML doc template for this modal")]
         [SerializeField] VisualTreeAsset modalContent;
+        private Action _onClose;
+        private Action _onSubmit;
+        private Action _onCancel;
 
         public virtual void OnEnable()
         {
@@ -66,6 +69,27 @@ namespace EVRC.Desktop
             parentUIDocument.rootVisualElement.Add(modalUI);
         }
 
+        /// <summary>
+        /// Pass a callback method that will be called when closing the modal
+        /// </summary>
+        /// <param name="onClose"></param>
+        public virtual void LaunchModal(Action onClose)
+        {
+            _onClose = onClose;
+            LaunchModal();
+        }
+
+        /// <summary>
+        /// Separate methods to be called when submitting or canceling the modal
+        /// </summary>
+        /// <param name="onClose"></param>
+        public virtual void LaunchModal(Action onSubmit, Action onCancel)
+        {
+            _onSubmit = onSubmit;
+            _onCancel = onCancel;
+            LaunchModal();
+        }
+
         private void AddHeader()
         {
             VisualElement headerBar = modalHeader.Instantiate();
@@ -84,6 +108,16 @@ namespace EVRC.Desktop
         public virtual void Close()
         {
             modalUI.RemoveFromHierarchy();
+
+            // Call the callbacks if not null
+            _onClose?.Invoke();
+            _onCancel?.Invoke();
+            _onSubmit?.Invoke();
+
+            // Optional: Reset the callback after invoking it
+            _onClose = null;
+            _onCancel = null;
+            _onSubmit = null;
         }
 
         private void OnPointerDown(PointerDownEvent evt)

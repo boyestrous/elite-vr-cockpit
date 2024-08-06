@@ -1,1 +1,232 @@
-{"version":5,"staticLocations":[{"key":"leftFootGrip","overlayTransform":{"pos":{"x":-0.23560604453086854,"y":0.6071305871009827,"z":0.44360655546188357},"rot":{"x":0.0,"y":0.0,"z":0.0}}},{"key":"metaPanel","overlayTransform":{"pos":{"x":0.63897705078125,"y":0.47762352228164675,"z":0.1921326071023941},"rot":{"x":42.911827087402347,"y":65.78206634521485,"z":7.146819114685059}}},{"key":"srvJoystick","overlayTransform":{"pos":{"x":0.26581311225891116,"y":0.7062139511108398,"z":0.43387454748153689},"rot":{"x":0.0,"y":0.0,"z":0.0}}},{"key":"fighterJoystick","overlayTransform":{"pos":{"x":0.27000001072883608,"y":0.6000000238418579,"z":0.38999998569488528},"rot":{"x":0.0,"y":0.0,"z":0.0}}},{"key":"shipJoystick","overlayTransform":{"pos":{"x":0.2867908477783203,"y":0.6661794185638428,"z":0.4457104504108429},"rot":{"x":0.0,"y":0.0,"z":0.0}}},{"key":"centerButtonPanel","overlayTransform":{"pos":{"x":0.0027207210659980776,"y":0.6920153498649597,"z":0.5160055160522461},"rot":{"x":49.52472686767578,"y":0.5414090752601624,"z":358.9066162109375}}},{"key":"rightButtonPanel","overlayTransform":{"pos":{"x":0.4675077497959137,"y":0.7682406902313232,"z":0.4763771593570709},"rot":{"x":26.14735221862793,"y":38.49590301513672,"z":2.6136627197265627}}},{"key":"leftButtonPanel","overlayTransform":{"pos":{"x":-0.3909476101398468,"y":0.762420654296875,"z":0.4999099671840668},"rot":{"x":28.721885681152345,"y":331.5639953613281,"z":0.5332037806510925}}},{"key":"shipPowerDistributionPanel","overlayTransform":{"pos":{"x":0.49947473406791689,"y":0.762002170085907,"z":0.49824732542037966},"rot":{"x":27.10624122619629,"y":38.1968879699707,"z":358.3895568847656}}},{"key":"srvThrottle","overlayTransform":{"pos":{"x":-0.1575070321559906,"y":0.7746366262435913,"z":0.35048484802246096},"rot":{"x":349.89892578125,"y":1.563966989517212,"z":315.5614013671875}}},{"key":"shipThrottle","overlayTransform":{"pos":{"x":-0.17003656923770905,"y":0.7499767541885376,"z":0.35804516077041628},"rot":{"x":356.19403076171877,"y":0.23868925869464875,"z":1.3746482133865357}}},{"key":"fighterThrottle","overlayTransform":{"pos":{"x":-0.14658410847187043,"y":0.7448037266731262,"z":0.37246567010879519},"rot":{"x":359.8091125488281,"y":0.8057231903076172,"z":358.4627990722656}}},{"key":"fighterPowerDistributionPanel","overlayTransform":{"pos":{"x":0.3099850118160248,"y":0.8310741782188416,"z":0.5320585370063782},"rot":{"x":17.104217529296876,"y":27.670324325561525,"z":356.9954833984375}}},{"key":"srvPowerDistributionPanel","overlayTransform":{"pos":{"x":0.3499999940395355,"y":0.8999999761581421,"z":0.5},"rot":{"x":10.00000286102295,"y":34.99998474121094,"z":-4.334721950272069e-7}}},{"key":"rightFootGrip","overlayTransform":{"pos":{"x":0.272102952003479,"y":0.6236668825149536,"z":0.4453944265842438},"rot":{"x":0.0,"y":0.0,"z":0.0}}}],"controlButtons":[{"type":"SetSpeedZero","anchorStatusFlag":"InMainShip","anchorGuiFocus":"PanelOrNoFocus","overlayTransform":{"pos":{"x":-0.2957945764064789,"y":0.7917639017105103,"z":0.5216891765594482},"rot":{"x":33.37875747680664,"y":351.06201171875,"z":359.00408935546877}}},{"type":"DisableRotationCorrectToggle","anchorStatusFlag":"InMainShip","anchorGuiFocus":"PanelOrNoFocus","overlayTransform":{"pos":{"x":0.5700806379318237,"y":0.8257563710212708,"z":0.48769205808639529},"rot":{"x":24.980066299438478,"y":35.90341567993164,"z":359.565185546875}}},{"type":"UseAlternateFlightValuesToggle","anchorStatusFlag":"InMainShip","anchorGuiFocus":"PanelOrNoFocus","overlayTransform":{"pos":{"x":-0.23801101744174958,"y":0.7924216985702515,"z":0.5304602384567261},"rot":{"x":36.855194091796878,"y":347.32293701171877,"z":357.2003479003906}}},{"type":"LandingGearToggle","anchorStatusFlag":"InMainShip","anchorGuiFocus":"PanelOrNoFocus","overlayTransform":{"pos":{"x":0.7434319257736206,"y":1.3091816902160645,"z":0.1789981871843338},"rot":{"x":2.6257517337799074,"y":71.50733184814453,"z":359.3211669921875}}},{"type":"ToggleCargoScoop","anchorStatusFlag":"InMainShip","anchorGuiFocus":"PanelOrNoFocus","overlayTransform":{"pos":{"x":-0.06592021137475968,"y":0.6885267496109009,"z":0.4143006503582001},"rot":{"x":48.20628356933594,"y":356.9822998046875,"z":359.15557861328127}}},{"type":"ShipSpotLightToggle","anchorStatusFlag":"InMainShip","anchorGuiFocus":"PanelOrNoFocus","overlayTransform":{"pos":{"x":0.05333852767944336,"y":0.6908391118049622,"z":0.4178834557533264},"rot":{"x":44.14359664916992,"y":0.6835651397705078,"z":0.8602958917617798}}},{"type":"TargetNextRouteSystem","anchorStatusFlag":"InMainShip","anchorGuiFocus":"PanelOrNoFocus","overlayTransform":{"pos":{"x":0.15596546232700349,"y":0.8388322591781616,"z":0.5056679248809815},"rot":{"x":29.61338233947754,"y":16.705734252929689,"z":359.5081481933594}}},{"type":"DeployHardpointToggle","anchorStatusFlag":"InMainShip","anchorGuiFocus":"PanelOrNoFocus","overlayTransform":{"pos":{"x":0.2086656242609024,"y":0.8377844095230103,"z":0.48828747868537905},"rot":{"x":30.429046630859376,"y":16.802371978759767,"z":359.7825927734375}}},{"type":"GalaxyMapOpen","anchorStatusFlag":"InMainShip","anchorGuiFocus":"PanelOrNoFocus","overlayTransform":{"pos":{"x":-0.5346707701683044,"y":0.9204679727554321,"z":0.2708769142627716},"rot":{"x":25.449138641357423,"y":300.9561767578125,"z":1.1529165506362916}}},{"type":"DeployHeatSink","anchorStatusFlag":"InMainShip","anchorGuiFocus":"PanelOrNoFocus","overlayTransform":{"pos":{"x":-0.17875146865844727,"y":0.7859270572662354,"z":0.5389801263809204},"rot":{"x":33.31377029418945,"y":352.76055908203127,"z":358.4263610839844}}},{"type":"NightVisionToggle","anchorStatusFlag":"InMainShip","anchorGuiFocus":"PanelOrNoFocus","overlayTransform":{"pos":{"x":-0.0051011452451348309,"y":0.6898232698440552,"z":0.41596779227256777},"rot":{"x":46.314308166503909,"y":1.6228910684585572,"z":2.9523508548736574}}},{"type":"PlayerHUDModeToggle","anchorStatusFlag":"InMainShip","anchorGuiFocus":"PanelOrNoFocus","overlayTransform":{"pos":{"x":0.5246438980102539,"y":0.8249527215957642,"z":0.5273261666297913},"rot":{"x":24.31182098388672,"y":37.0345573425293,"z":359.6915283203125}}},{"type":"HyperSuperCombination","anchorStatusFlag":"InMainShip","anchorGuiFocus":"PanelOrNoFocus","overlayTransform":{"pos":{"x":-0.4215417504310608,"y":0.8971825838088989,"z":0.3973831236362457},"rot":{"x":20.195205688476564,"y":320.22625732421877,"z":357.19671630859377}}},{"type":"ExplorationFSSEnter","anchorStatusFlag":"InMainShip","anchorGuiFocus":"PanelOrNoFocus","overlayTransform":{"pos":{"x":-0.18070727586746217,"y":0.8388748168945313,"z":0.5759809017181397},"rot":{"x":31.687591552734376,"y":351.9382629394531,"z":359.4792785644531}}},{"type":"ExplorationFSSQuit","anchorStatusFlag":"InMainShip","anchorGuiFocus":"FSSMode","overlayTransform":{"pos":{"x":-0.170242041349411,"y":0.8575725555419922,"z":0.685775637626648},"rot":{"x":28.95980453491211,"y":356.9845275878906,"z":359.8040466308594}}},{"type":"ToggleCargoScoop_Buggy","anchorStatusFlag":"InSRV","anchorGuiFocus":"PanelOrNoFocus","overlayTransform":{"pos":{"x":0.05816441774368286,"y":0.7222147583961487,"z":0.3949180841445923},"rot":{"x":30.302270889282228,"y":5.7166218757629398,"z":4.030468463897705}}},{"type":"ToggleDriveAssist","anchorStatusFlag":"InSRV","anchorGuiFocus":"PanelOrNoFocus","overlayTransform":{"pos":{"x":-0.09494492411613465,"y":0.7684745788574219,"z":0.4281884729862213},"rot":{"x":29.750471115112306,"y":1.4302436113357545,"z":2.545210361480713}}},{"type":"ToggleBuggyTurretButton","anchorStatusFlag":"InSRV","anchorGuiFocus":"PanelOrNoFocus","overlayTransform":{"pos":{"x":0.20629365742206574,"y":0.8052985668182373,"z":0.49978166818618777},"rot":{"x":20.391891479492189,"y":14.896941184997559,"z":2.683077096939087}}},{"type":"HeadlightsBuggyButton","anchorStatusFlag":"InSRV","anchorGuiFocus":"PanelOrNoFocus","overlayTransform":{"pos":{"x":-0.012076109647750855,"y":0.7186204791069031,"z":0.39700448513031008},"rot":{"x":33.22006607055664,"y":2.4591691493988039,"z":1.9424148797988892}}},{"type":"SetSpeedZero","anchorStatusFlag":"InSRV","anchorGuiFocus":"PanelOrNoFocus","overlayTransform":{"pos":{"x":-0.09317646920681,"y":0.7167456150054932,"z":0.397018164396286},"rot":{"x":28.541505813598634,"y":2.435079574584961,"z":2.7454073429107668}}},{"type":"PlayerHUDModeToggle_Buggy","anchorStatusFlag":"InSRV","anchorGuiFocus":"PanelOrNoFocus","overlayTransform":{"pos":{"x":0.3857196569442749,"y":0.8278764486312866,"z":0.44671115279197695},"rot":{"x":15.5729341506958,"y":35.961971282958987,"z":2.3353445529937746}}},{"type":"SystemMapOpen","anchorStatusFlag":"InMainShip","anchorGuiFocus":"PanelOrNoFocus","overlayTransform":{"pos":{"x":-0.5042253732681274,"y":0.9205291271209717,"z":0.320161908864975},"rot":{"x":25.77459144592285,"y":303.0084533691406,"z":1.3215017318725587}}},{"type":"AutoBreakBuggyButton","anchorStatusFlag":"InSRV","anchorGuiFocus":"PanelOrNoFocus","overlayTransform":{"pos":{"x":-0.24002084136009217,"y":0.7799640893936157,"z":0.4701707661151886},"rot":{"x":29.434354782104493,"y":351.035400390625,"z":357.9116516113281}}},{"type":"RecallDismissShip","anchorStatusFlag":"InSRV","anchorGuiFocus":"PanelOrNoFocus","overlayTransform":{"pos":{"x":0.08995330333709717,"y":1.4295598268508912,"z":0.5487762689590454},"rot":{"x":344.9852294921875,"y":12.744124412536621,"z":358.68701171875}}},{"type":"FocusRadarPanel","anchorStatusFlag":"InMainShip","anchorGuiFocus":"PanelOrNoFocus","overlayTransform":{"pos":{"x":-0.0029869042336940767,"y":0.6534738540649414,"z":0.36645960807800295},"rot":{"x":47.90352249145508,"y":1.9962551593780518,"z":3.195274829864502}}},{"type":"FocusCommsPanel","anchorStatusFlag":"InMainShip","anchorGuiFocus":"PanelOrNoFocus","overlayTransform":{"pos":{"x":-0.06459768116474152,"y":0.6537674069404602,"z":0.3641762137413025},"rot":{"x":52.46245193481445,"y":2.5935962200164797,"z":3.4098305702209474}}},{"type":"FocusCommsPanel","anchorStatusFlag":"InFighter","anchorGuiFocus":"PanelOrNoFocus","overlayTransform":{"pos":{"x":-0.05378931388258934,"y":0.6993268132209778,"z":0.4146297574043274},"rot":{"x":37.98450469970703,"y":359.6471862792969,"z":0.41499409079551699}}},{"type":"FocusRadarPanel","anchorStatusFlag":"InFighter","anchorGuiFocus":"PanelOrNoFocus","overlayTransform":{"pos":{"x":0.006256317254155874,"y":0.7025624513626099,"z":0.41676610708236697},"rot":{"x":36.03404235839844,"y":0.2659386992454529,"z":1.5724135637283326}}},{"type":"CycleNextSubsystem","anchorStatusFlag":"InMainShip","anchorGuiFocus":"PanelOrNoFocus","overlayTransform":{"pos":{"x":-0.36654406785964968,"y":0.7922458052635193,"z":0.48810458183288576},"rot":{"x":29.550701141357423,"y":327.4888916015625,"z":357.3319396972656}}},{"type":"SelectHighestThreat","anchorStatusFlag":"InMainShip","anchorGuiFocus":"PanelOrNoFocus","overlayTransform":{"pos":{"x":0.17136166989803315,"y":0.7894988059997559,"z":0.46578457951545718},"rot":{"x":32.38447189331055,"y":17.334012985229493,"z":0.15016445517539979}}},{"type":"FocusRadarPanel","anchorStatusFlag":"InSRV","anchorGuiFocus":"PanelOrNoFocus","overlayTransform":{"pos":{"x":-0.015170041471719742,"y":0.7703580260276794,"z":0.434024453163147},"rot":{"x":30.10004234313965,"y":2.8938238620758058,"z":3.8281939029693605}}}],"booleanSettings":[]}
+{
+    "version": 5,
+    "staticLocations": [
+        {
+            "key": "leftFootGrip",
+            "overlayTransform": {
+                "pos": {
+                    "x": -0.23560604453086854,
+                    "y": 0.6071305871009827,
+                    "z": 0.44360655546188357
+                },
+                "rot": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            }
+        },
+        {
+            "key": "metaPanel",
+            "overlayTransform": {
+                "pos": {
+                    "x": 0.63897705078125,
+                    "y": 0.47762352228164675,
+                    "z": 0.1921326071023941
+                },
+                "rot": {
+                    "x": 42.911827087402347,
+                    "y": 65.78206634521485,
+                    "z": 7.146819114685059
+                }
+            }
+        },
+        {
+            "key": "srvJoystick",
+            "overlayTransform": {
+                "pos": {
+                    "x": 0.26581311225891116,
+                    "y": 0.7062139511108398,
+                    "z": 0.43387454748153689
+                },
+                "rot": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            }
+        },
+        {
+            "key": "fighterJoystick",
+            "overlayTransform": {
+                "pos": {
+                    "x": 0.27000001072883608,
+                    "y": 0.6000000238418579,
+                    "z": 0.38999998569488528
+                },
+                "rot": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            }
+        },
+        {
+            "key": "shipJoystick",
+            "overlayTransform": {
+                "pos": {
+                    "x": 0.2867908477783203,
+                    "y": 0.6661794185638428,
+                    "z": 0.4457104504108429
+                },
+                "rot": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            }
+        },
+        {
+            "key": "centerButtonPanel",
+            "overlayTransform": {
+                "pos": {
+                    "x": 0.0027207210659980776,
+                    "y": 0.6920153498649597,
+                    "z": 0.5160055160522461
+                },
+                "rot": {
+                    "x": 49.52472686767578,
+                    "y": 0.5414090752601624,
+                    "z": 358.9066162109375
+                }
+            }
+        },
+        {
+            "key": "rightButtonPanel",
+            "overlayTransform": {
+                "pos": {
+                    "x": 0.4675077497959137,
+                    "y": 0.7682406902313232,
+                    "z": 0.4763771593570709
+                },
+                "rot": {
+                    "x": 26.14735221862793,
+                    "y": 38.49590301513672,
+                    "z": 2.6136627197265627
+                }
+            }
+        },
+        {
+            "key": "leftButtonPanel",
+            "overlayTransform": {
+                "pos": {
+                    "x": -0.3909476101398468,
+                    "y": 0.762420654296875,
+                    "z": 0.4999099671840668
+                },
+                "rot": {
+                    "x": 28.721885681152345,
+                    "y": 331.5639953613281,
+                    "z": 0.5332037806510925
+                }
+            }
+        },
+        {
+            "key": "shipPowerDistributionPanel",
+            "overlayTransform": {
+                "pos": {
+                    "x": 0.49947473406791689,
+                    "y": 0.762002170085907,
+                    "z": 0.49824732542037966
+                },
+                "rot": {
+                    "x": 27.10624122619629,
+                    "y": 38.1968879699707,
+                    "z": 358.3895568847656
+                }
+            }
+        },
+        {
+            "key": "srvThrottle",
+            "overlayTransform": {
+                "pos": {
+                    "x": -0.1575070321559906,
+                    "y": 0.7746366262435913,
+                    "z": 0.35048484802246096
+                },
+                "rot": {
+                    "x": 349.89892578125,
+                    "y": 1.563966989517212,
+                    "z": 315.5614013671875
+                }
+            }
+        },
+        {
+            "key": "shipThrottle",
+            "overlayTransform": {
+                "pos": {
+                    "x": -0.17003656923770905,
+                    "y": 0.7499767541885376,
+                    "z": 0.35804516077041628
+                },
+                "rot": {
+                    "x": 356.19403076171877,
+                    "y": 0.23868925869464875,
+                    "z": 1.3746482133865357
+                }
+            }
+        },
+        {
+            "key": "fighterThrottle",
+            "overlayTransform": {
+                "pos": {
+                    "x": -0.14658410847187043,
+                    "y": 0.7448037266731262,
+                    "z": 0.37246567010879519
+                },
+                "rot": {
+                    "x": 359.8091125488281,
+                    "y": 0.8057231903076172,
+                    "z": 358.4627990722656
+                }
+            }
+        },
+        {
+            "key": "fighterPowerDistributionPanel",
+            "overlayTransform": {
+                "pos": {
+                    "x": 0.3099850118160248,
+                    "y": 0.8310741782188416,
+                    "z": 0.5320585370063782
+                },
+                "rot": {
+                    "x": 17.104217529296876,
+                    "y": 27.670324325561525,
+                    "z": 356.9954833984375
+                }
+            }
+        },
+        {
+            "key": "srvPowerDistributionPanel",
+            "overlayTransform": {
+                "pos": {
+                    "x": 0.3499999940395355,
+                    "y": 0.8999999761581421,
+                    "z": 0.5
+                },
+                "rot": {
+                    "x": 10.00000286102295,
+                    "y": 34.99998474121094,
+                    "z": -4.334721950272069e-7
+                }
+            }
+        },
+        {
+            "key": "rightFootGrip",
+            "overlayTransform": {
+                "pos": {
+                    "x": 0.272102952003479,
+                    "y": 0.6236668825149536,
+                    "z": 0.4453944265842438
+                },
+                "rot": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                }
+            }
+        }
+    ],
+    "controlButtons": [],
+    "booleanSettings": []
+}

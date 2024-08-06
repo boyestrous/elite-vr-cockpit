@@ -24,6 +24,7 @@ namespace EVRC.Desktop
 
             buttonLabelToggleElement = root.Q<Toggle>("toggle-labels");
             buttonLabelToggleElement.SetEnabled(false);
+            buttonLabelToggleElement.RegisterValueChangedCallback(buttonLabelSetting.OnToggle);
         }
         
         public void OnOverlayStateLoaded()
@@ -34,8 +35,6 @@ namespace EVRC.Desktop
             buttonLabelToggleElement.value = GetOrCreateSettingValue(buttonLabelSetting.saveFileKey);
             //Enable to toggle element, so it's clickable
             buttonLabelToggleElement.SetEnabled(true);
-
-            buttonLabelToggleElement.RegisterValueChangedCallback(buttonLabelSetting.OnToggle);
         }
 
         private bool GetOrCreateSettingValue(string saveFileKey)

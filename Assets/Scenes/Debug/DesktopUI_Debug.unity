@@ -130,21 +130,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114996553333904926, guid: 13dfd2ff77290bb4faf75012641f360d,
+        type: 3}
+      propertyPath: savedStateLoaded
+      value: 
+      objectReference: {fileID: 11400000, guid: 38556d8a03de49a4f9d81702416a3157,
+        type: 2}
     - target: {fileID: 790830182887621547, guid: 13dfd2ff77290bb4faf75012641f360d,
         type: 3}
       propertyPath: uiDocument
       value: 
       objectReference: {fileID: 508984842}
-    - target: {fileID: 3203118652949787583, guid: 13dfd2ff77290bb4faf75012641f360d,
-        type: 3}
-      propertyPath: tabName
-      value: steamvr
-      objectReference: {fileID: 0}
-    - target: {fileID: 3203118652949787583, guid: 13dfd2ff77290bb4faf75012641f360d,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3457673712947369564, guid: 13dfd2ff77290bb4faf75012641f360d,
         type: 3}
       propertyPath: uiDocument
@@ -155,17 +151,76 @@ PrefabInstance:
       propertyPath: recommendedBindingsModal
       value: 
       objectReference: {fileID: 1687509421}
-    - target: {fileID: 4972279433456300615, guid: 13dfd2ff77290bb4faf75012641f360d,
-        type: 3}
-      propertyPath: requiredBindingsState
-      value: 
-      objectReference: {fileID: 11400000, guid: 7baa37a7f24b0c2478d0122fea0db811,
-        type: 2}
     - target: {fileID: 5625217958891209880, guid: 13dfd2ff77290bb4faf75012641f360d,
         type: 3}
       propertyPath: uiDocument
       value: 
       objectReference: {fileID: 508984842}
+    - target: {fileID: 6278015330906870882, guid: 13dfd2ff77290bb4faf75012641f360d,
+        type: 3}
+      propertyPath: Response.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6278015330906870882, guid: 13dfd2ff77290bb4faf75012641f360d,
+        type: 3}
+      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6278015330906870882, guid: 13dfd2ff77290bb4faf75012641f360d,
+        type: 3}
+      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6278015330906870882, guid: 13dfd2ff77290bb4faf75012641f360d,
+        type: 3}
+      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6278015330906870882, guid: 13dfd2ff77290bb4faf75012641f360d,
+        type: 3}
+      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6278015330906870882, guid: 13dfd2ff77290bb4faf75012641f360d,
+        type: 3}
+      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6278015330906870882, guid: 13dfd2ff77290bb4faf75012641f360d,
+        type: 3}
+      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PopulateHolographicButtonsListView
+      objectReference: {fileID: 0}
+    - target: {fileID: 6278015330906870882, guid: 13dfd2ff77290bb4faf75012641f360d,
+        type: 3}
+      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PopulateSavedStateDropdown
+      objectReference: {fileID: 0}
+    - target: {fileID: 6278015330906870882, guid: 13dfd2ff77290bb4faf75012641f360d,
+        type: 3}
+      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: PopulateSavedStateDropdown
+      objectReference: {fileID: 0}
+    - target: {fileID: 6278015330906870882, guid: 13dfd2ff77290bb4faf75012641f360d,
+        type: 3}
+      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: EVRC.Desktop.ControlButtonViewController, EVRC.Desktop
+      objectReference: {fileID: 0}
+    - target: {fileID: 6278015330906870882, guid: 13dfd2ff77290bb4faf75012641f360d,
+        type: 3}
+      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: EVRC.Desktop.SavedStateView, EVRC.Desktop
+      objectReference: {fileID: 0}
+    - target: {fileID: 6278015330906870882, guid: 13dfd2ff77290bb4faf75012641f360d,
+        type: 3}
+      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: EVRC.Desktop.SavedStateView, EVRC.Desktop
+      objectReference: {fileID: 0}
+    - target: {fileID: 6278015330906870882, guid: 13dfd2ff77290bb4faf75012641f360d,
+        type: 3}
+      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6465645074838448020, guid: 13dfd2ff77290bb4faf75012641f360d,
         type: 3}
       propertyPath: m_RootOrder
@@ -226,14 +281,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: NewDesktopUI
       objectReference: {fileID: 0}
-    - target: {fileID: 7584120879435125516, guid: 13dfd2ff77290bb4faf75012641f360d,
-        type: 3}
-      propertyPath: logState
-      value: 
-      objectReference: {fileID: 11400000, guid: a2ce98a12b641fc41b29f993223986dc,
-        type: 2}
     m_RemovedComponents:
     - {fileID: 6465645074838448021, guid: 13dfd2ff77290bb4faf75012641f360d, type: 3}
+    - {fileID: 8859447503791462621, guid: 13dfd2ff77290bb4faf75012641f360d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 13dfd2ff77290bb4faf75012641f360d, type: 3}
 --- !u!114 &508984842 stripped
 MonoBehaviour:

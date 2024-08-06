@@ -7,8 +7,11 @@
                 <ui:VisualElement name="ControlsDetails">
                     <ui:Label text="ControlButtons" display-tooltip-when-elided="true" style="-unity-font-style: bold;" />
                     <ui:Label text="Holographic &quot;Control Buttons&quot; can be placed inside your VR cockpit to give you control over your ship without having to bind controls to your (limited) VR Controllers.&#10;&#10;The list to the right shows your currently configured holographic buttons and the respective context in which those buttons will appear." display-tooltip-when-elided="true" name="ControlButtonsDescription" class="paragraphText" style="padding-bottom: 10px; white-space: normal; font-size: 12px;" />
-                    <ui:VisualElement name="CurrentFile" style="flex-direction: row; margin-bottom: 5px;">
-                        <ui:DropdownField label="Save File:" index="-1" choices="System.Collections.Generic.List`1[System.String]" name="current-savedstate-file" style="width: 98%; font-size: 12px;" />
+                    <ui:VisualElement name="CurrentFile" style="flex-direction: row; margin-bottom: 5px; width: 100%; justify-content: space-around;">
+                        <ui:DropdownField label="Save File:" index="-1" choices="System.Collections.Generic.List`1[System.String]" name="current-savedstate-file" style="width: 90%; font-size: 12px;" />
+                        <ui:Button text="Open" display-tooltip-when-elided="true" name="open-explorer" style="font-size: 10px; max-height: 50px; max-width: 50px; width: 10%; min-width: 30px; min-height: 20px;">
+                            <ui:VisualElement />
+                        </ui:Button>
                     </ui:VisualElement>
                 </ui:VisualElement>
                 <ui:VisualElement name="Settings" style="border-top-width: 1px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);">
@@ -26,7 +29,7 @@
                     <ui:Label text="Holo Buttons in Scene" display-tooltip-when-elided="true" name="ControlButtonsHeading" class="contentHeader" style="-unity-font: url(&apos;project://database/Assets/TextMesh%20Pro/Fonts/LiberationSans.ttf?fileID=12800000&amp;guid=e3265ab4bf004d28a9537516768c1c75&amp;type=3#LiberationSans&apos;); color: rgb(0, 0, 0); font-size: 14px; -unity-text-align: middle-left;" />
                     <ui:Button text="Add Holo Button" display-tooltip-when-elided="true" name="open-addButtonModal-button" style="padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px;" />
                 </ui:VisualElement>
-                <ui:ScrollView name="control-list-container" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="AlwaysVisible" />
+                <ui:ScrollView name="control-list-container" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="AlwaysVisible" style="height: 100%; width: 100%;" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:GroupBox>

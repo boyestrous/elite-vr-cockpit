@@ -122,9 +122,9 @@ namespace EVRC.Core.Overlay
         /// <summary>
         /// Copy the template file (from default location) to the default location
         /// </summary>
-        private static void CopyTemplateFile()
+        public static void CreateBlankSavedStateFile(string filename)
         {
-            string dest = Paths.OverlayStatePath;
+            string dest = Path.Combine(Application.persistentDataPath, filename);
             CopyTemplateFile(dest);
         }
 
@@ -136,7 +136,7 @@ namespace EVRC.Core.Overlay
         private static void CopyTemplateFile(string destination)
         {
             File.Copy(Paths.OverlayStateTemplatePath, destination);
-            Debug.Log($"Copied Template SavedState to: {destination}");
+            Debug.Log($"Created new blank SavedState File at: {destination}");
         }
 
         internal static SavedStateFile Load(string path)

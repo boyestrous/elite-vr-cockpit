@@ -1,5 +1,271 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &700670331
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 700670332}
+  - component: {fileID: 700670333}
+  m_Layer: 6
+  m_Name: Settings
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &700670332
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 700670331}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3656005567304995617}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &700670333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 700670331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4da24b3f5a37654b8ab709064c7a2db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentUIDocument: {fileID: 6465645074838448022}
+  buttonLabelSetting: {fileID: 11400000, guid: 35fee506411b17045b36e4918cf6f71a, type: 2}
+  savedState: {fileID: 11400000, guid: 6f013364a8a2fd4448e6e72d02d181c3, type: 2}
+--- !u!1 &1180333830
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1180333831}
+  - component: {fileID: 1180333834}
+  - component: {fileID: 1180333833}
+  - component: {fileID: 1180333832}
+  m_Layer: 6
+  m_Name: Save File
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1180333831
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180333830}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3656005567304995617}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1180333834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180333830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e31e1e5907021743a03af4e6e4b6086, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentUIDocument: {fileID: 6465645074838448022}
+  modalHeader: {fileID: 9197481963319205126, guid: cfa80f0743562c44dab5929a89f05552,
+    type: 3}
+  headerEnabled: 1
+  modalContent: {fileID: 9197481963319205126, guid: 80861e114ef68e7439dbb306c783d2c0,
+    type: 3}
+--- !u!114 &1180333833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180333830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 116c28abcea24534d9635e7e20434751, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentUIDocument: {fileID: 6465645074838448022}
+  savedState: {fileID: 11400000, guid: 6f013364a8a2fd4448e6e72d02d181c3, type: 2}
+  selectedSavedStateFile: 
+--- !u!114 &1180333832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180333830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e31e1e5907021743a03af4e6e4b6086, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentUIDocument: {fileID: 6465645074838448022}
+  modalHeader: {fileID: 9197481963319205126, guid: cfa80f0743562c44dab5929a89f05552,
+    type: 3}
+  headerEnabled: 1
+  modalContent: {fileID: 9197481963319205126, guid: 80861e114ef68e7439dbb306c783d2c0,
+    type: 3}
+--- !u!1 &1289165451
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1289165452}
+  - component: {fileID: 1289165456}
+  - component: {fileID: 1289165455}
+  - component: {fileID: 1289165454}
+  - component: {fileID: 1289165453}
+  m_Layer: 6
+  m_Name: Holo Buttons
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1289165452
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289165451}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3656005567304995617}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1289165456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289165451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 176839a1abd11224cad8d39527ce262c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentUIDocument: {fileID: 6465645074838448022}
+  controlButtonEntryTemplate: {fileID: 9197481963319205126, guid: 833a4429788708142a5ae40fed71f03f,
+    type: 3}
+  savedState: {fileID: 11400000, guid: 6f013364a8a2fd4448e6e72d02d181c3, type: 2}
+  controlButtonCatalog: {fileID: 11400000, guid: 83d2b71115eca78419410b43b99628b2,
+    type: 2}
+  controlButtonRemovedEvent: {fileID: 11400000, guid: 8af64cdc3761eb042922a6e60eaaa09c,
+    type: 2}
+--- !u!114 &1289165455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289165451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b562736bad172534eb6dedc7d3f2c4cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentUIDocument: {fileID: 6465645074838448022}
+  modalHeader: {fileID: 9197481963319205126, guid: cfa80f0743562c44dab5929a89f05552,
+    type: 3}
+  headerEnabled: 1
+  modalContent: {fileID: 9197481963319205126, guid: 9140ca18f8f714c4a9c01bfe8ca5faca,
+    type: 3}
+  controlButtonAddedEvent: {fileID: 11400000, guid: d13bd3f18fae7c54783c13f198b9a36b,
+    type: 2}
+  catalog: {fileID: 11400000, guid: 83d2b71115eca78419410b43b99628b2, type: 2}
+  savedGameState: {fileID: 11400000, guid: 6f013364a8a2fd4448e6e72d02d181c3, type: 2}
+  advancedModeActive: 0
+--- !u!114 &1289165454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289165451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 504008d4e07a6df4982514b3ef454c30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Source: {fileID: 11400000, guid: d13bd3f18fae7c54783c13f198b9a36b, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1289165456}
+        m_TargetAssemblyTypeName: EVRC.Desktop.ControlButtonViewController, EVRC.Desktop
+        m_MethodName: AddControlButton
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+--- !u!114 &1289165453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289165451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1ef366d1adba714aa9442631db4e0b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Source: {fileID: 11400000, guid: 38556d8a03de49a4f9d81702416a3157, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1289165456}
+        m_TargetAssemblyTypeName: EVRC.Desktop.ControlButtonViewController, EVRC.Desktop
+        m_MethodName: PopulateHolographicButtonsListView
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
 --- !u!1 &1200109454227299433
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,7 +528,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f0e47f17e9060048b76cb0ab20df472, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tabName: steam
+  tabName: steamvr
   hasErrors: 0
   openVrState: {fileID: 11400000, guid: 25d4adda955fdac47a3eb997224de168, type: 2}
   hmdModel: 
@@ -312,13 +578,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3656005567304995617}
-  - component: {fileID: 7801773867867527582}
-  - component: {fileID: 7101438878122661753}
-  - component: {fileID: 268777256}
-  - component: {fileID: 3423843137621750281}
-  - component: {fileID: 114996553333904926}
-  - component: {fileID: 8859447503791462621}
-  - component: {fileID: 6278015330906870882}
   m_Layer: 6
   m_Name: HolographicTab
   m_TagString: Untagged
@@ -337,168 +596,13 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1289165452}
+  - {fileID: 700670332}
+  - {fileID: 1180333831}
   m_Father: {fileID: 6465645074838448020}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7801773867867527582
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4769661530639456945}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 176839a1abd11224cad8d39527ce262c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentUIDocument: {fileID: 6465645074838448022}
-  controlButtonEntryTemplate: {fileID: 9197481963319205126, guid: 833a4429788708142a5ae40fed71f03f,
-    type: 3}
-  savedState: {fileID: 11400000, guid: 6f013364a8a2fd4448e6e72d02d181c3, type: 2}
-  controlButtonCatalog: {fileID: 11400000, guid: 83d2b71115eca78419410b43b99628b2,
-    type: 2}
-  controlButtonRemovedEvent: {fileID: 11400000, guid: 8af64cdc3761eb042922a6e60eaaa09c,
-    type: 2}
---- !u!114 &7101438878122661753
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4769661530639456945}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b562736bad172534eb6dedc7d3f2c4cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentUIDocument: {fileID: 6465645074838448022}
-  modalContent: {fileID: 9197481963319205126, guid: 9140ca18f8f714c4a9c01bfe8ca5faca,
-    type: 3}
-  modalHeader: {fileID: 9197481963319205126, guid: cfa80f0743562c44dab5929a89f05552,
-    type: 3}
-  headerEnabled: 1
-  controlButtonAddedEvent: {fileID: 11400000, guid: d13bd3f18fae7c54783c13f198b9a36b,
-    type: 2}
-  catalog: {fileID: 11400000, guid: 83d2b71115eca78419410b43b99628b2, type: 2}
-  savedGameState: {fileID: 11400000, guid: 6f013364a8a2fd4448e6e72d02d181c3, type: 2}
---- !u!114 &268777256
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4769661530639456945}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 504008d4e07a6df4982514b3ef454c30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Source: {fileID: 11400000, guid: d13bd3f18fae7c54783c13f198b9a36b, type: 2}
-  Response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7801773867867527582}
-        m_TargetAssemblyTypeName: EVRC.Desktop.ControlButtonViewController, EVRC.Desktop
-        m_MethodName: AddControlButton
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &3423843137621750281
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4769661530639456945}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 116c28abcea24534d9635e7e20434751, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentUIDocument: {fileID: 6465645074838448022}
-  savedState: {fileID: 11400000, guid: 6f013364a8a2fd4448e6e72d02d181c3, type: 2}
-  selectedSavedStateFile: 
---- !u!114 &114996553333904926
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4769661530639456945}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e31e1e5907021743a03af4e6e4b6086, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentUIDocument: {fileID: 6465645074838448022}
-  modalContent: {fileID: 9197481963319205126, guid: 80861e114ef68e7439dbb306c783d2c0,
-    type: 3}
-  modalHeader: {fileID: 9197481963319205126, guid: cfa80f0743562c44dab5929a89f05552,
-    type: 3}
-  headerEnabled: 1
---- !u!114 &8859447503791462621
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4769661530639456945}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4da24b3f5a37654b8ab709064c7a2db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentUIDocument: {fileID: 6465645074838448022}
-  buttonLabelSetting: {fileID: 11400000, guid: 35fee506411b17045b36e4918cf6f71a, type: 2}
-  savedState: {fileID: 11400000, guid: 6f013364a8a2fd4448e6e72d02d181c3, type: 2}
---- !u!114 &6278015330906870882
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4769661530639456945}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1ef366d1adba714aa9442631db4e0b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Source: {fileID: 11400000, guid: 38556d8a03de49a4f9d81702416a3157, type: 2}
-  Response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8859447503791462621}
-        m_TargetAssemblyTypeName: EVRC.Desktop.ControlButtonSettings, EVRC.Desktop
-        m_MethodName: OnOverlayStateLoaded
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 7801773867867527582}
-        m_TargetAssemblyTypeName: EVRC.Desktop.ControlButtonViewController, EVRC.Desktop
-        m_MethodName: PopulateHolographicButtonsListView
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &6465645074838448027
 GameObject:
   m_ObjectHideFlags: 0
@@ -840,7 +944,7 @@ PrefabInstance:
         type: 3}
       propertyPath: uiDocument
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 6465645074838448022}
     - target: {fileID: 5122717251172941421, guid: 4972cdab98fab564280066e8ec2e19ef,
         type: 3}
       propertyPath: statusUxmlLabelName
@@ -978,7 +1082,7 @@ PrefabInstance:
         type: 3}
       propertyPath: uiDocument
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 6465645074838448022}
     - target: {fileID: 8594232243582844746, guid: 4972cdab98fab564280066e8ec2e19ef,
         type: 3}
       propertyPath: m_Name
@@ -1110,7 +1214,7 @@ PrefabInstance:
         type: 3}
       propertyPath: uiDocument
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 6465645074838448022}
     - target: {fileID: 5122717251172941421, guid: 4972cdab98fab564280066e8ec2e19ef,
         type: 3}
       propertyPath: statusUxmlLabelName

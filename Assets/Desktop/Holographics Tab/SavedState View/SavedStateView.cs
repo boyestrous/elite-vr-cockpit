@@ -1,6 +1,9 @@
 using EVRC.Core;
 using EVRC.Core.Overlay;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -11,7 +14,8 @@ namespace EVRC.Desktop
     {
         [SerializeField] UIDocument parentUIDocument;
         private VisualElement root; // the root of the whole UI
-        public DropdownField savedStateFileDropdown;
+        private DropdownField savedStateFileDropdown;
+        private Button openExplorerButton;
 
         public SavedGameState savedState;
 
@@ -24,6 +28,7 @@ namespace EVRC.Desktop
         {
             root = parentUIDocument.rootVisualElement;
             savedStateFileDropdown = root.Q<DropdownField>("current-savedstate-file");
+            openExplorerButton = root.Q<Button>("open-explorer");
 
             createNewSavedStateModal = GetComponent<CreateSavedStateModal>();
 
@@ -31,15 +36,32 @@ namespace EVRC.Desktop
             string lastUsedFile = UserPreferences.GetLastUsedJsonFile();
             selectedSavedStateFile = lastUsedFile == null ? Paths.OverlayStateFileName : lastUsedFile;
 
+            if (savedState.GetStatusText() != "Loaded")
+            {
+                savedState.Load(selectedSavedStateFile);
+            }
+
             PopulateSavedStateDropdown();
 
+            savedStateFileDropdown.RegisterValueChangedCallback(OnSavedStateDropdownChanged);
+            openExplorerButton.clicked += OpenSavedStatePath;
             // Load the file selected by the user
-            savedState.Load(selectedSavedStateFile); // savedState will raise a gameEvent automatically when it's loaded
+            //savedState.Load(selectedSavedStateFile); // savedState will raise a gameEvent automatically when it's loaded
         }
 
-
-        private void PopulateSavedStateDropdown()
+        private void OpenSavedStatePath()
         {
+            Utils.OpenExplorer(Application.persistentDataPath);
+        }
+
+        public void OnDisable()
+        {
+            savedStateFileDropdown.UnregisterValueChangedCallback(OnSavedStateDropdownChanged);
+        }
+
+        public void PopulateSavedStateDropdown()
+        {
+            Debug.LogWarning("Populated SavedState Dropdown");
             List<string> overlayFiles = OverlayFileUtils.GetAllSavedStateFiles();
             savedStateFileDropdown.choices = overlayFiles;
 
@@ -47,19 +69,30 @@ namespace EVRC.Desktop
             savedStateFileDropdown.index = overlayFiles.Contains(selectedSavedStateFile) ? overlayFiles.IndexOf(selectedSavedStateFile) : 0;
 
             savedStateFileDropdown.choices.Add(addNewSavedStateString);
-
-            savedStateFileDropdown.RegisterValueChangedCallback(OnSavedStateDropdownChanged);
         }
 
         private void OnSavedStateDropdownChanged(ChangeEvent<string> evt)
         {
             if (evt.newValue == addNewSavedStateString)
             {
-                createNewSavedStateModal.LaunchModal();
+                createNewSavedStateModal.LaunchModal(FindNewFileAndSwitch, () => { });// Do nothing on cancel
             }
             else
             {
                 SwitchSavedStateFile(evt.previousValue, evt.newValue);
+                savedStateFileDropdown.choices = new List<string>();
+                PopulateSavedStateDropdown();
+            }
+        }
+
+        private void FindNewFileAndSwitch()
+        {
+            List<string> overlayFiles = OverlayFileUtils.GetAllSavedStateFiles();
+            List<string> newFile = overlayFiles.Except(savedStateFileDropdown.choices).ToList();
+
+            if (newFile.Count == 1)
+            {
+                SwitchSavedStateFile(savedState.currentSavedStateFile, newFile[0]);
             }
         }
 
@@ -70,11 +103,6 @@ namespace EVRC.Desktop
             savedState.SwitchFile(newFileName); // savedState will raise a GameEvent when done
             selectedSavedStateFile = newFileName;
             UserPreferences.SaveLastUsedJsonFile(newFileName);
-        }
-
-        private void CreateNewSavedStateFile(string fileName)
-        {
-
         }
     }
 }

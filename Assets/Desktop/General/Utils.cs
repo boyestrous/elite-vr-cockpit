@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -5,6 +6,15 @@ namespace EVRC.Desktop
 {
     public static class Utils
     {
+        public static void OpenExplorer(string path)
+        {
+            // Ensure the path uses backslashes
+            string formattedPath = path.Replace("/", "\\");
+
+            // Start the process to open Explorer at the specified path
+            Process.Start("explorer.exe", formattedPath);
+        }
+
         public static Vector2 FindCenterForModal(UIDocument parentUIDocument)
         {
             Vector2 center = Vector2.zero;
@@ -31,7 +41,7 @@ namespace EVRC.Desktop
 
             if (tempItem == null)
             {
-                Debug.LogError($"Cannot get reference to {typeof(T).Name} with name {itemName} in Desktop UI");
+                UnityEngine.Debug.LogError($"Cannot get reference to {typeof(T).Name} with name {itemName} in Desktop UI");
             }
 
             return tempItem;

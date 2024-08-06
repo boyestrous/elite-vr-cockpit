@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Xml.Linq;
 using EVRC.Core;
 using EVRC.Core.Actions;
 using EVRC.Core.Overlay;
@@ -18,7 +20,6 @@ namespace EVRC.Desktop
         public ControlButtonAssetCatalog controlButtonCatalog;
         public GameEvent controlButtonRemovedEvent;
         private AddControlButtonModal addControlButtonModal;
-        private bool firstRun = true;
 
         private VisualElement root; // the root of the whole UI
         private Dictionary<(string, string), ControlButtonList> controlButtonLists;
@@ -26,37 +27,37 @@ namespace EVRC.Desktop
         private Button openAddButtonModalElement;
 
         // the Scrollview that will hold all of the mini ListViews of controlButtons
-        private ScrollView controlListContainer;
+        private ScrollView controlListScrollview;
 
-        private void FirstRun()
+        public void OnEnable()
         {
             addControlButtonModal = GetComponent<AddControlButtonModal>();
 
             root = parentUIDocument.rootVisualElement;
             controlButtonLists = new Dictionary<(string, string), ControlButtonList>();
-            controlListContainer = root.Q<ScrollView>("control-list-container");
-
+            controlListScrollview = root.Q<ScrollView>("control-list-container");
 
             openAddButtonModalElement = root.Q<Button>("open-addButtonModal-button");
             openAddButtonModalElement.clicked += addControlButtonModal.LaunchModal;
 
-            firstRun = false;
-        }
-
-        public void OnEnable()
-        {
-            if (firstRun) FirstRun();
+            PopulateHolographicButtonsListView();
         }
 
         // Invoked from GameEvent
         public void PopulateHolographicButtonsListView()
         {
-            if (firstRun) FirstRun();
+            UnityEngine.Debug.LogWarning("PopulateHolographicButtonsListView");
 
             //Reset the List of Lists and the containing scrollview
             controlButtonLists = new Dictionary<(string, string), ControlButtonList>();
-            controlListContainer.Clear();
-            controlListContainer.scrollOffset = Vector2.zero; // Reset scroll position to the top-left corner
+
+            if (controlListScrollview == null)
+            {
+                controlListScrollview = root.Q<ScrollView>("control-list-container");
+            }
+            //CreateScrollview();
+            controlListScrollview.Clear();
+            controlListScrollview.scrollOffset = Vector2.zero; // Reset scroll position to the top-left corner
 
             List<SavedControlButton> controlButtons = savedState.controlButtons;
 
@@ -68,6 +69,7 @@ namespace EVRC.Desktop
 
         public void AddControlButton(SavedControlButton addedControlButton)
         {
+            UnityEngine.Debug.Log($"Adding ControlButton: {addedControlButton.type}");
             // use the "type" to search for a matching controlButtonAsset
             string type = addedControlButton.type;
             ControlButtonAsset controlButtonAsset = controlButtonCatalog.GetByName(type);
@@ -84,28 +86,11 @@ namespace EVRC.Desktop
                 controlButtonLists.Add(cat, newList);
 
                 // Add the Visual Element to the UI
-                controlListContainer.Add(newList.visualElementContainer);
+                controlListScrollview.Add(newList.visualElementContainer);
             }
 
             // Add to source list
             controlButtonLists[cat].Add(addedControlButton);
         }
-
-        //void LaunchModal()
-        //{
-        //    // Get the VisualElement representing the ListView
-        //    VisualElement listViewElement = controlListContainer.hierarchy.parent;
-
-        //    // Now you can use the RectTransform listViewRectTransform as needed
-        //    // For example, you can get its position, size, etc.
-        //    Vector2 listViewPosition = listViewElement.contentRect.position;
-        //    Vector2 listViewSize = listViewElement.contentRect.size;
-
-        //    // Calculate the center position of the ListView
-        //    Vector2 listViewCenter = new Vector2(listViewPosition.x + (listViewSize.x / 2f),
-        //                                         listViewPosition.y + (listViewSize.y / 2f));
-
-        //    addControlButtonModal.LaunchModal();
-        //}
     }
 }

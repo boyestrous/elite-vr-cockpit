@@ -1,3 +1,4 @@
+using EVRC.Core;
 using EVRC.Core.Overlay;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,23 @@ namespace EVRC.Desktop
         public override void LaunchModal()
         {
             base.LaunchModal();
+            GetAdditionalElements();
+        }
 
+        public override void LaunchModal(Action onClose)
+        {
+            base.LaunchModal(onClose);
+            GetAdditionalElements();
+        }
+
+        public override void LaunchModal(Action onSubmit, Action onCancel)
+        {
+            base.LaunchModal(onSubmit, onCancel);
+            GetAdditionalElements();
+        }
+
+        private void GetAdditionalElements()
+        {
             modalMessageElement = modalUI.Q<Label>("modal-message");
             textInputElement = modalUI.Q<TextField>("filename-input");
 
@@ -47,8 +64,9 @@ namespace EVRC.Desktop
             Debug.Log($"...after EnsureJsonExtension: {userFileName}");
             if (ValidInput(userFileName)) 
             {
-                Debug.Log($"Submitting {userFileName}");
-            };
+                OverlayFileUtils.CreateBlankSavedStateFile(userFileName);
+                Close();
+            }
         }
 
         private bool ValidInput(string userInput)
@@ -70,7 +88,7 @@ namespace EVRC.Desktop
             if (reserved.Contains(filename))
             {
                 DisplayMessage($"{filename} Reserved - choose another name");
-                Debug.LogError($"Filname Reserved: {filename}");
+                Debug.LogError($"Filename Reserved: {filename}");
                 return false;
             }
             return true;
@@ -83,8 +101,8 @@ namespace EVRC.Desktop
 
             if (usedFilenames.Contains(filename))
             {
-                DisplayMessage($"Already in use: {filename}");
-                Debug.LogError($"Filname is already in use: {filename}");
+                DisplayMessage($"Filename already in use: {filename}");
+                Debug.LogError($"Filename is already in use: {filename}");
                 return false;
             }
             return true;
