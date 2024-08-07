@@ -16,13 +16,16 @@ namespace EVRC.Core
 
         private StaticLocationsManager staticLocationsManager;
         private ControlButtonManager controlButtonManager;
+        private CockpitModeManager cockpitModeManager;
 
-        private SavedStateFile loadedState;
+        //private SavedStateFile loadedState;
+        [SerializeField] private SavedGameState savedGameState;
 
         void Awake()
         {
             staticLocationsManager = GetComponentInChildren<StaticLocationsManager>(true);
             controlButtonManager = GetComponentInChildren<ControlButtonManager>(true);
+            cockpitModeManager = GetComponentInChildren<CockpitModeManager>(true);
         }
 
         void OnEnable()
@@ -32,8 +35,8 @@ namespace EVRC.Core
 
         private IEnumerator PlaceLoadedObjects(System.Action callback)
         {
-            yield return StartCoroutine(controlButtonManager.PlaceWhenReady(loadedState.controlButtons));
-            yield return StartCoroutine(staticLocationsManager.PlaceWhenReady(loadedState.staticLocations));
+            yield return StartCoroutine(controlButtonManager.PlaceWhenReady(savedGameState.controlButtons));
+            yield return StartCoroutine(staticLocationsManager.PlaceWhenReady(savedGameState.staticLocations));
 
             callback?.Invoke();
         }
@@ -54,7 +57,10 @@ namespace EVRC.Core
 
         public void LoadAndPlace()
         {
-            loadedState = OverlayFileUtils.LoadFromFile();
+            if (savedGameState.GetStatusText() != "Loaded")
+            {
+                savedGameState.Load();
+            }
 
             //Start all of the placement Coroutines, raise the loaded GameEvent when done.
             StartCoroutine(PlaceLoadedObjects(() => overlayStateLoaded.Raise()));
@@ -63,6 +69,7 @@ namespace EVRC.Core
         public void Rebuild()
         {
             controlButtonManager.Clear();
+            cockpitModeManager.Clear();
             LoadAndPlace();
         }
 

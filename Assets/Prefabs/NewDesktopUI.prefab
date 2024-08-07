@@ -113,6 +113,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentUIDocument: {fileID: 6465645074838448022}
   savedState: {fileID: 11400000, guid: 6f013364a8a2fd4448e6e72d02d181c3, type: 2}
+  stateFileChangeEvent: {fileID: 11400000, guid: 1adaae6e1aafc0949aaf9693c1ab0c87,
+    type: 2}
   selectedSavedStateFile: 
 --- !u!114 &1180333832
 MonoBehaviour:

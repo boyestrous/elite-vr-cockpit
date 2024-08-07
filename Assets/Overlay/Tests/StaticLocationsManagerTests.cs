@@ -8,7 +8,7 @@ using UnityEngine;
 public class StaticLocationsManagerTests
 {
     private StaticLocationsManager staticLocationsManager;
-    private SavedGameObject[] loadedGameObjects;
+    private List<SavedGameObject> loadedGameObjects;
     GameObject objectOne;
     GameObject objectTwo; 
     GameObject objectThree;
@@ -24,26 +24,36 @@ public class StaticLocationsManagerTests
 
         // Mimick a loaded array from the file. These are the objects 
         // we're trying to place in the scene from the file
-        loadedGameObjects = new SavedGameObject[2];
-        loadedGameObjects[0] = new SavedGameObject()
+        loadedGameObjects = new List<SavedGameObject>()
         {
-            key = "firstTestObject",
-            overlayTransform = new OverlayTransform()
+            new SavedGameObject()
             {
-                pos = Vector3.zero,
-                rot = Vector3.zero
+                key = "firstTestObject",
+                overlayTransform = new OverlayTransform()
+                {
+                    pos = Vector3.zero,
+                    rot = Vector3.zero
+                }
+            },
+            new SavedGameObject()
+            {
+                key = "secondTestObject",
+                overlayTransform = new OverlayTransform()
+                {
+                    pos = Vector3.one,
+                    rot = Vector3.one
+                }
+            },
+            new SavedGameObject()
+            {
+                key = "thirdTestObject",
+                overlayTransform = new OverlayTransform()
+                {
+                    pos = Vector3.down,
+                    rot = Vector3.down
+                }
             }
         };
-        loadedGameObjects[1] = new SavedGameObject()
-        {
-            key = "secondTestObject",
-            overlayTransform = new OverlayTransform()
-            {
-                pos = Vector3.one,
-                rot = Vector3.one
-            }
-        };
-
 
         // These Anchors match the loadedGameObjects
         objectOne = new GameObject("One");

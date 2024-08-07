@@ -18,6 +18,7 @@ namespace EVRC.Desktop
         private Button openExplorerButton;
 
         public SavedGameState savedState;
+        [SerializeField] private GameEvent stateFileChangeEvent;
 
         [Header("These can be private after initial testing")]
         [SerializeField] string selectedSavedStateFile;
@@ -32,13 +33,9 @@ namespace EVRC.Desktop
 
             createNewSavedStateModal = GetComponent<CreateSavedStateModal>();
 
-            // Default, if not selected already
-            string lastUsedFile = UserPreferences.GetLastUsedJsonFile();
-            selectedSavedStateFile = lastUsedFile == null ? Paths.OverlayStateFileName : lastUsedFile;
-
             if (savedState.GetStatusText() != "Loaded")
             {
-                savedState.Load(selectedSavedStateFile);
+                savedState.Load();
             }
 
             PopulateSavedStateDropdown();
@@ -61,7 +58,7 @@ namespace EVRC.Desktop
 
         public void PopulateSavedStateDropdown()
         {
-            Debug.LogWarning("Populated SavedState Dropdown");
+            //Debug.LogWarning("Populated SavedState Dropdown");
             List<string> overlayFiles = OverlayFileUtils.GetAllSavedStateFiles();
             savedStateFileDropdown.choices = overlayFiles;
 
@@ -92,6 +89,7 @@ namespace EVRC.Desktop
 
             if (newFile.Count == 1)
             {
+
                 SwitchSavedStateFile(savedState.currentSavedStateFile, newFile[0]);
             }
         }
@@ -102,7 +100,9 @@ namespace EVRC.Desktop
             Debug.Log($"Changing SavedState file from {oldFileName} to {newFileName}");
             savedState.SwitchFile(newFileName); // savedState will raise a GameEvent when done
             selectedSavedStateFile = newFileName;
+            PopulateSavedStateDropdown();
             UserPreferences.SaveLastUsedJsonFile(newFileName);
+            stateFileChangeEvent.Raise();
         }
     }
 }

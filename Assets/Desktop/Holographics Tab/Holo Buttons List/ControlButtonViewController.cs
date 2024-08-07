@@ -46,7 +46,7 @@ namespace EVRC.Desktop
         // Invoked from GameEvent
         public void PopulateHolographicButtonsListView()
         {
-            UnityEngine.Debug.LogWarning("PopulateHolographicButtonsListView");
+            //UnityEngine.Debug.LogWarning("PopulateHolographicButtonsListView");
 
             //Reset the List of Lists and the containing scrollview
             controlButtonLists = new Dictionary<(string, string), ControlButtonList>();
@@ -69,7 +69,7 @@ namespace EVRC.Desktop
 
         public void AddControlButton(SavedControlButton addedControlButton)
         {
-            UnityEngine.Debug.Log($"Adding ControlButton: {addedControlButton.type}");
+            //UnityEngine.Debug.Log($"Adding ControlButton: {addedControlButton.type}");
             // use the "type" to search for a matching controlButtonAsset
             string type = addedControlButton.type;
             ControlButtonAsset controlButtonAsset = controlButtonCatalog.GetByName(type);

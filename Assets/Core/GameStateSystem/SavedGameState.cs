@@ -41,13 +41,11 @@ namespace EVRC.Core
 
         public void Load()
         {
-            SavedStateFile file = OverlayFileUtils.LoadFromFile();
-            fileVersion = file.version;
-            staticLocations = file.staticLocations.ToList();
-            controlButtons = file.controlButtons.ToList();
-            booleanSettings = file.booleanSettings.ToList();
-            loaded = true;
-            gameEvent.Raise();
+            // Default, if not selected already
+            string lastUsedFile = UserPreferences.GetLastUsedJsonFile();
+            currentSavedStateFile = lastUsedFile == null ? Paths.OverlayStateFileName : lastUsedFile;
+
+            Load(currentSavedStateFile);
         }
 
         public void Load(string fileName)

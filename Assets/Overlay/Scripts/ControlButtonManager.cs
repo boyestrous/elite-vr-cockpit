@@ -39,7 +39,7 @@ namespace EVRC.Core.Overlay
         /// </summary>
         /// <param name="loadedControlButtons"></param>
         /// <returns></returns>
-        public IEnumerator PlaceWhenReady(SavedControlButton[] loadedControlButtons)
+        public IEnumerator PlaceWhenReady(List<SavedControlButton> loadedControlButtons)
         {
             //while (!ready)
             //{
@@ -55,9 +55,9 @@ namespace EVRC.Core.Overlay
         /// Places all controlButtons in the scene based on the settings in the SavedState
         /// </summary>
         /// <param name="state"></param>
-        private void PlaceAll(SavedControlButton[] loadedControlButtons)
+        private void PlaceAll(List<SavedControlButton> loadedControlButtons)
         {
-            for (var i = 0; i < loadedControlButtons.Length; i++)
+            for (var i = 0; i < loadedControlButtons.Count; i++)
             {
                 PlaceSavedControlButton(loadedControlButtons[i]);
             }
