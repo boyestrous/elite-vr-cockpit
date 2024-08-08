@@ -1,6 +1,6 @@
 {
     "name": "EVRC.Core.Tests",
-    "rootNamespace": "",
+    "rootNamespace": "EVRC.Core",
     "references": [
         "GUID:de298fed4758e514a88a8e8da87fb939",
         "GUID:0acc523941302664db1f4e527237feb3",

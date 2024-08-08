@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace EVRC.Core
@@ -10,6 +11,20 @@ namespace EVRC.Core
         {
             public string Device;
             public string Key;
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is KeyModifier))
+                    return false;
+
+                KeyModifier other = (KeyModifier)obj;
+                return Device == other.Device && Key == other.Key;
+            }
+
+            public override int GetHashCode()
+            {
+                return (Device?.GetHashCode() ?? 0) ^ (Key?.GetHashCode() ?? 0);
+            }
         }
 
         public struct KeyBinding
@@ -18,6 +33,45 @@ namespace EVRC.Core
             public string Key;
             public string DeviceIndex;
             public HashSet<KeyModifier> Modifiers;
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is KeyBinding))
+                    return false;
+
+                KeyBinding other = (KeyBinding)obj;
+                return Device == other.Device &&
+                       Key == other.Key &&
+                       DeviceIndex == other.DeviceIndex &&
+                       Modifiers.SetEquals(other.Modifiers);
+            }
+
+            public override int GetHashCode()
+            {
+                int hash = 17;
+                hash = hash * 23 + (Device?.GetHashCode() ?? 0);
+                hash = hash * 23 + (Key?.GetHashCode() ?? 0);
+                hash = hash * 23 + (DeviceIndex?.GetHashCode() ?? 0);
+                hash = hash * 23 + Modifiers.Aggregate(0, (acc, modifier) => acc + modifier.GetHashCode());
+                return hash;
+            }
+
+            public string unityEditorString
+            {
+                get { return GetKeyBindingString(); }
+            }
+
+            // Method to return a string representation of the KeyBinding
+            public string GetKeyBindingString()
+            {
+                if (Modifiers == null || Modifiers.Count == 0)
+                {
+                    return Key;
+                }
+
+                var modifiersString = string.Join(", ", Modifiers.Select(m => m.Key));
+                return $"{Key} + {modifiersString}";
+            }
 
             public bool IsValid
             {
@@ -31,6 +85,7 @@ namespace EVRC.Core
                 {
                     // Is it on the Keyboard device?
                     if (Device != "Keyboard") return false;
+                    if (Key == string.Empty) return false;
 
                     foreach (var modifier in Modifiers)
                     {

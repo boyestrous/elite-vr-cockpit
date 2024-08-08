@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Label text="This feature is not yet complete - the information below is intended to help diagnose bindings issues related to SteamVR inputs." display-tooltip-when-elided="true" style="white-space: normal;" />
+    <ui:VisualElement name="error-dialog" style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px; border-left-color: rgba(255, 255, 255, 0.62); border-right-color: rgba(255, 255, 255, 0.62); border-top-color: rgba(255, 255, 255, 0.62); border-bottom-color: rgba(255, 255, 255, 0.62); border-left-width: 2px; border-right-width: 2px; border-top-width: 2px; border-bottom-width: 2px; display: none;">
+        <ui:Label text="ErrorMessage" display-tooltip-when-elided="true" name="error-message" style="display: flex;" />
+        <ui:TextField picking-mode="Ignore" label="Alternate Path to SteamVR.settings file" value="filler text" text="your path here" name="alt-path-input" tooltip="Typically located at: C:\Program Files (x86)\Steam\config\" />
+        <ui:Button text="Try Again" display-tooltip-when-elided="true" style="width: 20%;" />
+    </ui:VisualElement>
+    <ui:VisualElement name="BindingsArea" style="flex-direction: row; margin-left: 5px; margin-right: 5px; margin-top: 5px; margin-bottom: 5px;">
+        <ui:Label text="VR-Input-Workshop ID:" display-tooltip-when-elided="true" name="BindingsNameLabel" style="-unity-font-style: bold;" />
+        <ui:Label text="1234567898" display-tooltip-when-elided="true" name="steamvr-binding-version" />
+    </ui:VisualElement>
+    <ui:VisualElement name="ControllersArea" style="flex-direction: row; margin-left: 5px; margin-right: 5px; margin-top: 5px; margin-bottom: 5px;">
+        <ui:Label text="Last Known Device:" display-tooltip-when-elided="true" name="YourDeviceLabel" style="-unity-font-style: bold;" />
+        <ui:Label text="Your Device Placeholder" display-tooltip-when-elided="true" name="vr-device-value" />
+    </ui:VisualElement>
+</ui:UXML>

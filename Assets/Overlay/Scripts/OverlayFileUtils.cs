@@ -2,8 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.NetworkInformation;
 using EVRC.Core.Actions;
+using Moq;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Valve.Newtonsoft.Json;
 
 namespace EVRC.Core.Overlay
@@ -15,30 +18,128 @@ namespace EVRC.Core.Overlay
     public static class OverlayFileUtils
     {
         #region ---------------Load---------------------
-        public static SavedStateFile LoadFromFile()
+        public static List<string> GetAllSavedStateFiles()
         {
-            var _savedFilePath = Paths.OverlayStatePath;
-            if (_savedFilePath != null && File.Exists(_savedFilePath))
-            {
-                return Load(_savedFilePath);
-            }
+            // Default path
+            string path = Application.persistentDataPath;
 
-            Debug.Log($"CockpitState file was not found. Loading a fresh profile. \n Expected filepath: {_savedFilePath}");
-            return new SavedStateFile(true);
+            return GetAllSavedStateFiles(path);
         }
 
-        public static SavedStateFile LoadFromFile(string filePath)
+        public static List<string> GetAllSavedStateFiles(string path)
         {
+            List<string> jsonFiles = new List<string>();
+            try
+            {
+                // Get all .json files in the specified directory
+                string[] files = Directory.GetFiles(path, "*.json", SearchOption.TopDirectoryOnly);
+
+                // Check each file for the "version" key
+                foreach (string file in files)
+                {
+                    try
+                    {
+                        string jsonContent = File.ReadAllText(file);
+                        var data = JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonContent);
+
+                        if (data.TryGetValue("version", out object value))
+                        {
+                            int version = ((IConvertible)value).ToInt32(null);
+                            jsonFiles.Add(Path.GetFileName(file));
+                        }
+                        // TODO - maybe add a way to indicate old file versions
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.LogWarning($"Error reading or parsing JSON file {file} while trying to populate the Desktop List of SavedState Files. Messag: {ex.Message}.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Error accessing files at {path}: {ex.Message}");
+            }
+
+            return jsonFiles;
+        }
+
+        /// <summary>
+        /// Loads the Default SavedState file from the Default Location
+        /// </summary>
+        /// <returns></returns>
+        public static SavedStateFile LoadFromFile()
+        {
+            var defaultFilename = Paths.OverlayStateFileName;
+            return LoadFromFile(defaultFilename);
+        }
+
+        /// <summary>
+        /// Load a specific SavedState filename from default file location
+        /// </summary>
+        /// <param name="fileName">File name - assumed to be in the default location</param>
+        /// <returns></returns>
+        public static SavedStateFile LoadFromFile(string fileName)
+        {
+            return LoadFromFile(fileName, Application.persistentDataPath);
+        }
+
+        /// <summary>
+        /// Load a specific filename from a specific location.
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="pathFolder"></param>
+        /// <returns></returns>
+
+        public static SavedStateFile LoadFromFile(string fileName, string pathFolder)
+        {
+            string filePath = Path.Combine(pathFolder, fileName);
+
             if (filePath != null && File.Exists(filePath))
             {
                 return Load(filePath);
             }
 
-            Debug.Log($"Could not find the provided path: {filePath} Loading a fresh profile.");
-            return new SavedStateFile(true);
+            // If the filename is the default file AND it doesn't exist, use the template
+            if (fileName == Paths.OverlayStateFileName && !File.Exists(filePath))
+            {
+                Debug.LogWarning("Default File not found, will use a copy of the template file instead");
+                CopyTemplateFile(Path.Combine(pathFolder, fileName));
+            }
+
+            Debug.LogWarning($"Could not find the provided path: {filePath}.");
+            Debug.Log($"Trying to load default SavedState File: {Paths.OverlayStatePath}");
+
+            if (pathFolder == Application.persistentDataPath)
+            {
+                return LoadFromFile(); // load from default name and location
+            } else
+            {
+                // Look for the default file name in the provided folder
+                return LoadFromFile(Paths.OverlayStateFileName, pathFolder); 
+            }
         }
 
-        private static SavedStateFile Load(string path)
+        /// <summary>
+        /// Copy the template file (from default location) to the default location
+        /// </summary>
+        public static void CreateBlankSavedStateFile(string filename)
+        {
+            string dest = Path.Combine(Application.persistentDataPath, filename);
+            CopyTemplateFile(dest);
+        }
+
+
+        /// <summary>
+        /// Copy the template file from a specific location
+        /// </summary>
+        /// <param name="destination">full path to the desired destination (including filename)</param>
+        private static void CopyTemplateFile(string destination)
+        {
+            File.Copy(Paths.OverlayStateTemplatePath, destination);
+            Debug.Log($"Created new blank SavedState File at: {destination}");
+        }
+
+        internal static SavedStateFile Load(string path)
         {
             Debug.LogFormat("Loading from {0}", path);
 
@@ -48,7 +149,7 @@ namespace EVRC.Core.Overlay
             
             // If it's not the current file version, start the upgrade process, which will
             // return an updated 
-            if (fileVersion < OverlayManager.currentFileVersion)
+            if (fileVersion < Paths.currentOverlayFileVersion)
             {
                 Debug.LogWarning($"File version: {fileVersion} is not current. Starting upgrade...");
                 OverlayStateUpgradeManager upgradeManager = new OverlayStateUpgradeManager();
@@ -56,9 +157,19 @@ namespace EVRC.Core.Overlay
                 return returnState;
             }
         
-            // If it's already the right version, Deserialize and return
-            returnState = JsonConvert.DeserializeObject<SavedStateFile>(File.ReadAllText(path));
-            return returnState;
+            try
+            {
+                // If it's already the right version, Deserialize and return
+                returnState = JsonConvert.DeserializeObject<SavedStateFile>(File.ReadAllText(path));
+                return returnState;
+            }
+            catch (Exception ex)
+            {
+                // Log the error and raise an exception
+                Debug.LogError($"Failed to load JSON file at {path}: {ex.Message}");
+                throw new Exception($"Failed to load JSON file at {path}", ex);
+            }
+            
         }
 
         public static int TryGetSavedStateVersion(string filePath)
@@ -74,7 +185,7 @@ namespace EVRC.Core.Overlay
             else
             {
                 Debug.LogError($"Could not find version in SavedState File: {filePath}. Starting a fresh SavedState file.");
-                return OverlayManager.currentFileVersion;
+                return Paths.currentOverlayFileVersion;
             }
 
         }
@@ -89,15 +200,24 @@ namespace EVRC.Core.Overlay
             WriteToFile(state, savedStatePath);
         }
 
-        public static void WriteToFile(SavedStateFile state, string overrideSavePath)
+        public static void WriteToFile(SavedStateFile state, string saveFileName)
         {
-            if (!File.Exists(overrideSavePath))
-            {
-                Debug.LogWarning($"Path: {overrideSavePath} does not exist. Creating new file.");
-            }
+            WriteToFile(state, Application.persistentDataPath, saveFileName);
+        }
 
-            File.WriteAllText(overrideSavePath, JsonUtility.ToJson(state));
-            Debug.LogFormat($"SavedState Saved to {overrideSavePath}");
+        public static void WriteToFile(SavedStateFile state, string destinationPath, string saveFileName)
+        {
+            string filePath = Path.Combine(destinationPath, saveFileName);
+
+            try
+            {
+                File.WriteAllText(filePath, JsonUtility.ToJson(state));
+                Debug.LogFormat($"SavedState Saved to {filePath}");
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Could not save file: {saveFileName} to path:{destinationPath}. Exception: {ex.Message}");
+            }
         }
         #endregion
 

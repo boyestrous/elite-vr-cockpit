@@ -12,19 +12,20 @@ namespace EVRC.Core
     /// </summary>
     public class OverlayManager : MonoBehaviour
     {
-        public static int currentFileVersion = 5;
-
         public GameEvent overlayStateLoaded;
 
         private StaticLocationsManager staticLocationsManager;
         private ControlButtonManager controlButtonManager;
+        private CockpitModeManager cockpitModeManager;
 
-        private SavedStateFile loadedState;
+        //private SavedStateFile loadedState;
+        [SerializeField] private SavedGameState savedGameState;
 
         void Awake()
         {
             staticLocationsManager = GetComponentInChildren<StaticLocationsManager>(true);
             controlButtonManager = GetComponentInChildren<ControlButtonManager>(true);
+            cockpitModeManager = GetComponentInChildren<CockpitModeManager>(true);
         }
 
         void OnEnable()
@@ -34,8 +35,8 @@ namespace EVRC.Core
 
         private IEnumerator PlaceLoadedObjects(System.Action callback)
         {
-            yield return StartCoroutine(controlButtonManager.PlaceWhenReady(loadedState.controlButtons));
-            yield return StartCoroutine(staticLocationsManager.PlaceWhenReady(loadedState.staticLocations));
+            yield return StartCoroutine(controlButtonManager.PlaceWhenReady(savedGameState.controlButtons));
+            yield return StartCoroutine(staticLocationsManager.PlaceWhenReady(savedGameState.staticLocations));
 
             callback?.Invoke();
         }
@@ -48,7 +49,7 @@ namespace EVRC.Core
 
             // Get Current State and save to file
             SavedStateFile currentState = new SavedStateFile();
-            currentState.version = currentFileVersion;
+            currentState.version = Paths.currentOverlayFileVersion;
             currentState.staticLocations = staticLocationsManager.GetCurrentStates();
             currentState.controlButtons = controlButtonManager.GetCurrentStates();
             OverlayFileUtils.WriteToFile(currentState);
@@ -56,7 +57,10 @@ namespace EVRC.Core
 
         public void LoadAndPlace()
         {
-            loadedState = OverlayFileUtils.LoadFromFile();
+            if (savedGameState.GetStatusText() != "Loaded")
+            {
+                savedGameState.Load();
+            }
 
             //Start all of the placement Coroutines, raise the loaded GameEvent when done.
             StartCoroutine(PlaceLoadedObjects(() => overlayStateLoaded.Raise()));
@@ -65,6 +69,7 @@ namespace EVRC.Core
         public void Rebuild()
         {
             controlButtonManager.Clear();
+            cockpitModeManager.Clear();
             LoadAndPlace();
         }
 

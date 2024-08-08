@@ -1,5 +1,273 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &700670331
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 700670332}
+  - component: {fileID: 700670333}
+  m_Layer: 6
+  m_Name: Settings
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &700670332
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 700670331}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3656005567304995617}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &700670333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 700670331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4da24b3f5a37654b8ab709064c7a2db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentUIDocument: {fileID: 6465645074838448022}
+  buttonLabelSetting: {fileID: 11400000, guid: 35fee506411b17045b36e4918cf6f71a, type: 2}
+  savedState: {fileID: 11400000, guid: 6f013364a8a2fd4448e6e72d02d181c3, type: 2}
+--- !u!1 &1180333830
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1180333831}
+  - component: {fileID: 1180333834}
+  - component: {fileID: 1180333833}
+  - component: {fileID: 1180333832}
+  m_Layer: 6
+  m_Name: Save File
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1180333831
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180333830}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3656005567304995617}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1180333834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180333830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e31e1e5907021743a03af4e6e4b6086, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentUIDocument: {fileID: 6465645074838448022}
+  modalHeader: {fileID: 9197481963319205126, guid: cfa80f0743562c44dab5929a89f05552,
+    type: 3}
+  headerEnabled: 1
+  modalContent: {fileID: 9197481963319205126, guid: 80861e114ef68e7439dbb306c783d2c0,
+    type: 3}
+--- !u!114 &1180333833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180333830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 116c28abcea24534d9635e7e20434751, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentUIDocument: {fileID: 6465645074838448022}
+  savedState: {fileID: 11400000, guid: 6f013364a8a2fd4448e6e72d02d181c3, type: 2}
+  stateFileChangeEvent: {fileID: 11400000, guid: 1adaae6e1aafc0949aaf9693c1ab0c87,
+    type: 2}
+  selectedSavedStateFile: 
+--- !u!114 &1180333832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180333830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e31e1e5907021743a03af4e6e4b6086, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentUIDocument: {fileID: 6465645074838448022}
+  modalHeader: {fileID: 9197481963319205126, guid: cfa80f0743562c44dab5929a89f05552,
+    type: 3}
+  headerEnabled: 1
+  modalContent: {fileID: 9197481963319205126, guid: 80861e114ef68e7439dbb306c783d2c0,
+    type: 3}
+--- !u!1 &1289165451
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1289165452}
+  - component: {fileID: 1289165456}
+  - component: {fileID: 1289165455}
+  - component: {fileID: 1289165454}
+  - component: {fileID: 1289165453}
+  m_Layer: 6
+  m_Name: Holo Buttons
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1289165452
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289165451}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3656005567304995617}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1289165456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289165451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 176839a1abd11224cad8d39527ce262c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentUIDocument: {fileID: 6465645074838448022}
+  controlButtonEntryTemplate: {fileID: 9197481963319205126, guid: 833a4429788708142a5ae40fed71f03f,
+    type: 3}
+  savedState: {fileID: 11400000, guid: 6f013364a8a2fd4448e6e72d02d181c3, type: 2}
+  controlButtonCatalog: {fileID: 11400000, guid: 83d2b71115eca78419410b43b99628b2,
+    type: 2}
+  controlButtonRemovedEvent: {fileID: 11400000, guid: 8af64cdc3761eb042922a6e60eaaa09c,
+    type: 2}
+--- !u!114 &1289165455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289165451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b562736bad172534eb6dedc7d3f2c4cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentUIDocument: {fileID: 6465645074838448022}
+  modalHeader: {fileID: 9197481963319205126, guid: cfa80f0743562c44dab5929a89f05552,
+    type: 3}
+  headerEnabled: 1
+  modalContent: {fileID: 9197481963319205126, guid: 9140ca18f8f714c4a9c01bfe8ca5faca,
+    type: 3}
+  controlButtonAddedEvent: {fileID: 11400000, guid: d13bd3f18fae7c54783c13f198b9a36b,
+    type: 2}
+  catalog: {fileID: 11400000, guid: 83d2b71115eca78419410b43b99628b2, type: 2}
+  savedGameState: {fileID: 11400000, guid: 6f013364a8a2fd4448e6e72d02d181c3, type: 2}
+  advancedModeActive: 0
+--- !u!114 &1289165454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289165451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 504008d4e07a6df4982514b3ef454c30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Source: {fileID: 11400000, guid: d13bd3f18fae7c54783c13f198b9a36b, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1289165456}
+        m_TargetAssemblyTypeName: EVRC.Desktop.ControlButtonViewController, EVRC.Desktop
+        m_MethodName: AddControlButton
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+--- !u!114 &1289165453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289165451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1ef366d1adba714aa9442631db4e0b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Source: {fileID: 11400000, guid: 38556d8a03de49a4f9d81702416a3157, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1289165456}
+        m_TargetAssemblyTypeName: EVRC.Desktop.ControlButtonViewController, EVRC.Desktop
+        m_MethodName: PopulateHolographicButtonsListView
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
 --- !u!1 &1200109454227299433
 GameObject:
   m_ObjectHideFlags: 0
@@ -12,8 +280,9 @@ GameObject:
   - component: {fileID: 3388104431613939313}
   - component: {fileID: 3914959317253130693}
   - component: {fileID: 2792544302326749862}
+  - component: {fileID: 7584120879435125516}
   m_Layer: 6
-  m_Name: LogView
+  m_Name: DebugTab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +301,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6465645074838448020}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3388104431613939313
 MonoBehaviour:
@@ -49,16 +318,7 @@ MonoBehaviour:
   m_ListEntryTemplate: {fileID: 9197481963319205126, guid: d30c8e5c5d3bb824dbe7a8c217c0cba0,
     type: 3}
   parentUIDocument: {fileID: 6465645074838448022}
-  infoStyle:
-    color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    icon: {fileID: 21300000, guid: c25ad00be07907d42b7111b765255bb1, type: 3}
-  warningStyle:
-    color: {r: 1, g: 0.6938923, b: 0, a: 1}
-    icon: {fileID: 21300000, guid: 0ce3f8efc40a73145834dcd72d8a7c03, type: 3}
-  errorStyle:
-    color: {r: 0.9433962, g: 0, b: 0, a: 1}
-    icon: {fileID: 21300000, guid: 365964070f343304da7d6b2875ae06a2, type: 3}
-  maxLines: 100
+  logState: {fileID: 11400000, guid: a2ce98a12b641fc41b29f993223986dc, type: 2}
 --- !u!114 &3914959317253130693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,6 +362,25 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &7584120879435125516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1200109454227299433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e95859fda959e7f47913fa090ee2c511, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentUIDocument: {fileID: 6465645074838448022}
+  eliteDangerousState: {fileID: 11400000, guid: de65acd1f8087ff4cb3c04f687b0f89f,
+    type: 2}
+  controlBindingsState: {fileID: 11400000, guid: 1de2906d06cd6f745bab03c953c45a3a,
+    type: 2}
+  vjoyState: {fileID: 11400000, guid: 6e76b948f29825342b2ade83571d5cb9, type: 2}
+  logState: {fileID: 11400000, guid: a2ce98a12b641fc41b29f993223986dc, type: 2}
 --- !u!1 &1417640592640192690
 GameObject:
   m_ObjectHideFlags: 0
@@ -115,7 +394,7 @@ GameObject:
   - component: {fileID: 4630692459872260786}
   - component: {fileID: 3339672887010423997}
   m_Layer: 6
-  m_Name: BindingsView
+  m_Name: BindingsTab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -133,10 +412,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2688429832135916705}
   - {fileID: 7559442749638383542}
   m_Father: {fileID: 6465645074838448020}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1194726077349563152
 MonoBehaviour:
@@ -150,8 +428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0fb38ed66a311e4a8aa3dbd99346805, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  missingBindingsListController: {fileID: 5052489821320121753}
-  vJoyBindingsListController: {fileID: 4726670226658153969}
+  bindingItemsListController: {fileID: 4726670226658153969}
   parentUIDocument: {fileID: 6465645074838448022}
 --- !u!114 &4630692459872260786
 MonoBehaviour:
@@ -208,7 +485,58 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
+--- !u!1 &1885352924072067237
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8322096876445233120}
+  - component: {fileID: 3203118652949787583}
+  m_Layer: 6
+  m_Name: VR Tab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8322096876445233120
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1885352924072067237}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6465645074838448020}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3203118652949787583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1885352924072067237}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f0e47f17e9060048b76cb0ab20df472, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tabName: steamvr
+  hasErrors: 0
+  openVrState: {fileID: 11400000, guid: 25d4adda955fdac47a3eb997224de168, type: 2}
+  hmdModel: 
+  currentURLs: []
+  ApplicationName: application.generated.unity.elitevrcockpit.exe
+  parentUIDocument: {fileID: 6465645074838448022}
 --- !u!1 &1895929214567527768
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,59 +569,8 @@ Transform:
   - {fileID: 4830886075692796530}
   - {fileID: 7354177508307066757}
   m_Father: {fileID: 6465645074838448020}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &3779239808811944745
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2688429832135916705}
-  - component: {fileID: 5052489821320121753}
-  m_Layer: 6
-  m_Name: MissingBindings
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2688429832135916705
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3779239808811944745}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6904863876773597988}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5052489821320121753
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3779239808811944745}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3556f02bb1dd9c3409980578d1f4212d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  savedGameState: {fileID: 11400000, guid: 6f013364a8a2fd4448e6e72d02d181c3, type: 2}
-  bindingsState: {fileID: 11400000, guid: 1de2906d06cd6f745bab03c953c45a3a, type: 2}
-  assetCatalog: {fileID: 11400000, guid: 83d2b71115eca78419410b43b99628b2, type: 2}
-  m_BindingEntryTemplate: {fileID: 9197481963319205126, guid: 369281b6eaf3e7047abbb422ec8460a8,
-    type: 3}
-  parentUIDocument: {fileID: 6465645074838448022}
-  missingBindings: 
 --- !u!1 &4769661530639456945
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,11 +580,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3656005567304995617}
-  - component: {fileID: 7801773867867527582}
-  - component: {fileID: 7101438878122661753}
-  - component: {fileID: 268777256}
   m_Layer: 6
-  m_Name: ControlButtons
+  m_Name: HolographicTab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -324,76 +598,13 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1289165452}
+  - {fileID: 700670332}
+  - {fileID: 1180333831}
   m_Father: {fileID: 6465645074838448020}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7801773867867527582
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4769661530639456945}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 176839a1abd11224cad8d39527ce262c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentUIDocument: {fileID: 6465645074838448022}
-  controlButtonEntryTemplate: {fileID: 9197481963319205126, guid: 833a4429788708142a5ae40fed71f03f,
-    type: 3}
-  savedState: {fileID: 11400000, guid: 6f013364a8a2fd4448e6e72d02d181c3, type: 2}
-  targetParentName: control-list-container
-  controlButtonCatalog: {fileID: 11400000, guid: 83d2b71115eca78419410b43b99628b2,
-    type: 2}
-  controlButtonRemovedEvent: {fileID: 11400000, guid: 8af64cdc3761eb042922a6e60eaaa09c,
-    type: 2}
---- !u!114 &7101438878122661753
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4769661530639456945}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b562736bad172534eb6dedc7d3f2c4cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controlButtonAddedEvent: {fileID: 11400000, guid: d13bd3f18fae7c54783c13f198b9a36b,
-    type: 2}
-  parentUIDocument: {fileID: 6465645074838448022}
-  catalog: {fileID: 11400000, guid: 83d2b71115eca78419410b43b99628b2, type: 2}
-  savedGameState: {fileID: 11400000, guid: 6f013364a8a2fd4448e6e72d02d181c3, type: 2}
---- !u!114 &268777256
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4769661530639456945}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 504008d4e07a6df4982514b3ef454c30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Source: {fileID: 11400000, guid: d13bd3f18fae7c54783c13f198b9a36b, type: 2}
-  Response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7801773867867527582}
-        m_TargetAssemblyTypeName: EVRC.Desktop.ControlButtonViewController, EVRC.Desktop
-        m_MethodName: AddControlButton
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &6465645074838448027
 GameObject:
   m_ObjectHideFlags: 0
@@ -404,8 +615,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6465645074838448020}
   - component: {fileID: 6465645074838448022}
-  - component: {fileID: 6465645074838448021}
+  - component: {fileID: 6029431416816041201}
   - component: {fileID: 7491602119711795409}
+  - component: {fileID: 3334328095437784012}
   m_Layer: 6
   m_Name: NewDesktopUI
   m_TagString: Untagged
@@ -425,10 +637,12 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2949295880637833969}
   - {fileID: 649170928783406786}
   - {fileID: 7715148199576530260}
   - {fileID: 3656005567304995617}
   - {fileID: 6904863876773597988}
+  - {fileID: 8322096876445233120}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -449,7 +663,7 @@ MonoBehaviour:
   sourceAsset: {fileID: 9197481963319205126, guid: 15595b2215fdee842ac6655c673283a1,
     type: 3}
   m_SortingOrder: 1
---- !u!114 &6465645074838448021
+--- !u!114 &6029431416816041201
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -458,7 +672,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6465645074838448027}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12a9897b97ce0334b93d30581adb7ce5, type: 3}
+  m_Script: {fileID: 11500000, guid: c00083213889ea5488ce45e3639a8f70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &7491602119711795409
@@ -478,6 +692,69 @@ MonoBehaviour:
   openVrState: {fileID: 11400000, guid: 25d4adda955fdac47a3eb997224de168, type: 2}
   startButtonText: Start OpenVR
   stopButtonText: Stop OpenVR
+--- !u!114 &3334328095437784012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6465645074838448027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6249d0c9eeddd84fbe263a71eaa114f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  preChecks: []
+  errorIconTexture: {fileID: 2800000, guid: 0ce3f8efc40a73145834dcd72d8a7c03, type: 3}
+  errorIconColor: {r: 1, g: 0.37465727, b: 0, a: 1}
+  startStopButton: {fileID: 0}
+  parentUIDocument: {fileID: 0}
+  tabsWithErrors: []
+--- !u!1 &7332220839452202027
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2949295880637833969}
+  - component: {fileID: 6383792737260308991}
+  m_Layer: 6
+  m_Name: HomeTab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2949295880637833969
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7332220839452202027}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6465645074838448020}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6383792737260308991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7332220839452202027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a56fe07c0d11bf409369e45cf51a777, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiDocument: {fileID: 6465645074838448022}
 --- !u!1 &7707757889235039289
 GameObject:
   m_ObjectHideFlags: 0
@@ -488,8 +765,12 @@ GameObject:
   m_Component:
   - component: {fileID: 7559442749638383542}
   - component: {fileID: 4726670226658153969}
+  - component: {fileID: 4702260006377328484}
+  - component: {fileID: 2079154047034965911}
+  - component: {fileID: 365425780558097588}
+  - component: {fileID: 4972279433456300615}
   m_Layer: 6
-  m_Name: vJoyBindingsList
+  m_Name: BindingItemsList
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -508,7 +789,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6904863876773597988}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4726670226658153969
 MonoBehaviour:
@@ -522,11 +803,77 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af4867fe2e8fd214faf6baa5fddd6add, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BindingEntryTemplate: {fileID: 9197481963319205126, guid: a4e5a72a43cd33d4ca76cd2283c05644,
-    type: 3}
+  tabName: bindings
+  hasErrors: 0
   parentUIDocument: {fileID: 6465645074838448022}
   bindings: {fileID: 11400000, guid: 1de2906d06cd6f745bab03c953c45a3a, type: 2}
-  m_requiredBindings: []
+  m_BindingEntryTemplate: {fileID: 9197481963319205126, guid: a4e5a72a43cd33d4ca76cd2283c05644,
+    type: 3}
+  vJoyOnly: 0
+  validOnly: 0
+  errorsOnly: 0
+  m_FixBindingModalTemplate: {fileID: 9197481963319205126, guid: 836954df4531976408681c7c0b69277c,
+    type: 3}
+  savedGameState: {fileID: 11400000, guid: 6f013364a8a2fd4448e6e72d02d181c3, type: 2}
+  assetCatalog: {fileID: 11400000, guid: 83d2b71115eca78419410b43b99628b2, type: 2}
+  requestBindingsReloadEvent: {fileID: 11400000, guid: d36b750e591c4da4c9b7da361069ee74,
+    type: 2}
+--- !u!114 &4702260006377328484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7707757889235039289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07f9770cc46fa4046a4a1ea688ff6db3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentUIDocument: {fileID: 6465645074838448022}
+  m_FixBindingModalTemplate: {fileID: 9197481963319205126, guid: 7592ce9359656064ea18b570cbea6fb1,
+    type: 3}
+  bindings: {fileID: 11400000, guid: 1de2906d06cd6f745bab03c953c45a3a, type: 2}
+--- !u!114 &2079154047034965911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7707757889235039289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: add6173bbb570f14e96ba8322287f0a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &365425780558097588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7707757889235039289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75d37e434afa06b4cb925f0dc6b600ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  problemList: 
+--- !u!114 &4972279433456300615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7707757889235039289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6095ca567fa1044ea3c0c410a200635, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  problemList: 
+  requiredBindingsState: {fileID: 11400000, guid: 7baa37a7f24b0c2478d0122fea0db811,
+    type: 2}
 --- !u!1001 &650565485984119541
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -599,7 +946,7 @@ PrefabInstance:
         type: 3}
       propertyPath: uiDocument
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 6465645074838448022}
     - target: {fileID: 5122717251172941421, guid: 4972cdab98fab564280066e8ec2e19ef,
         type: 3}
       propertyPath: statusUxmlLabelName
@@ -737,7 +1084,7 @@ PrefabInstance:
         type: 3}
       propertyPath: uiDocument
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 6465645074838448022}
     - target: {fileID: 8594232243582844746, guid: 4972cdab98fab564280066e8ec2e19ef,
         type: 3}
       propertyPath: m_Name
@@ -869,7 +1216,7 @@ PrefabInstance:
         type: 3}
       propertyPath: uiDocument
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 6465645074838448022}
     - target: {fileID: 5122717251172941421, guid: 4972cdab98fab564280066e8ec2e19ef,
         type: 3}
       propertyPath: statusUxmlLabelName

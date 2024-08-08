@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Xml;
 using System.Xml.Linq;
 using UnityEngine;
+using static EVRC.Core.ControlButtonBinding;
 
 namespace EVRC.Core
 {
@@ -69,6 +71,308 @@ namespace EVRC.Core
             return attribute?.Value;  // Return the attribute value if found, otherwise return null
         }
 
+        public static void UpdateBindingXml(string filePath, string tagName, ControlButtonBinding.KeyBinding keyBinding)
+        {
+            // Save a copy, just in case
+            SaveCopyWithTimestamp(filePath);
+
+            // Load the XML document
+            XDocument doc = XDocument.Load(filePath);
+
+            // Find the matching node
+            XElement node = doc.Descendants(tagName).FirstOrDefault();
+            if (node == null)
+            {
+                Console.WriteLine($"Node with tagName {tagName} not found.");
+                return;
+            }
+
+            // Determine which node to replace based on the existing structure
+            XElement primaryNode = node.Element("Primary");
+            XElement secondaryNode = node.Element("Secondary");
+
+            if (secondaryNode == null || secondaryNode.Attribute("Device")?.Value == "{NoDevice}")
+            {
+                // If Secondary node is empty or doesn't exist, replace it
+                ReplaceOrAddElement(node, "Secondary", keyBinding);
+            }
+            else if (primaryNode == null || primaryNode.Attribute("Device")?.Value == "{NoDevice}")
+            {
+                // If Primary node is empty, replace it
+                ReplaceOrAddElement(node, "Primary", keyBinding);
+            }
+            else
+            {
+                // Both nodes are not empty, replace the one that isn't a vJoy binding
+                if (secondaryNode.Attribute("Device")?.Value != "vJoy")
+                {
+                    ReplaceOrAddElement(node, "Secondary", keyBinding);
+                }
+                else if (primaryNode.Attribute("Device")?.Value != "vJoy")
+                {
+                    ReplaceOrAddElement(node, "Primary", keyBinding);
+                }
+                else
+                {
+                    Debug.LogError("Cannot change binding automatically, both are set to vJoy controls");
+                }
+            }
+
+            // Save the modified XML
+            doc.Save(filePath);
+        }
+
+        /// <summary>
+        /// Allows you to replace a specific binding, based on the old value
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="tagName"></param>
+        /// <param name="newKeyBinding"></param>
+        /// <param name="oldKeyBinding"></param>
+        public static void UpdateBindingXml(string filePath, string tagName, ControlButtonBinding.KeyBinding newKeyBinding, ControlButtonBinding.KeyBinding oldKeyBinding)
+        {
+            // Save a copy, just in case
+            SaveCopyWithTimestamp(filePath);
+
+            // Load the XML document
+            XDocument doc = XDocument.Load(filePath);
+
+            // Find the matching node
+            XElement node = doc.Descendants(tagName).FirstOrDefault();
+            if (node == null)
+            {
+                Console.WriteLine($"Node with tagName {tagName} not found.");
+                return;
+            }
+
+            // Determine which node to replace based on the existing structure
+            XElement primaryNode = node.Element("Primary");
+            XElement secondaryNode = node.Element("Secondary");
+
+            var tempPrimaryXElement = CreateKeyBindingElement(oldKeyBinding, "Primary");
+            var tempSecondaryXElement = CreateKeyBindingElement(oldKeyBinding, "Secondary");
+
+            if (XNode.DeepEquals(secondaryNode, tempSecondaryXElement))
+            {
+                // If Secondary node is empty or doesn't exist, replace it
+                ReplaceOrAddElement(node, "Secondary", newKeyBinding);
+            }
+            else if (XNode.DeepEquals(primaryNode,tempPrimaryXElement))
+            {
+                // If Primary node is empty or doesn't exist, replace it
+                ReplaceOrAddElement(node, "Primary", newKeyBinding);
+            }
+            else
+            {
+                Debug.LogWarning($"Could not overwrite {tagName}. Value from prior binding: {oldKeyBinding.Key} was not found");
+            }
+
+            // Save the modified XML
+            doc.Save(filePath);
+        }
+
+
+        private static void ReplaceOrAddElement(XElement parent, string elementName, ControlButtonBinding.KeyBinding keyBinding)
+        {
+            XElement element = parent.Element(elementName);
+            if (element != null)
+            {
+                element.ReplaceWith(CreateKeyBindingElement(keyBinding, elementName));
+            }
+            else
+            {
+                parent.Add(CreateKeyBindingElement(keyBinding, elementName));
+            }
+        }
+
+        private static XElement CreateKeyBindingElement(ControlButtonBinding.KeyBinding keyBinding, string tagName)
+        {
+            // Create the XML representation of the KeyBinding
+            XElement keyBindingElement = new XElement(tagName,
+                new XAttribute("Device", keyBinding.Device),
+                new XAttribute("Key", keyBinding.Key)
+            );
+
+
+            var deviceIndexProperty = keyBinding.GetType().GetProperty("DeviceIndex");
+            //Keyboards don't get DeviceIndexes
+            if (keyBindingElement.Attribute("Device").Value != "Keyboard" && deviceIndexProperty != null)
+            {
+                //keyBindingElement.Add(new XAttribute("DeviceIndex", keyBinding.DeviceIndex));
+                keyBindingElement.Add(new XAttribute("DeviceIndex", keyBinding.DeviceIndex));
+            }
+
+            // Add Modifiers if present
+            foreach (var modifier in keyBinding.Modifiers)
+            {
+                XElement modifierElement = new XElement("Modifier",
+                    new XAttribute("Device", modifier.Device),
+                    new XAttribute("Key", modifier.Key)
+                );
+                keyBindingElement.Add(modifierElement);
+            }
+
+            return keyBindingElement;
+        }
+
+        public static void UpdateBindingXml(string filePath, string tagName, string newKey)
+        {
+            // Save a copy, just in case
+            SaveCopyWithTimestamp(filePath);
+
+            // Load XML document from file
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(filePath);
+
+
+            // Find elements with the specified tag name
+            XmlNodeList nodes = xmlDoc.GetElementsByTagName(tagName);
+
+            // Iterate through the found elements
+            foreach (XmlNode node in nodes)
+            {
+                // Get the "Secondary" element
+                XmlNode secondaryNode = node.SelectSingleNode("Secondary");
+                if (secondaryNode != null)
+                {
+                    // Update the "Device" and "Key" properties of the "Secondary" element
+                    XmlNode deviceAttr = secondaryNode.Attributes.GetNamedItem("Device");
+                    if (deviceAttr != null)
+                    {
+                        deviceAttr.Value = "Keyboard";
+                    }
+
+                    XmlNode keyAttr = secondaryNode.Attributes.GetNamedItem("Key");
+                    if (keyAttr != null)
+                    {
+                        keyAttr.InnerText = newKey;
+                    }
+                }
+            }
+
+            // Save the modified XML back to the file
+            xmlDoc.Save(filePath);
+        }
+
+        public static void SaveCopyWithTimestamp(string originalFilePath)
+        {
+            try
+            {
+                // Check if the original file exists
+                if (!File.Exists(originalFilePath))
+                {
+                    Debug.LogError("Original file does not exist: " + originalFilePath);
+                    return;
+                }
+
+                // Get the directory and filename from the original file path
+                string directory = Path.GetDirectoryName(originalFilePath);
+                string filename = Path.GetFileNameWithoutExtension(originalFilePath);
+                string extension = Path.GetExtension(originalFilePath);
+
+                // Create the backup folder if it doesn't exist
+                string backupFolder = Path.Combine(directory, "backup_binds");
+                if (!Directory.Exists(backupFolder))
+                {
+                    Directory.CreateDirectory(backupFolder);
+                }
+
+                CleanBackupBindsFiles(originalFilePath); // cleanup old files before making more
+
+                // Construct the new filename with timestamp
+                string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+                string newFilename = $"{filename}_{timestamp}{extension}";
+
+                // Construct the path for the copy within the backup folder
+                string copyFilePath = Path.Combine(backupFolder, newFilename);
+
+                // Copy the original file to the new path
+                File.Copy(originalFilePath, copyFilePath);
+
+                Debug.Log("Copy of bindings file saved: " + copyFilePath);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError("Error while saving file copy: " + ex.Message);
+            }
+        }
+
+        public static void CleanBackupBindsFiles(string originalFilePath)
+        {
+
+            // Get the directory and filename from the original file path
+            string directory = Path.GetDirectoryName(originalFilePath);
+            string backupFolderPath = Path.Combine(directory, "backup_binds");
+
+            try
+            {
+                // Check if the backup folder exists
+                if (!Directory.Exists(backupFolderPath))
+                {
+                    Debug.LogError("Backup folder does not exist: " + backupFolderPath);
+                    return;
+                }
+
+                // Get all files in the backup folder
+                string[] files = Directory.GetFiles(backupFolderPath);
+
+                // Loop through each file
+                foreach (string file in files)
+                {
+                    // Get the datetime from the file name
+                    string filename = Path.GetFileNameWithoutExtension(file);
+                    string[] parts = filename.Split('_');
+                    if (parts.Length < 2)
+                    {
+                        // Skip files without datetime in the name
+                        continue;
+                    }
+
+                    if (!DateTime.TryParseExact(parts[1], "yyyyMMdd", null, System.Globalization.DateTimeStyles.None, out DateTime fileDateTime))
+                    {
+                        Debug.LogWarning("Failed to parse datetime from file name: " + filename);
+                        continue;
+                    }
+
+                    // Calculate the difference in days between the file datetime and current datetime
+                    TimeSpan difference = DateTime.Now - fileDateTime;
+                    double daysDifference = difference.TotalDays;
+
+                    // Check if the file is older than 30 days
+                    if (daysDifference > 30)
+                    {
+                        // Delete the file
+                        File.Delete(file);
+                        Debug.Log($"Backup Binds File deleted, older than 30 days: {Path.GetFileNameWithoutExtension(file)}");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError("Error while cleaning backup files: " + ex.Message);
+            }
+        }
+
+        public static void UpdateStartPreset(string newPresetName)
+        {
+            string content;
+            string startPresetFileName = Path.GetFileName(Paths.StartPresetPath);
+            if (startPresetFileName == "StartPreset.4.start")
+            {
+                // Create an array of four identical lines
+                content = string.Join("\n", new string[] { newPresetName, newPresetName, newPresetName, newPresetName });
+
+                // Write the lines to the file
+            }
+            else if (startPresetFileName == "StartPreset.start") {
+                content = newPresetName;
+            }
+            else
+            {
+                content = Paths.BindingNameFromStartPreset;
+            }
+            File.WriteAllText(Paths.StartPresetPath, content);
+        }
 
         public static string EDControlFriendlyName(EDControlButton button)
         {

@@ -1,5 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:VisualElement name="ItemRow" style="min-width: 250px; border-bottom-width: 2px; border-bottom-color: rgba(0, 0, 0, 255);">
-        <ui:Label text="SampleBindingNameThatsReallyLong" display-tooltip-when-elided="true" name="binding-label" style="font-size: 12px;" />
-    </ui:VisualElement>
-</ui:UXML>

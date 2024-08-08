@@ -25,7 +25,6 @@ namespace EVRC.Core.Overlay
         {
             registeredObjects = new List<staticLocationKeyTargetMap>();
             StartCoroutine(GetAnchors());
-            CheckForDuplicateAnchors();
         }
 
         private void CheckForDuplicateAnchors()
@@ -35,6 +34,16 @@ namespace EVRC.Core.Overlay
             {
                 Debug.LogError($"Duplicate keys found in StaticLocationAnchor list! {gameObject.name}");
             }
+        }
+
+        /// <summary>
+        /// Clear out existing references and re-acquire Anchors. After this is done, 'ready' is set to true, which allows PlaceWhenReady to proceed.
+        /// </summary>
+        public void Rebuild()
+        {
+            ready = false;
+            registeredObjects = new List<staticLocationKeyTargetMap>();
+            StartCoroutine(GetAnchors());
         }
 
 
@@ -58,10 +67,11 @@ namespace EVRC.Core.Overlay
             }          
 
             yield return new WaitForSeconds(1.0f);
+            CheckForDuplicateAnchors();
             ready = true;
         }
 
-        public IEnumerator PlaceWhenReady(SavedGameObject[] loadedGameObjects)
+        public IEnumerator PlaceWhenReady(List<SavedGameObject> loadedGameObjects)
         {
             while (!ready)
             {
@@ -76,7 +86,7 @@ namespace EVRC.Core.Overlay
         /// Places StaticLocation objects in the scene from the passed state.
         /// </summary>
         /// <param name="state"></param>
-        public void PlaceAll(SavedGameObject[] loadedGameObjects)
+        public void PlaceAll(List<SavedGameObject> loadedGameObjects)
         {
             if (registeredObjects == null)
             {
@@ -85,7 +95,7 @@ namespace EVRC.Core.Overlay
 
             if (loadedGameObjects == null) return;
 
-            for (var i = 0; i < loadedGameObjects.Length; i++)
+            for (var i = 0; i < loadedGameObjects.Count; i++)
             {
                 string _key = loadedGameObjects[i].key;
 
@@ -95,7 +105,7 @@ namespace EVRC.Core.Overlay
                 {
                     throw new KeyNotFoundException($"key: {_key} was not found. Check to make sure your save file is compatible with the current EVRC version.");
                 }
-
+                
                 
                 // Assign position and rotation from the loaded state 
                 Vector3 _pos = loadedGameObjects[i].overlayTransform.pos;

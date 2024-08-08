@@ -56,14 +56,14 @@ public class ValidFileTests
     [Test]
     public void ValidFile_PopulatesOverlayStateObject()
     {
-        int expectedFileVersion = OverlayManager.currentFileVersion;
+        int expectedFileVersion = Paths.currentOverlayFileVersion;
 
         // Act
         SavedStateFile savedState = OverlayFileUtils.LoadFromFile(validTempStatePath);
 
         // Assert
         Assert.IsNotNull(savedState);
-        Assert.AreEqual(OverlayManager.currentFileVersion, savedState.version);
+        Assert.AreEqual(Paths.currentOverlayFileVersion, savedState.version);
 
         SavedGameObject[] staticLocations = savedState.staticLocations;
         Assert.IsNotNull(staticLocations);
@@ -84,23 +84,6 @@ public class ValidFileTests
         Assert.AreEqual(1, booleanSettings.Length);
         Assert.AreEqual("testSetting", booleanSettings[0].name);
         Assert.AreEqual(true, booleanSettings[0].value);
-    }
-
-    [Test]
-    public void FileNotFound_Returns_NewOverlayStateObject()
-    {
-        // Arrange
-        string invalidPath = "--invalidPath--";
-
-        // Act
-        SavedStateFile savedState = OverlayFileUtils.LoadFromFile(invalidPath);
-
-        // Assert
-        SavedStateFile comparison = new SavedStateFile(true);
-        Assert.AreEqual(savedState.version, comparison.version);
-        Assert.AreEqual(savedState.staticLocations.Length, comparison.staticLocations.Length);
-        Assert.AreEqual(savedState.controlButtons.Length, comparison.controlButtons.Length);
-        Assert.AreEqual(savedState.booleanSettings.Length, comparison.booleanSettings.Length);
     }
 
     [TearDown]

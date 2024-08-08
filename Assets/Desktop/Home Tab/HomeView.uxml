@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Desktop/unity_uss_overrides.uss?fileID=7433441132597879392&amp;guid=00c71a919149def4b8a4b4161d9f034a&amp;type=3#unity_uss_overrides" />
+    <ui:VisualElement style="width: 100%; height: 100%; padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px;">
+        <ui:Label text="Elite VR Cockpit is a SteamVR overlay for Elite Dangerous. The overlay is currently in an beta stage but is sufficient to play in every game mode." display-tooltip-when-elided="true" name="Label" style="white-space: normal;" />
+        <ui:Button text="Getting Started" display-tooltip-when-elided="true" name="getting-started-link" class="buttonLinkText" />
+        <ui:Button text="Youtube - Getting Started" display-tooltip-when-elided="true" name="getting-started-youtube-link" class="buttonLinkText" />
+        <ui:Button text="Report a Bug (github)" display-tooltip-when-elided="true" name="report-bug-link" class="buttonLinkText" />
+        <ui:Button text="Oculus - SteamVR Workaround" display-tooltip-when-elided="true" name="oculus-workaround-link" class="buttonLinkText" />
+    </ui:VisualElement>
+</ui:UXML>

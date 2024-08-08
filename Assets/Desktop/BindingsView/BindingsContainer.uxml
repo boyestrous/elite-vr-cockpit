@@ -1,9 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <ui:Template name="VJoyBindingsList" src="project://database/Assets/Desktop/BindingsView/VJoyBindingsList.uxml?fileID=9197481963319205126&amp;guid=2c32bb2c5a5660545ab628f78ca192d5&amp;type=3#VJoyBindingsList" />
-    <ui:Template name="MissingBindingsList" src="project://database/Assets/Desktop/BindingsView/MissingBindingsList.uxml?fileID=9197481963319205126&amp;guid=4e63fc1eb0bc3ce41b2cf3e879ae3969&amp;type=3#MissingBindingsList" />
-    <Style src="project://database/Assets/Desktop/BindingsView/bindingsStyles.uss?fileID=7433441132597879392&amp;guid=486398ca079e92444881f179de7726f0&amp;type=3#bindingsStyles" />
-    <ui:VisualElement name="BindingsContainer" class="contentContainer" style="flex-direction: row;">
-        <ui:Instance template="VJoyBindingsList" name="VJoyBindingsList" />
-        <ui:Instance template="MissingBindingsList" name="MissingBindingsList" style="display: none;" />
-    </ui:VisualElement>
-</ui:UXML>

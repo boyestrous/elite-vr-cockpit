@@ -37,7 +37,7 @@ If you have any questions or need support while contributing, feel free to ask i
 
 ## Specific Notes About This Project
 1. Base ScriptableObjects Types
-    - [GameEvents & Listeners](Assets/GameEventSystem/ReadMe_GameEvents.md)
+    - [GameEvents & Listeners](Assets\Core\GameEventSystem\ReadMe.md)
 2. SteamVR "Standalone Patch"
     - hacked by Dantman in 2019 to make SteamVR run as an overlay (the base of this whole project)
     - [Notes for Upgrading Steam VR](Assets/Scripts/SteamVR_Upgrade_Notes.md)
@@ -76,7 +76,24 @@ It was a lot of de-coupling code by using an event-based system. I didn't reinve
     b) Unit Tests
         - *Ideally*...All new code has a corresponding unit test, this is tricky in unity, but I've been able to make significant headway in unit testing the Status file and other non-visual things
 
-**Not Done Yet**
+## Naming Conventions
+### Manager vs Controller
+**tl;dr**
+- Managers are responsible for lots of identical (or similar) instances or components.
+- Controllers are responsible for orchestrating interactions _between_ single instances of different classes.
+
+**Manager Classes** are generally used to coordinate and manage _multiple instances or components_, overseeing high-level tasks such as resource management, state management, or system-wide coordination.
+- Examples:
+    - **OverlayManager**: Responsible for all overlay elements, including holographic buttons, colors, settings, etc.
+    - **EDStateManager**: Responsible for tracking the Elite Dangerous state and invoking GameEvents to notify other components
+
+**Controller Classes** are used to orchestrate interactions between different components, and manage the flow of specific game mechanics, such as user inputs.
+- Examples:
+    - **BindingItemsListController**: Responsible for getting the current bindings and configuring the Desktop UI to display them correctly.
+    - **FSSModeController**: Responsible for handling user interactions that are specific to FSS mode (button press events, game state changes, etc.)
+
+
+## Work in Progress
 1. I created separate namespaces, but haven't yet moved all of them into separate assemblies. The main ones are: Core, Desktop, and Overlay, but right now they all _technically_ reside within the Core namespace. There's a lot more decoupling to be done before it's feasible to fully separate them.
 2. Not everything uses the GameEvent system, there are still lots of direct references to other class instances
 

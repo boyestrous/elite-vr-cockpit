@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 6ccc21a36a18b3d429beeeb083a43d54
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - parentUIDocument: {instanceID: 0}
+  - modalContent: {instanceID: 0}
+  - modalHeader: {fileID: 9197481963319205126, guid: cfa80f0743562c44dab5929a89f05552,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

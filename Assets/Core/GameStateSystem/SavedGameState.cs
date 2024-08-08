@@ -1,6 +1,5 @@
 using EVRC.Core.Overlay;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -14,10 +13,17 @@ namespace EVRC.Core
     public class SavedGameState : GameState
     {
         public int fileVersion;
+        public string currentSavedStateFile;
         public List<SavedGameObject> staticLocations;
         public List<SavedControlButton> controlButtons;
         public List<SavedBooleanSetting> booleanSettings; 
         public bool loaded = false;
+
+        public void SwitchFile(string newFileName)
+        {
+            Reset();
+            Load(newFileName);
+        }
 
         public void Reset()
         {
@@ -35,12 +41,24 @@ namespace EVRC.Core
 
         public void Load()
         {
-            SavedStateFile file = OverlayFileUtils.LoadFromFile();
+            // Default, if not selected already
+            string lastUsedFile = UserPreferences.GetLastUsedJsonFile();
+            currentSavedStateFile = lastUsedFile == null ? Paths.OverlayStateFileName : lastUsedFile;
+
+            Load(currentSavedStateFile);
+        }
+
+        public void Load(string fileName)
+        {
+            currentSavedStateFile = fileName;
+
+            SavedStateFile file = OverlayFileUtils.LoadFromFile(fileName);
             fileVersion = file.version;
             staticLocations = file.staticLocations.ToList();
             controlButtons = file.controlButtons.ToList();
             booleanSettings = file.booleanSettings.ToList();
             loaded = true;
+            gameEvent.Raise();
         }
 
         public void Save()
@@ -51,7 +69,7 @@ namespace EVRC.Core
             file.controlButtons = controlButtons.ToArray();
             file.booleanSettings = booleanSettings.ToArray();
 
-            OverlayFileUtils.WriteToFile(file);
+            OverlayFileUtils.WriteToFile(file, currentSavedStateFile);
         }
 
         

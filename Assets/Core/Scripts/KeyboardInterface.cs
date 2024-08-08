@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using EVRC.Core.Overlay;
 using UnityEngine;
 using WindowsInput;
@@ -139,6 +140,11 @@ namespace EVRC.Core
         };
 
         public static InputSimulator simulator = new InputSimulator();
+
+        public static List<string> GetAllKeycodeStrings()
+        {
+            return virtualKeyCodeMapping.Keys.ToList();
+        }
 
         /**
          * Can we map a Key_* string from elite to a VirtualKeyCode

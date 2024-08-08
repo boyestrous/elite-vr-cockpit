@@ -1,0 +1,26 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Desktop/evrc_styles.uss?fileID=7433441132597879392&amp;guid=ffee2a42999db844e843710513f0aafc&amp;type=3#evrc_styles" />
+    <ui:VisualElement name="modalContent" class="modalContainer">
+        <ui:Label text="Add a Holographic Button" display-tooltip-when-elided="true" name="add-button-label" style="font-size: 18px; margin-top: 0;" />
+        <ui:Toggle label="Advanced Placement Mode" name="advanced-mode-toggle" style="flex-direction: row-reverse; align-items: center; -unity-text-align: middle-left; display: flex; width: 40%;" />
+        <ui:VisualElement name="form" class="modalForm" style="display: flex;">
+            <ui:VisualElement name="advanced-options" class="formOptionsContainer" style="display: none;">
+                <ui:Label text="Choose a Status Flag and GuiFocus combination where you would like to place the ControlButton. For Status Flags, you may choose &apos;Any Flag&apos; if you want the button to be controlled by the guiFocus only. For GuiFocus, PanelOrNoFocus is a helper that includes the values for each cockpitPanel and also the No Focus" display-tooltip-when-elided="true" name="advanced-description" class="formDescriptionText" />
+                <ui:VisualElement name="advanced-dropdowns" class="formOptionsRow">
+                    <ui:DropdownField label="Status Flag" index="-1" name="statusFlag-dropdown" style="flex-direction: column; width: 48%;" />
+                    <ui:DropdownField label="GuiFocus" index="-1" name="guiFocus-dropdown" style="flex-direction: column; width: 49%;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="basic-options" class="formOptionsContainer" style="display: flex; justify-content: flex-end;">
+                <ui:Label text="Choose a Ship Mode where you would like to place the ControlButton." display-tooltip-when-elided="true" name="basic-description" class="formDescriptionText" />
+                <ui:DropdownField label="Ship Mode" index="-1" choices="System.Collections.Generic.List`1[System.String]" name="basic-dropdown" style="flex-direction: column;" />
+            </ui:VisualElement>
+            <ui:DropdownField label="Control Button to Add" index="-1" name="control-button-dropdown" style="flex-direction: column; min-height: 60px;" />
+            <ui:Label text="Warning/Status Message" display-tooltip-when-elided="true" name="messageText" style="-unity-text-align: upper-center; display: none; height: 25px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;" />
+        </ui:VisualElement>
+        <ui:VisualElement class="modalBottomRow">
+            <ui:Button text="Add" display-tooltip-when-elided="true" name="submit-button" class="button" />
+            <ui:Button text="Cancel" display-tooltip-when-elided="true" name="cancel-button" class="button" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

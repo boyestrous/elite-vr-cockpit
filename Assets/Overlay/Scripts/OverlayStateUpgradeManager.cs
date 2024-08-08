@@ -10,7 +10,7 @@ namespace EVRC.Core.Overlay
 {
     public class OverlayStateUpgradeManager
     {
-        private static int currentVersion = OverlayManager.currentFileVersion;
+        private static int currentVersion = Paths.currentOverlayFileVersion;
 
         /// <summary>
         /// Makes necessary conversions to old file versions, then saves the new file and returns the updated SavedState.

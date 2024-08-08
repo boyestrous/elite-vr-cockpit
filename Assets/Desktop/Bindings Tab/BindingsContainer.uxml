@@ -1,0 +1,5 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Template name="BindingsItemsList" src="project://database/Assets/Desktop/BindingsView/BindingsItemsList.uxml?fileID=9197481963319205126&amp;guid=2c32bb2c5a5660545ab628f78ca192d5&amp;type=3#BindingsItemsList" />
+    <Style src="project://database/Assets/Desktop/BindingsView/bindingsStyles.uss?fileID=7433441132597879392&amp;guid=486398ca079e92444881f179de7726f0&amp;type=3#bindingsStyles" />
+    <ui:Instance template="BindingsItemsList" name="BindingsItemsList" style="width: 100%; height: 100%; min-width: 200px;" />
+</ui:UXML>

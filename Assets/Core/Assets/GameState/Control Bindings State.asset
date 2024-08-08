@@ -13,4 +13,8 @@ MonoBehaviour:
   m_Name: Control Bindings State
   m_EditorClassIdentifier: 
   gameEvent: {fileID: 11400000, guid: 9f4ea0e82caa98c4bbc2ae79e12655ff, type: 2}
-  ready: 0
+  ready: 1
+  bindingsFilePath: C:\Users\Parker\AppData\Local\Frontier Developments\Elite Dangerous\Options\Bindings\EVRC.4.1.binds
+  bindingsFileName: 
+  startPreset: 
+  startPresetFileName: 

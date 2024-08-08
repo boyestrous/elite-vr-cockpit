@@ -14,6 +14,7 @@ namespace EVRC.Core
     {
         public Value value;
         public string displayName;
+        [LockedTextField]
         public string saveFileKey;
 
         [Tooltip("The Queryable name of the component in the UI. Required for attaching controls to the Desktop UI")]

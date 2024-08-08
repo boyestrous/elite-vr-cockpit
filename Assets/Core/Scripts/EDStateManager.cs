@@ -111,7 +111,7 @@ namespace EVRC.Core
                     eliteDangerousState.processDirectory = Path.GetDirectoryName(p.MainModule?.FileName);
 
                     // Add this path to the list of places to search for control bindings configurations
-                    Paths.controlBindingsPaths.Add(Path.Combine(eliteDangerousState.processDirectory, "ControlSchemes", Paths.StartPresetFileName + ".binds"));
+                    Paths.controlBindingsPaths.Add(Path.Combine(eliteDangerousState.processDirectory, "ControlSchemes", Paths.BindingNameFromStartPreset + ".binds"));
                     
                 }
                 SetIsEliteDangerousRunning(isEliteDangerous);

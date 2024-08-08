@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 using UnityEngine;
 using Valve.VR;
@@ -21,14 +23,7 @@ namespace EVRC.Core
 
         private void OnEnable()
         {
-            StartCoroutine(FirstLoad());
-        }
-
-        //Slight delay is required to make this load correctly. Otherwise, the desktop UI tries to populate stuff to fast
-        private IEnumerator FirstLoad()
-        {
-            yield return new WaitForSeconds(1.0f);
-            Reload();
+            _ = CoreUtils.DelayAndExecute(Reload, 1);
         }
 
         public void Reload()
@@ -42,6 +37,10 @@ namespace EVRC.Core
         {
             bindingsFile = Paths.ControlBindingsPath;
             bindingsPath = Path.GetDirectoryName(bindingsFile);
+            controlBindingsState.bindingsFilePath = bindingsFile;
+            controlBindingsState.bindingsFileName = Path.GetFileName(bindingsFile);
+            controlBindingsState.startPresetFileName = Paths.StartPresetPath;
+            controlBindingsState.startPreset = Paths.BindingNameFromStartPreset;
         }
         /// <summary>
         /// Overload for setting a custom path (mostly for testing)
@@ -106,8 +105,10 @@ namespace EVRC.Core
          */
         private void OnBindsChange(object sender, FileSystemEventArgs e)
         {
+            controlBindingsState.ready = false;
             LoadControlBindings();
             controlBindingsState.gameEvent.Raise();
+            
         }
 
         /**
