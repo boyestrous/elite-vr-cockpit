@@ -56,9 +56,12 @@ unityProject.vrmanifest
 !Assets/Plugins/Markdig.pdb.meta
 
 
-#Other
+# Other
 RebuildPlan.md
 EVRC.Core.csproj.DotSettings
 *.DotSettings
 *.dwlt
 .vsconfig
+
+# Unity 
+*.meta
